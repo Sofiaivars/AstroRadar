@@ -34,7 +34,7 @@ MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
 #Flask CORS
-CORS(app, supports_credentials=True, expose_headers=["Authorization"])
+CORS(app, supports_credentials=True)
 
 # add the admin
 setup_admin(app)
@@ -53,6 +53,21 @@ app.register_blueprint(api, url_prefix='/api')
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
+
+@jwt.unauthorized_loader
+def unauthorized_response(callback):
+    print(f"Unauthorized: {callback}")
+    return jsonify({"msg": "Token no enviado o inválido"}), 401
+
+@jwt.invalid_token_loader
+def invalid_token_callback(reason):
+    print(f"Token inválido: {reason}")
+    return jsonify({"msg": "Token inválido"}), 422
+
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    print("Token expirado")
+    return jsonify({"msg": "Token expirado"}), 401
 
 # generate sitemap with all your endpoints
 
@@ -83,17 +98,19 @@ def create_token():
     if user is None:
         return jsonify({"msg": "Usuario o contraseña incorrectos."}), 401
     
-    access_token = create_access_token(identity=user.id)
-    print(access_token)
+    access_token = create_access_token(identity=str(user.id)) # 🗿
+    print(app.config["JWT_SECRET_KEY"])
     return jsonify({ "token": access_token, "user_id": user.id })
 
 @app.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
+    # print("headers: ", request.headers)
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
     
     return jsonify({ "id": user.id, "username": user.username }), 200
+    
 
 @app.route('/users', methods=['GET'])
 def get_users_from_db():
