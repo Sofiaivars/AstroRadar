@@ -16,8 +16,7 @@ function DashboardMain(){
 
   useEffect(() => {
     const getUserDataFromDatabase = async () => {
-      const response = await getUserInfo()
-      const data = await response.json()
+      const data = await getUserInfo()
       return getUserData(data)
     }
 
