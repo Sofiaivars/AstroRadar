@@ -5,11 +5,13 @@ import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required #👽
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_cors import CORS
 
 # from models import Person
 
@@ -19,23 +21,30 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-# database condiguration
+# database configuration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
         "postgres://", "postgresql://")
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
+
+#Flask CORS
+CORS(app, supports_credentials=True, expose_headers=["Authorization"])
 
 # add the admin
 setup_admin(app)
 
 # add the admin
 setup_commands(app)
+
+#JWT
+app.config["JWT_SECRET_KEY"] = "Xk9#mP3$qR7!vS2@wT8%yU4^zV6&aB1*cD5#eF9$gH3!iJ7@kL2%mN8^oP4&qR6*sT1#uV5$wX9!yZ3@"
+jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
@@ -65,6 +74,35 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+#Crear Token
+@app.route('/token', methods=['POST'])
+def create_token():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    
+    user = User.query.filter_by(username=username, password=password).first()
+    
+    if user is None:
+        return jsonify({"msg": "Usuario o contraseña incorrectos."}), 401
+    
+    access_token = create_access_token(identity=user.id)
+    print(access_token)
+    return jsonify({ "token": access_token, "user_id": user.id })
+
+@app.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    
+    return jsonify({ "id": user.id, "username": user.username }), 200
+
+@app.route('/users', methods=['GET'])
+def get_users_from_db():
+    users = User.query.all()
+    if not users:
+        return jsonify({"msg": "No hay datos de usuario."}), 200
+    return jsonify([user.serialize() for user in users]), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
