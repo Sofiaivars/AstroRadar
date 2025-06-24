@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+:root{
+  --components-background: #0a0a1bbf;
+  --astroradar-purple: #8E4990;
+  --astroradar-dark: #06031A;
+  --astroradar-white: #EAEAFF;
+}
