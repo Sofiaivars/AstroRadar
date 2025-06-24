@@ -43,15 +43,13 @@ setup_admin(app)
 setup_commands(app)
 
 #JWT
-app.config["JWT_SECRET_KEY"] = "Xk9#mP3$qR7!vS2@wT8%yU4^zV6&aB1*cD5#eF9$gH3!iJ7@kL2%mN8^oP4&qR6*sT1#uV5$wX9!yZ3@"
+app.config["JWT_SECRET_KEY"] = "porfavorfuncionadeunavezestoyaespersonal"
 jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
-
-
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
