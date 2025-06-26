@@ -98,14 +98,12 @@ def create_token():
     if user is None:
         return jsonify({"msg": "Usuario o contraseña incorrectos."}), 401
     
-    access_token = create_access_token(identity=str(user.id)) # 🗿
-    print(app.config["JWT_SECRET_KEY"])
+    access_token = create_access_token(identity=str(user.id))
     return jsonify({ "token": access_token, "user_id": user.id })
 
 @app.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
-    # print("headers: ", request.headers)
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
     
