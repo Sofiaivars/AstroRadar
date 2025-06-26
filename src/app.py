@@ -107,7 +107,15 @@ def protected():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
     
-    return jsonify({ "id": user.id, "username": user.username }), 200
+    return jsonify({ 
+                    "id": user.id, 
+                    "username": user.username, 
+                    "name": user.name, 
+                    "lastname": user.lastname,
+                    "email": user.email,
+                    "city": user.city,
+                    "country": user.country,
+                    }), 200
 
 # signup
 @app.route('/signup', methods=['POST'])

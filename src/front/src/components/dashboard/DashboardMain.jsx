@@ -32,6 +32,11 @@ function DashboardMain(){
       <div className="flex flex-col gap-3 bg-gray-900 text-white rounded-3xl p-3">
         <h1>Nombre de usuario: {userData.username || "⚠️"}</h1>
         <h2>User id: {userData.id || "⚠️"}</h2>
+        <h2>Nombre: {userData.name || "⚠️"}</h2>
+        <h2>Apellidos: {userData.lastname || "⚠️"}</h2>
+        <h2>Email: {userData.email || "⚠️"}</h2>
+        <h2>Ciudad: {userData.city || "⚠️"}</h2>
+        <h2>País: {userData.country || "⚠️"}</h2>
         <p>TOKEN: </p>
         <p className="w-200 overflow-y-auto">{JWTToken}</p>
         <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
