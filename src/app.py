@@ -108,7 +108,26 @@ def protected():
     user = User.query.get(current_user_id)
     
     return jsonify({ "id": user.id, "username": user.username }), 200
-    
+
+# signup
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    username = data.get("username")
+    name = data.get("name")
+    lastname = data.get("lastname")
+    email = data.get("email")
+    city = data.get("city")
+    country = data.get("country")
+    password = data.get("password")
+    if not username or not password:
+        return jsonify({ "msg": "Faltan campos obligatorios." }), 400
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return jsonify({ "msg": "El usuario ya existe." }), 409
+    new_user = User(username=username, password=password, name=name, lastname=lastname, email=email, city=city, country=country, is_active=True)
+    db.session.add(new_user)
+    db.session.commit()
 
 @app.route('/users', methods=['GET'])
 def get_users_from_db():
