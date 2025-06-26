@@ -10,7 +10,7 @@ function SignUpPage(){
       if(username || password || email || name || lastname || city || country){
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(emailRegex.test(email)){
-          await signUp(username, password, email, name, lastname, city, country)
+          await signUp(username, password, name, lastname, email, city, country)
           return navigate('/')
         }else{
           alert("Formato de email incorrecto")

@@ -28,7 +28,7 @@ const signUp = async (username, password, name, lastname, email, city, country) 
   const response = await fetch(`${mainURL}/signup`, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password, email, name, lastname, city, country })
+    body: JSON.stringify({ username, password, name, lastname, email, city, country })
   });
 
   if (!response.ok) {
