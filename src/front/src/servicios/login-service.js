@@ -23,6 +23,23 @@ const login = async (username, password) => {
   return data;
 }
 
+// SignUp
+const signUp = async (username, password, name, lastname, email, city, country) => {
+  const response = await fetch(`${mainURL}/signup`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password, email, name, lastname, city, country })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error en el registro");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
 // /protected es un endpoint privado.
 const getUserInfo = async () => {
   const token = localStorage.getItem('jwt-token');
@@ -48,4 +65,4 @@ const getUserInfo = async () => {
   return data;
 }
 
-export { login, getUserInfo };
+export { login, getUserInfo, signUp };
