@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { getUserInfo } from "../../servicios/login-service"
 import { useNavigate } from "react-router"
+import { Helix } from 'ldrs/react'
+import 'ldrs/react/Helix.css'
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -26,6 +28,19 @@ function DashboardMain(){
   useEffect(() => {
     console.log(`user-data: ${JSON.stringify(userData)}`)
   }, [userData])
+
+  if(Object.keys(userData).length === 0){
+    return(
+      <div className="flex flex-col gap-3 bg-gray-900 text-white rounded-3xl p-3">
+        <Helix
+          size="60"
+          speed="1.3"
+          color="#ffffff"
+        />
+        <button onClick={() => navigate('/')}>🏠</button>
+      </div>
+    )
+  }
  
   return (
     <>

@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-import os
+import os, hashlib
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -12,8 +12,6 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
-
-# from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -43,7 +41,7 @@ setup_admin(app)
 setup_commands(app)
 
 #JWT
-app.config["JWT_SECRET_KEY"] = "porfavorfuncionadeunavezestoyaespersonal"
+app.config["JWT_SECRET_KEY"] = "contraseñamegaultrahipersecretaindescifrable12345"
 jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix
@@ -70,8 +68,6 @@ def expired_token_callback(jwt_header, jwt_payload):
     return jsonify({"msg": "Token expirado"}), 401
 
 # generate sitemap with all your endpoints
-
-
 @app.route('/')
 def sitemap():
     if ENV == "development":
@@ -93,14 +89,19 @@ def create_token():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
     
-    user = User.query.filter_by(username=username, password=password).first()
+    user = User.query.filter_by(username=username).first()
     
     if user is None:
         return jsonify({"msg": "Usuario o contraseña incorrectos."}), 401
     
-    access_token = create_access_token(identity=str(user.id))
-    return jsonify({ "token": access_token, "user_id": user.id })
+    hashed_password = user.password
+    if hashlib.sha256(password.encode('utf-8')).hexdigest() == hashed_password:
+        access_token = create_access_token(identity=str(user.id))
+        return jsonify({ "token": access_token, "user_id": user.id })
+    
+    return jsonify({"message": "Invalid password"}), 401
 
+# Ruta protegida
 @app.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
@@ -133,7 +134,10 @@ def signup():
     existing_user = User.query.filter_by(username=username).first()
     if existing_user:
         return jsonify({ "msg": "El usuario ya existe." }), 409
-    new_user = User(username=username, password=password, name=name, lastname=lastname, email=email, city=city, country=country, is_active=True)
+    
+    hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    
+    new_user = User(username=username, password=hashed_password, name=name, lastname=lastname, email=email, city=city, country=country, is_active=True)
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"usename": username, "email": email}), 200
