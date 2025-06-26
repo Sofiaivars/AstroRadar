@@ -1,5 +1,5 @@
 // Cuando se ejecute en local, cambiar mainURL a http://localhost:3001
-const mainURL = "https://fr00zmm4-3001.uks1.devtunnels.ms"
+const mainURL = "https://congenial-bassoon-pq66pxx9vrrc69p-3001.app.github.dev"
 
 const login = async (username, password) => {
   const response = await fetch(`${mainURL}/token`, {

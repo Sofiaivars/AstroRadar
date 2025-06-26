@@ -32,7 +32,14 @@ MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
 #Flask CORS
-CORS(app, supports_credentials=True)
+from flask_cors import CORS
+
+ 
+CORS(app,
+     supports_credentials=True,
+     origins=["https://congenial-bassoon-pq66pxx9vrrc69p-5173.app.github.dev"],  # tu URL real
+     allow_headers=["Content-Type", "Authorization"])
+
 
 # add the admin
 setup_admin(app)
