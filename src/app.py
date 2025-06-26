@@ -128,6 +128,7 @@ def signup():
     new_user = User(username=username, password=password, name=name, lastname=lastname, email=email, city=city, country=country, is_active=True)
     db.session.add(new_user)
     db.session.commit()
+    return jsonify({"usename": username, "email": email}), 200
 
 @app.route('/users', methods=['GET'])
 def get_users_from_db():

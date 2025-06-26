@@ -35,6 +35,7 @@ function LoginPage(){
         handleClick={handleClick}
       />
       <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={deleteToken}>Borrar Token</button>
+      <button className="bg-amber-900 hover:bg-amber-300 text-white rounded-3xl p-2" onClick={() => navigate('/signup')}>Registro</button>
     </>
   )
 }
