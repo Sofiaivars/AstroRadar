@@ -12,6 +12,8 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
+import openai
+from dotenv import load_dotenv
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -32,7 +34,8 @@ MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
 
-
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
  
 CORS(app, supports_credentials=True)
@@ -152,6 +155,40 @@ def get_users_from_db():
     if not users:
         return jsonify({"msg": "No hay datos de usuario."}), 200
     return jsonify([user.serialize() for user in users]), 200
+
+#IA ENDPOINT
+
+@app.route('/ask', methods=['POST'])
+def ask():
+    try:
+        data = request.get_json()
+        pregunta = data.get("pregunta")
+
+        if not pregunta:
+            return jsonify({"error": "No se recibió una pregunta"}), 400
+
+        if not openai.api_key:
+            app.logger.error("La clave de OpenAI no está configurada.")
+            return jsonify({"error": "Configuración incorrecta del servidor"}), 500
+
+        respuesta_ia = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Eres un asistente útil."},
+                {"role": "user", "content": pregunta}
+            ]
+        )
+
+        respuesta = respuesta_ia.choices[0].message.content
+        return jsonify({"respuesta": respuesta})
+
+    except openai.error.OpenAIError as oe:
+        app.logger.error(f"Error de OpenAI: {oe}")
+        return jsonify({"error": "Problema con el servicio de OpenAI"}), 502
+
+    except Exception as e:
+        app.logger.error(f"Error inesperado en /ask: {e}")
+        return jsonify({"error": "Error interno"}), 500
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

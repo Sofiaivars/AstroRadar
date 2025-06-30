@@ -6,6 +6,7 @@ import 'ldrs/react/Helix.css'
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
+  const [respuesta, setRespuesta] = useState("");
 
   const navigate = useNavigate()
 
@@ -28,6 +29,27 @@ function DashboardMain(){
   useEffect(() => {
     console.log(`user-data: ${JSON.stringify(userData)}`)
   }, [userData])
+
+
+  // USEEFCT IA
+
+useEffect(() => {
+    const obtenerRespuesta = async () => {
+      try {
+        const res = await fetch("https://orange-barnacle-x6rwxxp67v2pqjw-3001.app.github.dev/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pregunta: "¿Cuál es la capital de Francia?" })
+        });
+        const data = await res.json();
+        setRespuesta(data.respuesta);
+      } catch (err) {
+        console.error("Error al consultar la IA:", err);
+      }
+    };
+
+    obtenerRespuesta();
+  }, []); 
 
   if(Object.keys(userData).length === 0){
     return(
@@ -52,6 +74,7 @@ function DashboardMain(){
         <h2>Email: {userData.email || "⚠️"}</h2>
         <h2>Ciudad: {userData.city || "⚠️"}</h2>
         <h2>País: {userData.country || "⚠️"}</h2>
+        <h2>Respuesta: {respuesta}</h2>
         <p>TOKEN: </p>
         <p className="w-200 overflow-y-auto">{JWTToken}</p>
         <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
