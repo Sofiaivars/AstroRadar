@@ -3,6 +3,8 @@ import { getUserInfo } from "../../servicios/login-service"
 import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
+import RankingMain from "./ranking-component/RankingMain"
+import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -58,6 +60,12 @@ function DashboardMain(){
           Cerrar Sesión
         </button>
       </div>
+
+      <div className="flex gap-1 w-auto">
+        <RankingMain />
+        <CosmoDashboard />
+      </div>
+      
     </>
   )
 }
