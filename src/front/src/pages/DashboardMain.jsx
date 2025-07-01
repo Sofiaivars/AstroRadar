@@ -60,10 +60,10 @@ function DashboardMain(){
         <h2>País: {userData.country || "⚠️"}</h2>
         <p>TOKEN: </p>
         <p className="w-200 overflow-y-auto">{JWTToken}</p>
-        <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
-          Cerrar Sesión
-        </button>
       </div> */}
+      <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
+        Cerrar Sesión
+      </button>
       <div className="flex gap-4">
         <div className="flex flex-col gap-3">
           <EventoDestacado />
@@ -75,7 +75,7 @@ function DashboardMain(){
             <MisionActual />
             <MisionRealizada />
           </div>
-          <div className="flex gap-1 w-auto gap-3">
+          <div className="flex w-auto gap-3">
             <RankingMain />
             <CosmoDashboard />
           </div>
