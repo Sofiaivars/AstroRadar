@@ -3,6 +3,8 @@ import { getUserInfo } from "../../servicios/login-service"
 import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
+import  Calendar from './Calendar'
+
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -57,6 +59,9 @@ function DashboardMain(){
         <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
           Cerrar Sesión
         </button>
+      </div>
+      <div>
+             <Calendar/>
       </div>
     </>
   )
