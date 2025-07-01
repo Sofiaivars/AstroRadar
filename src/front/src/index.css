@@ -6,3 +6,8 @@
   --astroradar-dark: #06031A;
   --astroradar-white: #EAEAFF;
 }
+
+body{
+  background-image: url("../public/astroradar-fondo.png");
+  background-size: cover;
+}

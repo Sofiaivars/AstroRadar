@@ -64,18 +64,18 @@ function DashboardMain(){
           Cerrar Sesión
         </button>
       </div> */}
-      <div className="flex">
-        <div className="flex flex-col">
+      <div className="flex gap-4">
+        <div className="flex flex-col gap-3">
           <EventoDestacado />
           <Map />
         </div>
 
-        <div className="flex flex-col">
-          <div className="flex">
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-3">
             <MisionActual />
             <MisionRealizada />
           </div>
-          <div className="flex gap-1 w-auto">
+          <div className="flex gap-1 w-auto gap-3">
             <RankingMain />
             <CosmoDashboard />
           </div>
