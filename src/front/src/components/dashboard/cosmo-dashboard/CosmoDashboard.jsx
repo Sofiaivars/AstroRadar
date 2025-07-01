@@ -15,9 +15,9 @@ function CosmoDashboard(){
   }, [])
 
   return(
-    <div className='flex flex-col justify-center items-center h-70 border-2 rounded-2xl w-70 relative overflow-hidden'>
-      <div className='flex items-center justify-center bg-sky-950 rounded-2xl w-8/9 p-3 h-20 max-h-20 cosmoMessage'>
-        <p className='text-xs text-center'>{cosmoTip}</p>
+    <div className='flex flex-col justify-center items-start h-70 border-2 rounded-2xl w-70 relative overflow-hidden'>
+      <div className='flex items-center justify-center bg-sky-950 rounded-t-2xl rounded-s-2xl w-8/9 p-3 h-20 max-h-20 ms-1 cosmoMessage'>
+        {cosmoTip ? <p className='text-xs text-center'>{cosmoTip}</p> : <div className='cosmoTipLoader'></div>}
       </div>
       <div className='flex items-end justify-end w-full'>
         <img src={cosmo} width={150} alt="cosmo-bot" />
