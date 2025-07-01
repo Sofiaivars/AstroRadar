@@ -3,6 +3,7 @@ import { getUserInfo } from "../../servicios/login-service"
 import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
+import RankingMain from "./ranking-component/RankingMain"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -58,6 +59,8 @@ function DashboardMain(){
           Cerrar Sesión
         </button>
       </div>
+
+      <RankingMain />
     </>
   )
 }
