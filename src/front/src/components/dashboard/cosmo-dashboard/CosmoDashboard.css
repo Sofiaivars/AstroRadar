@@ -7,6 +7,10 @@
   right: 5px;
 }
 
+.cosmoMessage{
+  background-color: var(--astroradar-dark);
+}
+
 .cosmoTipLoader {
   background-image: linear-gradient(rgb(186, 66, 255) 35%,rgb(0, 225, 255));
   width: 30px;

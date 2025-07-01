@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
-import { getUserInfo } from "../../servicios/login-service"
+import { getUserInfo } from "../servicios/login-service"
 import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
-import EventoDestacado from "./EventoDestacado"
-import Map from "./Map"
-import RankingMain from "./ranking-component/RankingMain"
-import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard"
+import EventoDestacado from "../components/dashboard/EventoDestacado"
+import Map from "../components/dashboard/Map"
+import RankingMain from "../components/dashboard/ranking-component/RankingMain"
+import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard"
+import MisionActual from "../components/dashboard/MisionActual/MisionActual"
+import MisionRealizada from "../components/dashboard/MisionRealizada/MisionRealizada"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -48,7 +50,7 @@ function DashboardMain(){
  
   return (
     <>
-      <div className="flex flex-col gap-3 bg-gray-900 text-white rounded-3xl p-3">
+      {/* <div className="flex flex-col gap-3 bg-gray-900 text-white rounded-3xl p-3">
         <h1>Nombre de usuario: {userData.username || "⚠️"}</h1>
         <h2>User id: {userData.id || "⚠️"}</h2>
         <h2>Nombre: {userData.name || "⚠️"}</h2>
@@ -58,14 +60,26 @@ function DashboardMain(){
         <h2>País: {userData.country || "⚠️"}</h2>
         <p>TOKEN: </p>
         <p className="w-200 overflow-y-auto">{JWTToken}</p>
-        <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
-          Cerrar Sesión
-        </button>
-      </div>
+      </div> */}
+      <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
+        Cerrar Sesión
+      </button>
+      <div className="flex gap-4">
+        <div className="flex flex-col gap-3">
+          <EventoDestacado />
+          <Map />
+        </div>
 
-      <div className="flex gap-1 w-auto">
-        <RankingMain />
-        <CosmoDashboard />
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-3">
+            <MisionActual />
+            <MisionRealizada />
+          </div>
+          <div className="flex w-auto gap-3">
+            <RankingMain />
+            <CosmoDashboard />
+          </div>
+        </div>
       </div>
       
     </>
