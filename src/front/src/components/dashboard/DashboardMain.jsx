@@ -3,10 +3,11 @@ import { getUserInfo } from "../../servicios/login-service"
 import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
+import EventoDestacado from "./EventoDestacado"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
-  const [respuesta, setRespuesta] = useState("");
+ 
 
   const navigate = useNavigate()
 
@@ -31,25 +32,9 @@ function DashboardMain(){
   }, [userData])
 
 
-  // USEEFCT IA
+  
 
-useEffect(() => {
-    const obtenerRespuesta = async () => {
-      try {
-        const res = await fetch("https://orange-barnacle-x6rwxxp67v2pqjw-3001.app.github.dev/ask", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pregunta: "¿Cuál es la capital de Francia?" })
-        });
-        const data = await res.json();
-        setRespuesta(data.respuesta);
-      } catch (err) {
-        console.error("Error al consultar la IA:", err);
-      }
-    };
 
-    obtenerRespuesta();
-  }, []); 
 
   if(Object.keys(userData).length === 0){
     return(
@@ -74,13 +59,32 @@ useEffect(() => {
         <h2>Email: {userData.email || "⚠️"}</h2>
         <h2>Ciudad: {userData.city || "⚠️"}</h2>
         <h2>País: {userData.country || "⚠️"}</h2>
-        <h2>Respuesta: {respuesta}</h2>
         <p>TOKEN: </p>
         <p className="w-200 overflow-y-auto">{JWTToken}</p>
         <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={handleClick}>
           Cerrar Sesión
         </button>
       </div>
+
+   <div className="relative p-[3px] rounded-xl bg-gradient-to-r from-[#a3cfff] to-[#e0f0ff] w-[700px] h-[300px] overflow-hidden">
+  <img
+    src="https://bufferwall.com/download/B20190923T000000374_1200x600.jpg"
+    alt="mapa"
+    className="w-full h-full object-cover rounded-[10px]"
+  />
+
+  <button className="absolute bottom-8 right-6 text-sm rounded-md whitespace-nowrap px-[2px] py-[2px] bg-gradient-to-r from-[var(--astroradar-purple)] to-[#dca2f2] min-w-[120px]">
+    <span className="block px-5 py-2 bg-[var(--components-background)] text-[var(--astroradar-white)] rounded-md text-center">
+      Explorar
+    </span>
+  </button>
+</div>
+
+
+
+
+
+
     </>
   )
 }
