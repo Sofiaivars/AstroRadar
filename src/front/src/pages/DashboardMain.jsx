@@ -84,10 +84,6 @@ function DashboardMain(){
           </div>
         </div>
       </div>
-      
-      <div>
-             
-      </div>
     </>
   )
 }
