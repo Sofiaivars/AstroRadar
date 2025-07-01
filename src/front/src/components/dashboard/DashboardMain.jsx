@@ -5,11 +5,12 @@ import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
 import EventoDestacado from "./EventoDestacado"
 import Map from "./Map"
+import RankingMain from "./ranking-component/RankingMain"
+import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
  
-
   const navigate = useNavigate()
 
   const handleClick = () => {
@@ -31,11 +32,6 @@ function DashboardMain(){
   useEffect(() => {
     console.log(`user-data: ${JSON.stringify(userData)}`)
   }, [userData])
-
-
-  
-
-
 
   if(Object.keys(userData).length === 0){
     return(
@@ -66,8 +62,12 @@ function DashboardMain(){
           Cerrar Sesión
         </button>
       </div>
+
+      <div className="flex gap-1 w-auto">
+        <RankingMain />
+        <CosmoDashboard />
+      </div>
       
-  
     </>
   )
 }

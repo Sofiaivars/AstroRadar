@@ -12,6 +12,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
+from ai_service.cosmo_functions import cosmo_tip
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -31,11 +32,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
-
-
- 
 CORS(app, supports_credentials=True,)
-
 
 # add the admin
 setup_admin(app)
@@ -152,10 +149,16 @@ def get_users_from_db():
         return jsonify({"msg": "No hay datos de usuario."}), 200
     return jsonify([user.serialize() for user in users]), 200
 
-#IA ENDPOINT
-
-
-
+# Cosmo dashboard AI endpoint
+@app.route('/cosmotip', methods=['GET'])
+def get_response_from_ai():
+    response = cosmo_tip()
+    if response:
+        print(response)
+        return jsonify(response), 200
+    else:
+        return jsonify({"message": "Sin respuesta..."})
+    
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
