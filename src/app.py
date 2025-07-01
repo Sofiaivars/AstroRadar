@@ -32,8 +32,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
-#Flask CORS
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True,)
 
 # add the admin
 setup_admin(app)

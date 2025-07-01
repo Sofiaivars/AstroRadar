@@ -3,12 +3,14 @@ import { getUserInfo } from "../../servicios/login-service"
 import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
+import EventoDestacado from "./EventoDestacado"
+import Map from "./Map"
 import RankingMain from "./ranking-component/RankingMain"
 import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
-
+ 
   const navigate = useNavigate()
 
   const handleClick = () => {
