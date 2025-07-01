@@ -3,7 +3,7 @@ import { getUserInfo } from "../../servicios/login-service"
 import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
-import  Calendar from './Calendar'
+import  Calendar from './calendar/Calendar'
 
 
 function DashboardMain(){
