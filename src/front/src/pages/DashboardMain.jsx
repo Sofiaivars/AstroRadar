@@ -9,6 +9,8 @@ import RankingMain from "../components/dashboard/ranking-component/RankingMain"
 import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard"
 import MisionActual from "../components/dashboard/MisionActual/MisionActual"
 import MisionRealizada from "../components/dashboard/MisionRealizada/MisionRealizada"
+import  Calendar from '../components/dashboard/calendar/Calendar'
+
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -68,6 +70,7 @@ function DashboardMain(){
         <div className="flex flex-col gap-3">
           <EventoDestacado />
           <Map />
+          <Calendar/>
         </div>
 
         <div className="flex flex-col gap-3">
@@ -82,6 +85,9 @@ function DashboardMain(){
         </div>
       </div>
       
+      <div>
+             
+      </div>
     </>
   )
 }
