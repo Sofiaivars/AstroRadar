@@ -61,7 +61,7 @@ function DashboardMain(){
         </button>
       </div>
 
-      <div className="flex w-auto">
+      <div className="flex gap-1 w-auto">
         <RankingMain />
         <CosmoDashboard />
       </div>
