@@ -1,10 +1,14 @@
 import React from "react";
-import fondoPerseidas from "./Assets/perseidas.jpg";
+import fondoMisionRealizada from "./Assets/ultima-mision.jpg";
 
-const MisionActual = () => {
-  const missionName = "Lluvia de Meteoros - Perseidas";
-  const missionStatus = "Mision en curso";
-  const location = "Observatorio Astronomico UPV";
+const MisionRealizada = () => {
+  const missionName = "Luna llena";
+  const missionStatus = "Ultima mision realizada";
+  //   const location = "46269 Tous, Valencia";
+  const awards = [
+    { name: "🎖️Nueva base estelar", description: "46269 Tous, Valencia" },
+    { name: "🎖️Cazador de perseidas", description: "9 misiones completadas" },
+  ];
   const handleClick = () => {
     console.log("Botón clickeado");
   };
@@ -14,7 +18,7 @@ const MisionActual = () => {
       <div
         className="relative w-[400px] h-[330px] rounded-[16px] overflow-hidden shadow-lg text-white font-poppins"
         style={{
-          backgroundImage: `url(${fondoPerseidas})`,
+          backgroundImage: `url(${fondoMisionRealizada})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundColor: "rgba(0,0,0,0.7)",
@@ -25,9 +29,17 @@ const MisionActual = () => {
             <div className="self-start">
               <span className="text-md font-normal">{missionStatus}</span>
             </div>
-            <div className="self-end text-right mt-2">
+            <div className="self-end text-right mt-1">
               <h2 className="text-xl font-semibold">{missionName}</h2>
-              <p className="text-base">{location}</p>
+              <div className="text-base">
+                {awards.map((award, index) => (
+                  <div key={index}>
+                    <strong>{award.name}</strong>:{" "}
+                    <span className="text-sm">{award.description}</span>
+                  </div>
+                ))}
+              </div>
+              {/* <p className="text-base">{location}</p> */}
             </div>
           </div>
 
@@ -41,7 +53,7 @@ const MisionActual = () => {
     text-white
     text-sm
     h-10
-    w-40
+    w-50
     font-medium
     transition
     duration-300
@@ -79,7 +91,7 @@ const MisionActual = () => {
                   backgroundColor: "var(--components-background)",
                 }}
               >
-                Continuar misión
+                Ver misiones realizadas
               </div>
             </button>
           </div>
@@ -89,4 +101,4 @@ const MisionActual = () => {
   );
 };
 
-export default MisionActual;
+export default MisionRealizada;
