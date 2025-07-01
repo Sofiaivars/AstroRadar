@@ -4,6 +4,7 @@ import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
 import EventoDestacado from "./EventoDestacado"
+import Map from "./Map"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -66,25 +67,7 @@ function DashboardMain(){
         </button>
       </div>
 
-   <div className="relative p-[3px] rounded-xl bg-gradient-to-r from-[#a3cfff] to-[#e0f0ff] w-[700px] h-[300px] overflow-hidden">
-  <img
-    src="https://bufferwall.com/download/B20190923T000000374_1200x600.jpg"
-    alt="mapa"
-    className="w-full h-full object-cover rounded-[10px]"
-  />
-
-  <button className="absolute bottom-8 right-6 text-sm rounded-md whitespace-nowrap px-[2px] py-[2px] bg-gradient-to-r from-[var(--astroradar-purple)] to-[#dca2f2] min-w-[120px]">
-    <span className="block px-5 py-2 bg-[var(--components-background)] text-[var(--astroradar-white)] rounded-md text-center">
-      Explorar
-    </span>
-  </button>
-</div>
-
-
-
-
-
-
+  
     </>
   )
 }
