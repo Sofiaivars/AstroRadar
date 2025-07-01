@@ -4,6 +4,7 @@ import { useNavigate } from "react-router"
 import { Helix } from 'ldrs/react'
 import 'ldrs/react/Helix.css'
 import RankingMain from "./ranking-component/RankingMain"
+import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard"
 
 function DashboardMain(){
   const [userData, getUserData] = useState({})
@@ -60,7 +61,11 @@ function DashboardMain(){
         </button>
       </div>
 
-      <RankingMain />
+      <div className="flex w-auto">
+        <RankingMain />
+        <CosmoDashboard />
+      </div>
+      
     </>
   )
 }
