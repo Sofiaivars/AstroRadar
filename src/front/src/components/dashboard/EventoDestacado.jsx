@@ -1,8 +1,8 @@
 const EventoDestacado = () => {
 
     return (<>
-     <div className="p-[3px] rounded-xl bg-gradient-to-r from-[#a3cfff] to-[#e0f0ff] w-[700px] h-[140px]">
-      <div className="flex w-full h-full bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)]">
+    <div className="p-[3px] rounded-xl bg-gradient-to-r from-[#22d3ee] to-[var(--astroradar-purple)] w-[700px] h-[140px]">
+      <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)]">
         
         
         <div className="w-[30%] h-full">
@@ -29,7 +29,7 @@ const EventoDestacado = () => {
           <p className="text-sm font-bold text-[var(--astroradar-white)] whitespace-nowrap">
             en 48hs 37min
           </p>
-          <button className="text-sm rounded-md whitespace-nowrap relative px-[1px] py-[1px] bg-gradient-to-r from-[var(--astroradar-purple)] to-[#dca2f2] boton">
+          <button className="text-sm rounded-md whitespace-nowrap relative px-[1px] py-[1px] bg-gradient-to-r from-[#22d3ee] to-[var(--astroradar-purple)] boton">
             <span className="block px-3 py-1 bg-[var(--components-background)] text-[var(--astroradar-white)] rounded-md">
               Comenzar misión
             </span>
@@ -37,6 +37,8 @@ const EventoDestacado = () => {
         </div>
       </div>
     </div>
+
+
     </>)
 
 }

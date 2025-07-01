@@ -1,6 +1,6 @@
 const Map = () => {
     return (<>
-    <div className="relative p-[3px] rounded-xl bg-gradient-to-r from-[#a3cfff] to-[#e0f0ff] w-[700px] h-[400px] overflow-hidden">
+    <div className="relative p-[3px] rounded-xl bg-gradient-to-r from-[#22d3ee] to-[var(--astroradar-purple)] w-[700px] h-[400px] overflow-hidden">
   <img
     src="https://bufferwall.com/download/B20190923T000000374_1200x600.jpg"
     alt="mapa"
@@ -12,7 +12,7 @@ const Map = () => {
       Explorar
     </span>
   </button>
-  <div className="absolute bottom-8 left-6 p-[2px] rounded-md border-2 border-sky-500 max-w-[280px]">
+  <div className="absolute bottom-8 left-6 p-[2px] rounded-md border-2 border-gray-500 max-w-[280px]">
   <div className="bg-white/1 backdrop-blur-xs rounded-md p-4  min-h-[100px] text-[var(--astroradar-white)] text-center">
     <h3 className="text-base font-semibold mb-1">Bases Estelares</h3>
     <p className="text-sm mt-5">
