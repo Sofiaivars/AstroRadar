@@ -1,7 +1,7 @@
 const EventoDestacado = () => {
 
     return (<>
-    <div className="p-[3px] rounded-xl bg-gradient-to-r from-[#22d3ee] to-[var(--astroradar-purple)] w-[700px] h-[140px]">
+    <div className="p-[3px] rounded-xl bg-gradient-to-r from-[var(--astroradar-purple)] to-[#22d3ee] w-[700px] h-[140px]">
       <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)]">
         
         
@@ -29,11 +29,56 @@ const EventoDestacado = () => {
           <p className="text-sm font-bold text-[var(--astroradar-white)] whitespace-nowrap">
             en 48hs 37min
           </p>
-          <button className="text-sm rounded-md whitespace-nowrap relative px-[1px] py-[1px] bg-gradient-to-r from-[#22d3ee] to-[var(--astroradar-purple)] boton">
-            <span className="block px-3 py-1 bg-[var(--components-background)] text-[var(--astroradar-white)] rounded-md">
-              Comenzar misión
-            </span>
-          </button>
+          <button
+              
+              className="
+    group
+    rounded-[12px]
+    p-[1.5px]
+    text-white
+    text-sm
+    h-10
+    w-40
+    font-medium
+    transition
+    duration-300
+    flex
+    items-center
+    justify-center
+    hover:shadow-2xl
+    hover:shadow-purple-600/30
+  "
+              style={{
+                backgroundImage:
+                  "linear-gradient(var(--components-background), var(--components-background)), " +
+                  "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)", //bordeeeeeeeee
+                backgroundOrigin: "border-box",
+                backgroundClip: "padding-box, border-box",
+                border: "2px solid transparent",
+              }}
+            >
+              <div
+                className="
+      rounded-[12px]
+      w-full
+      h-full
+      flex
+      items-center
+      justify-center
+      transition
+      duration-300
+      ease-in-out
+      group-hover:bg-gradient-to-br
+      group-hover:from-gray-700
+      group-hover:to-gray-900
+    "
+                style={{
+                  backgroundColor: "var(--components-background)",
+                }}
+              >
+                Comenzar misión
+              </div>
+            </button>
         </div>
       </div>
     </div>
