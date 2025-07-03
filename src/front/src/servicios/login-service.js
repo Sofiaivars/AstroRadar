@@ -1,5 +1,5 @@
 // Cuando se ejecute en local, cambiar mainURL a http://localhost:3001
-const mainURL = "https://solid-orbit-5p99xww56g63v979-3001.app.github.dev"
+const mainURL = "https://ominous-carnival-49rrwxxr74j35v6-3001.app.github.dev"
 
 const login = async (username, password) => {
   const response = await fetch(`${mainURL}/token`, {
