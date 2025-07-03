@@ -28,6 +28,7 @@ function RankingMain(){
       <div className="flex flex-col gap-1 overflow-y-auto h-full p-3 rankingList">
         {datosOrdenadosPorLogro.map((user, index) => {
           return <RankingCard 
+                    key={`${index}${user.name}${user.lastName}`}
                     position={index + 1} 
                     name={user.name} 
                     lastName={user.lastName} 

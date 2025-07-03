@@ -1,0 +1,7 @@
+.info-component-container{
+  background-image:linear-gradient(var(--components-background), var(--components-background)),
+                  linear-gradient(to right, #a855f7, #d946ef, #22d3ee);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid transparent;
+}
