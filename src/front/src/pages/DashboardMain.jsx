@@ -11,6 +11,7 @@ import MisionActual from "../components/dashboard/MisionActual/MisionActual";
 import MisionRealizada from "../components/dashboard/MisionRealizada/MisionRealizada";
 import Calendar from "../components/dashboard/calendar/Calendar";
 import Logotipo from "../components/dashboard/logotipo/Logotipo.jsx";
+import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
 
 function DashboardMain() {
   const [userData, getUserData] = useState({});
@@ -49,18 +50,6 @@ function DashboardMain() {
   return (
     <>
       <Logotipo />
-
-      {/* <div className="flex flex-col gap-3 bg-gray-900 text-white rounded-3xl p-3">
-        <h1>Nombre de usuario: {userData.username || "⚠️"}</h1>
-        <h2>User id: {userData.id || "⚠️"}</h2>
-        <h2>Nombre: {userData.name || "⚠️"}</h2>
-        <h2>Apellidos: {userData.lastname || "⚠️"}</h2>
-        <h2>Email: {userData.email || "⚠️"}</h2>
-        <h2>Ciudad: {userData.city || "⚠️"}</h2>
-        <h2>País: {userData.country || "⚠️"}</h2>
-        <p>TOKEN: </p>
-        <p className="w-200 overflow-y-auto">{JWTToken}</p>
-      </div> */}
       <div className="pt-20 px-4">
         <button
           className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2 mb-4"
@@ -68,7 +57,8 @@ function DashboardMain() {
         >
           Cerrar Sesión
         </button>
-        <div className="flex gap-4">
+        <InfoTopComponent />
+        <div className="flex gap-4 dashboard--main-container">
           <div className="flex flex-col gap-3">
             <EventoDestacado />
             <Map />
