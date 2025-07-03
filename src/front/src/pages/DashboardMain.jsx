@@ -12,9 +12,12 @@ import MisionRealizada from "../components/dashboard/MisionRealizada/MisionReali
 import Calendar from "../components/dashboard/calendar/Calendar";
 import Logotipo from "../components/dashboard/logotipo/Logotipo.jsx";
 import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
+import { getUserLocation } from "../servicios/geolocation-service.js";
 
 function DashboardMain() {
   const [userData, getUserData] = useState({});
+  const [userLocation, setUserLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const navigate = useNavigate();
 
@@ -23,8 +26,6 @@ function DashboardMain() {
     navigate("/");
   };
 
-  const JWTToken = localStorage.getItem("jwt-token");
-
   useEffect(() => {
     const getUserDataFromDatabase = async () => {
       const data = await getUserInfo();
@@ -32,6 +33,16 @@ function DashboardMain() {
     };
 
     getUserDataFromDatabase();
+    
+    getUserLocation(
+      (coords) => {
+        setUserLocation(coords)
+        setErrorMsg(null)
+      },
+      (mensajeError) => {
+        setErrorMsg(mensajeError)
+      }
+    )
   }, []);
 
   useEffect(() => {
@@ -57,11 +68,11 @@ function DashboardMain() {
         >
           Cerrar Sesión
         </button>
-        <InfoTopComponent />
+        <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation}/>
         <div className="flex gap-4 dashboard--main-container">
           <div className="flex flex-col gap-3">
             <EventoDestacado />
-            <Map />
+            <Map userLocation={userLocation}/>
             <Calendar />
           </div>
 
