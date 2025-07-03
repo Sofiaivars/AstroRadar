@@ -1,5 +1,6 @@
 const cosmoTipCall = async () => {
-  const response = await fetch(`https://ominous-carnival-49rrwxxr74j35v6-3001.app.github.dev/cosmotip`);
+  const response = await fetch(`http://localhost:3001/cosmotip`);
+
   const data = await response.json();
   return data;
 }

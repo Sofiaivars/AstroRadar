@@ -1,9 +1,9 @@
 import MapboxMap from "./mapbox/MapboxMap"
 
-const Map = () => {
+const Map = ({userLocation}) => {
     return (<>
     <div className="relative p-[3px] rounded-xl bg-gradient-to-r from-[var(--astroradar-purple)] to-[#22d3ee] w-[700px] h-[400px] overflow-hidden">
-  <MapboxMap/>
+  <MapboxMap userLocation={userLocation}/>
 
   <button
               

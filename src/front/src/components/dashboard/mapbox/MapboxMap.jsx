@@ -1,36 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MapGL, { Marker } from 'react-map-gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const MapboxMap = () => {
+const MapboxMap = ({userLocation}) => {
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
     zoom: 14
   });
-
-  const [userLocation, setUserLocation] = useState(null);
-
+  
   useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setViewState((prev) => ({
-            ...prev,
-            latitude,
-            longitude
-          }));
-          setUserLocation({ latitude, longitude });
-        },
-        (error) => {
-          console.error('Error obteniendo la ubicación:', error);
-        }
-      );
-    } else {
-      console.error('La geolocalización no está disponible en este navegador.');
+    if(userLocation){
+      setViewState((prev) => ({
+        ...prev, 
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude
+      }))
+      return
     }
-  }, []);
+  }, [userLocation])
 
   return (
     <div className="w-full h-[395px] rounded-2xl overflow-hidden relative shadow-lg border border-white/10">
