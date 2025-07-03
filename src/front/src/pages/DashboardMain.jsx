@@ -11,6 +11,7 @@ import MisionActual from "../components/dashboard/MisionActual/MisionActual";
 import MisionRealizada from "../components/dashboard/MisionRealizada/MisionRealizada";
 import Calendar from "../components/dashboard/calendar/Calendar";
 import Logotipo from "../components/dashboard/logotipo/Logotipo.jsx";
+import EventoSugerido from "../components/dashboard/EventoSugerido.jsx";
 import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
 import { getUserLocation } from "../servicios/geolocation-service.js";
 
