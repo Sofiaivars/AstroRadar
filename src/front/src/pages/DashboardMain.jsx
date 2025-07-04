@@ -12,6 +12,7 @@ import MisionRealizada from "../components/dashboard/MisionRealizada/MisionReali
 import Calendar from "../components/dashboard/calendar/Calendar";
 import Logotipo from "../components/dashboard/logotipo/Logotipo.jsx";
 import EventoSugerido from "../components/dashboard/EventoSugerido.jsx";
+import EventoProgramado from "../components/dashboard/EventoProgramado.jsx";
 import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
 import { getUserLocation } from "../servicios/geolocation-service.js";
 import SideBar from "../components/sidebar/SideBar.jsx";
@@ -75,8 +76,11 @@ function DashboardMain() {
         <div className="flex gap-4 dashboard--main-container">
           <div className="flex flex-col gap-3">
             <EventoDestacado />
-            <Map userLocation={userLocation} />
-            <Calendar />
+            <Map userLocation={userLocation}/>
+            <div className="flex gap-3">
+              <Calendar />
+              <EventoSugerido />
+            </div>
           </div>
 
           <div className="flex flex-col gap-3">
@@ -84,6 +88,7 @@ function DashboardMain() {
               <MisionActual />
               <MisionRealizada />
             </div>
+            <EventoProgramado />
             <div className="flex w-auto gap-3">
               <RankingMain />
               <CosmoDashboard />
