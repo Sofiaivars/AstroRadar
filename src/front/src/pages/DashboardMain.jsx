@@ -14,6 +14,7 @@ import Logotipo from "../components/dashboard/logotipo/Logotipo.jsx";
 import EventoSugerido from "../components/dashboard/EventoSugerido.jsx";
 import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
 import { getUserLocation } from "../servicios/geolocation-service.js";
+import SideBar from "../components/sidebar/SideBar.jsx";
 
 function DashboardMain() {
   const [userData, getUserData] = useState({});
@@ -34,16 +35,16 @@ function DashboardMain() {
     };
 
     getUserDataFromDatabase();
-    
+
     getUserLocation(
       (coords) => {
-        setUserLocation(coords)
-        setErrorMsg(null)
+        setUserLocation(coords);
+        setErrorMsg(null);
       },
       (mensajeError) => {
-        setErrorMsg(mensajeError)
+        setErrorMsg(mensajeError);
       }
-    )
+    );
   }, []);
 
   useEffect(() => {
@@ -69,11 +70,12 @@ function DashboardMain() {
         >
           Cerrar Sesión
         </button>
-        <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation}/>
+        <SideBar />
+        <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
         <div className="flex gap-4 dashboard--main-container">
           <div className="flex flex-col gap-3">
             <EventoDestacado />
-            <Map userLocation={userLocation}/>
+            <Map userLocation={userLocation} />
             <Calendar />
           </div>
 
