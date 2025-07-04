@@ -1,0 +1,16 @@
+body {
+  overflow: hidden;
+}
+.p-datepicker-calendar td {
+  padding: 0.25rem !important;
+  min-width: 1.5rem;
+  height: 1.2rem;
+}
+
+.p-datepicker-calendar td span {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.calendar-class :deep(.p-calendar) {
+  border-radius: 16px !important;
+}
