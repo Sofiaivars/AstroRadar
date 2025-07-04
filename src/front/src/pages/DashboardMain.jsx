@@ -24,11 +24,6 @@ function DashboardMain() {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    localStorage.removeItem("jwt-token");
-    navigate("/");
-  };
-
   useEffect(() => {
     const getUserDataFromDatabase = async () => {
       const data = await getUserInfo();
@@ -64,12 +59,7 @@ function DashboardMain() {
   return (
     <>
       <Logotipo />
-      <button
-          className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2 mb-4"
-          onClick={handleClick}
-        >
-          Cerrar Sesión
-        </button>
+
       <div className="flex flex-row items-center justify-center gap-3">
         <SideBar />
 
@@ -85,7 +75,7 @@ function DashboardMain() {
               </div>
             </div>
 
-            <div className="flex flex-col w-full gap-3">
+            <div className="flex flex-col w-full gap-1">
               <div className="flex flex-row w-9/10 gap-1">
                 <MisionActual />
                 <MisionRealizada />

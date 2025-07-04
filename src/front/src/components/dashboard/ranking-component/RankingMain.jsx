@@ -24,7 +24,7 @@ function RankingMain(){
 
   return(
     // Este div hace que la scrollbar no sobresalga del marco
-    <div className='h-58 w-3/4 overflow-hidden'>
+    <div className='h-61 w-3/4 overflow-hidden'>
       <div className="flex flex-col gap-1 overflow-y-auto h-full p-1 rankingList">
         {datosOrdenadosPorLogro.map((user, index) => {
           return <RankingCard 
