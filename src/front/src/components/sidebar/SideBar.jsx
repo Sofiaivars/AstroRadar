@@ -11,16 +11,7 @@ const iconList = [
 function SideBar() {
   return (
     <div
-      className="flex flex-col justify-between items-center h-180 p-2 rounded-2xl"
-      style={{
-        backgroundImage:
-          "linear-gradient(var(--components-background), var(--components-background)), " +
-          "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)",
-        backgroundOrigin: "border-box",
-        backgroundClip: "padding-box, border-box",
-        border: "2px solid transparent",
-        backgroundColor: "var(--components-background)",
-      }}
+      className="flex flex-col justify-between items-center h-180 p-2 rounded-2xl borde-con-degradado"
     >
       <div className="flex flex-col h-full gap-4 items-start">
         {iconList.map((item, index) => (

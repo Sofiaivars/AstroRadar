@@ -1,8 +1,8 @@
 const EventoProgramado = () => {
 
     return (<>
-     <div className="p-[3px] rounded-xl bg-gradient-to-r from-[var(--astroradar-purple)] to-[#22d3ee] w-9/10 h-[190px]">
-      <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)]">
+     <div className="rounded-xl w-9/10 h-[190px]">
+      <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
         
         
         <div className="w-[30%] h-full">

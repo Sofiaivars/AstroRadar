@@ -91,7 +91,7 @@ function DashboardMain() {
                 <MisionRealizada />
               </div>
               <EventoProgramado />
-              <div className="flex flex-row w-9/10 gap-1 relative">
+              <div className="flex flex-row w-9/10 gap-1 relative rounded-2xl borde-con-degradado">
                 <RankingMain />
                 <CosmoDashboard />
               </div>
