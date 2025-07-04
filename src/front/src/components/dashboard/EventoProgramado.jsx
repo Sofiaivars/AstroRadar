@@ -78,7 +78,7 @@ const EventoProgramado = () => {
                   backgroundColor: "var(--components-background)",
                 }}
               >
-                <span>></span>
+                <span>&#62;</span>
               </div>
             </button>
         </div>

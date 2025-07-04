@@ -64,37 +64,41 @@ function DashboardMain() {
   return (
     <>
       <Logotipo />
-      <div className="pt-20 px-4">
-        <button
+      <button
           className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2 mb-4"
           onClick={handleClick}
         >
           Cerrar Sesión
         </button>
+      <div className="flex flex-row gap-3 border-2">
         <SideBar />
-        <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
-        <div className="flex gap-4 dashboard--main-container">
-          <div className="flex flex-col gap-3">
-            <EventoDestacado />
-            <Map userLocation={userLocation}/>
-            <div className="flex gap-3">
-              <Calendar />
-              <EventoSugerido />
-            </div>
-          </div>
 
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-3">
-              <MisionActual />
-              <MisionRealizada />
+        <div className="flex flex-col border-2 w-350 h-200 overflow-hidden dashboard--main-container">  {/*Aquí irá el Outlet */}
+          <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
+          <div className="flex flex-row gap-4 w-full">
+            <div className="flex flex-col w-1/2 gap-3">
+              <EventoDestacado />
+              <Map userLocation={userLocation}/>
+              <div className="flex flex-row w-full gap-3">
+                <Calendar />
+                <EventoSugerido />
+              </div>
             </div>
-            <EventoProgramado />
-            <div className="flex w-auto gap-3">
-              <RankingMain />
-              <CosmoDashboard />
+
+            <div className="flex flex-col w-1/2 gap-3">
+              <div className="flex flex-row gap-3">
+                <MisionActual />
+                <MisionRealizada />
+              </div>
+              <EventoProgramado />
+              <div className="flex flex-row w-auto gap-3">
+                <RankingMain />
+                <CosmoDashboard />
+              </div>
             </div>
           </div>
         </div>
+        
       </div>
     </>
   );

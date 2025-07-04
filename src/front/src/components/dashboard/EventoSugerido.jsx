@@ -2,7 +2,7 @@ const EventoSugerido = () => {
 
     return(<>
     
-    <div className="p-[3px] rounded-xl bg-gradient-to-r from-[var(--astroradar-purple)] to-[#22d3ee] w-[350px] h-[350px]">
+    <div className="p-[3px] rounded-xl bg-gradient-to-r from-[var(--astroradar-purple)] to-[#22d3ee] w-[350px] h-70">
       <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)]">
         
         
@@ -71,7 +71,7 @@ const EventoSugerido = () => {
                   backgroundColor: "var(--components-background)",
                 }}
               >
-                <span>></span>
+                <span>&#62;</span>
               </div>
             </button>
         </div>

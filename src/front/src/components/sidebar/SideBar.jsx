@@ -11,7 +11,7 @@ const iconList = [
 function SideBar() {
   return (
     <div
-      className="fixed left-7 flex flex-col justify-between items-center h-[750px] w-12 py-6 rounded-2xl"
+      className="flex flex-col justify-between items-center h-[750px] w-12 py-6 rounded-2xl"
       style={{
         backgroundImage:
           "linear-gradient(var(--components-background), var(--components-background)), " +
