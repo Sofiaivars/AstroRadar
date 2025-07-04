@@ -10,20 +10,20 @@ function InfoTopComponent({errorMsg, userLocation}){
   const [locateString, setLocateString] = useState(null)
 
   useEffect(() => {
-    const getWeatherDataFromAPI = async () => {
-      const weatherData = await getWeather("40.463971", "-3.715840")
-      setWeatherInfo(weatherData)
-    }
-    getWeatherDataFromAPI()
-  }, [])
-
-  useEffect(() => {
     const getLocateInfo = async () => {
       const reverseGeocodingData = await reverseGeocodingAPICall(userLocation.latitude, userLocation.longitude)
       setLocateString(`${reverseGeocodingData.address.suburb}, ${reverseGeocodingData.address.city}, ${reverseGeocodingData.address.country}`)
     }
     getLocateInfo()
     console.log(userLocation)
+
+    if(userLocation){
+      const getWeatherDataFromAPI = async () => {
+      const weatherData = await getWeather(userLocation.latitude, userLocation.longitude)
+      setWeatherInfo(weatherData)
+    }
+    getWeatherDataFromAPI()
+    }
   }, [userLocation])
 
   return(
