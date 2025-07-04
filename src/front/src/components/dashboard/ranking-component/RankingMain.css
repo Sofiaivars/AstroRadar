@@ -1,5 +1,5 @@
 .ranking-card {
-  background-color: #efd1f04d;
+  background-color: #85848528;
   color: var(--astroradar-white);
   clip-path: polygon(20px 0%, 100% 0%, 100% 100%, 20px 100%, 0% 50%);
   backdrop-filter: blur(2px); 
@@ -16,12 +16,10 @@
 }
 
 .rankingList::-webkit-scrollbar-track {
-  background: var(--components-background);
   border-radius: 10px;
 }
 
 .rankingList::-webkit-scrollbar-thumb {
-  background-color: var(--astroradar-purple);
+  background-color: #85848528;
   border-radius: 10px;
-  border: 1px solid var(--astroradar-purple);
 }
