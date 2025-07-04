@@ -31,7 +31,7 @@ function InfoTopComponent({errorMsg, userLocation}){
   }, [weatherInfo])
 
   return(
-    <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-7/10 info-component-container'>
+    <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-7/10 borde-con-degradado'>
       <div className='flex ms-5 gap-10'>
         {errorMsg ? "Sin permisos de ubicación" : locateString ? <div className='flex gap-1'><LocateFixed /><p>{locateString}</p></div> : <LoaderMini />}
         {weatherInfo
