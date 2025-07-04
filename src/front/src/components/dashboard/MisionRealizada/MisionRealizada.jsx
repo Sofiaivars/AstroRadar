@@ -14,9 +14,9 @@ const MisionRealizada = () => {
   };
 
   return (
-    <div className="rounded-[16px] p-[2px] bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500">
+    <div className="rounded-[16px] p-[2px] w-1/2 h-70 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500">
       <div
-        className="relative w-[400px] h-[330px] rounded-[16px] overflow-hidden shadow-lg text-white font-poppins"
+        className="relative w-full h-full rounded-[16px] overflow-hidden shadow-lg text-white font-poppins"
         style={{
           backgroundImage: `url(${fondoMisionRealizada})`,
           backgroundSize: "cover",

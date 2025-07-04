@@ -11,7 +11,7 @@ const iconList = [
 function SideBar() {
   return (
     <div
-      className="flex flex-col justify-between items-center h-[750px] w-12 py-6 rounded-2xl"
+      className="flex flex-col justify-between items-center h-180 p-2 rounded-2xl"
       style={{
         backgroundImage:
           "linear-gradient(var(--components-background), var(--components-background)), " +
@@ -22,7 +22,7 @@ function SideBar() {
         backgroundColor: "var(--components-background)",
       }}
     >
-      <div className="flex flex-col gap-4 items-start">
+      <div className="flex flex-col h-full gap-4 items-start">
         {iconList.map((item, index) => (
           <button
             key={index}

@@ -70,28 +70,28 @@ function DashboardMain() {
         >
           Cerrar Sesión
         </button>
-      <div className="flex flex-row gap-3 border-2">
+      <div className="flex flex-row items-center justify-center gap-3">
         <SideBar />
 
-        <div className="flex flex-col border-2 w-350 h-200 overflow-hidden dashboard--main-container">  {/*Aquí irá el Outlet */}
+        <div className="flex flex-col w-350 h-200 overflow-hidden dashboard--main-container">  {/*Aquí irá el Outlet */}
           <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
-          <div className="flex flex-row gap-4 w-full">
-            <div className="flex flex-col w-1/2 gap-3">
+          <div className="flex flex-row gap-3 w-full">
+            <div className="flex flex-col w-1/2 gap-1">
               <EventoDestacado />
               <Map userLocation={userLocation}/>
-              <div className="flex flex-row w-full gap-3">
+              <div className="flex flex-row w-full gap-1">
                 <Calendar />
                 <EventoSugerido />
               </div>
             </div>
 
-            <div className="flex flex-col w-1/2 gap-3">
-              <div className="flex flex-row gap-3">
+            <div className="flex flex-col w-full gap-3">
+              <div className="flex flex-row w-9/10 gap-1">
                 <MisionActual />
                 <MisionRealizada />
               </div>
               <EventoProgramado />
-              <div className="flex flex-row w-auto gap-3">
+              <div className="flex flex-row w-9/10 gap-1 relative">
                 <RankingMain />
                 <CosmoDashboard />
               </div>

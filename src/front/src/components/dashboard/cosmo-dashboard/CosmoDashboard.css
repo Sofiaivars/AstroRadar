@@ -1,5 +1,6 @@
-.cosmoMessage{
-  color: var(--astroradar-white);
+.cosmo-component{
+  left: 360px;
+  top: -13px;
 }
 
 .ai-alert{
@@ -8,6 +9,8 @@
 }
 
 .cosmoMessage{
-  background-color: var(--astroradar-dark);
+  background-color: #06031ac9;
+  color: var(--astroradar-white);
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  backdrop-filter: blur(3px);
 }
