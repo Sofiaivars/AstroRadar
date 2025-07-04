@@ -22,7 +22,6 @@ function SideBar() {
         backgroundColor: "var(--components-background)",
       }}
     >
-      {/* TOP */}
       <div className="flex flex-col gap-4 items-start">
         {iconList.map((item, index) => (
           <button
@@ -34,8 +33,6 @@ function SideBar() {
           </button>
         ))}
       </div>
-
-      {/* BOTTOM */}
       <div className="flex justify-center">
         <button
           className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300"
