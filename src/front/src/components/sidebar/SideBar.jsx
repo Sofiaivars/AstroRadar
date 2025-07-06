@@ -20,7 +20,7 @@ function SideBar() {
         <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300" title="Mapa">
             <MapPin size={20} />
         </button>
-        <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300" title="Misiones">
+        <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300" title="Misiones" onClick={() => navigate('/dashboard/missions')}>
             <Rocket size={20} />
         </button>
         <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300" title="Globe">
