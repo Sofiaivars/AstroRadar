@@ -1,5 +1,4 @@
 import { Outlet } from "react-router";
-import Logotipo from "../components/dashboard/logotipo/Logotipo.jsx";
 import SideBar from "../components/sidebar/SideBar.jsx";
 
 function DashboardMain() {
@@ -7,8 +6,6 @@ function DashboardMain() {
 
   return (
     <>
-      <Logotipo />
-
       <div className="flex flex-row items-center justify-center gap-3">
         <SideBar />
 
