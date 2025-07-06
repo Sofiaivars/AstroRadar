@@ -16,7 +16,7 @@ import EventoProgramado from "../components/dashboard/EventoProgramado.jsx";
 import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
 import { getUserLocation } from "../servicios/geolocation-service.js";
 import SideBar from "../components/sidebar/SideBar.jsx";
-import { askAi } from "../servicios/ai_service.js";
+import { getJSONCoords } from "../servicios/cosmo-service.js";
 
 function DashboardMain() {
   const [userData, getUserData] = useState({});
@@ -26,14 +26,9 @@ function DashboardMain() {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    localStorage.removeItem("jwt-token");
-    navigate("/");
-  };
-
 const fetchAI = async (lat, lon) => {
     try {
-      const data = await askAi(lat, lon)
+      const data = await getJSONCoords(lat, lon)
       setSpots(data.spots)
     } catch (error) {
       console.error("Error:", error)

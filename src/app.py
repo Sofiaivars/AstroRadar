@@ -161,7 +161,7 @@ def get_response_from_ai():
         return jsonify({"message": "Sin respuesta..."})
 
 
-@app.route('/askai', methods=['POST'])
+@app.route('/getjson', methods=['POST'])
 def get_coodenates_from_ai():
     data = request.get_json()
     lat = data.get("latitude")

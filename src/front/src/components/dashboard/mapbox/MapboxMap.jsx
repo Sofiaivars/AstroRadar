@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import MapGL, { Marker } from 'react-map-gl';
+import MapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MapboxMap = ({ locations, userPosition }) => {
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
-    zoom: 10
+    zoom: 10,
   });
+
+  const [selectedSpot, setSelectedSpot] = useState(null);
 
   useEffect(() => {
     if (Array.isArray(locations) && locations.length > 0) {
-      setViewState(prev => ({
+      setViewState((prev) => ({
         ...prev,
         latitude: locations[0].coordinates.latitude,
         longitude: locations[0].coordinates.longitude,
@@ -24,9 +26,7 @@ const MapboxMap = ({ locations, userPosition }) => {
   }
 
   return (
-
     <div className="w-full h-[300px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado">
-
       <MapGL
         {...viewState}
         mapboxAccessToken="pk.eyJ1IjoidG9uaW1pcjEwIiwiYSI6ImNtY201eDFrZTBmcW4ya3M1OWRmOGp0d24ifQ.ywjMvmDuJ2TsnrtQnrXVgw"
@@ -40,17 +40,35 @@ const MapboxMap = ({ locations, userPosition }) => {
             key={idx}
             longitude={loc.coordinates.longitude}
             latitude={loc.coordinates.latitude}
-            color="blue"
+            color="#22d3ee"
+            onClick={() => setSelectedSpot(loc)}
           />
         ))}
 
-        {/* 🔵 Tu ubicación */}
+        {/* 🔴 Tu ubicación */}
         {userPosition && (
           <Marker
             longitude={userPosition.longitude}
             latitude={userPosition.latitude}
-            color="red"
+            color="#8E4990"
           />
+        )}
+
+        {/* 🗨️ Popup de lugar */}
+        {selectedSpot && (
+          <Popup
+            longitude={selectedSpot.coordinates.longitude}
+            latitude={selectedSpot.coordinates.latitude}
+            anchor="top"
+            onClose={() => setSelectedSpot(null)}
+            closeOnClick={false}
+          >
+            <div className="text-sm text-gray-800">
+              <strong>{selectedSpot.name}</strong><br />
+              Lat: {selectedSpot.coordinates.latitude.toFixed(4)}<br />
+              Lon: {selectedSpot.coordinates.longitude.toFixed(4)}
+            </div>
+          </Popup>
         )}
       </MapGL>
     </div>

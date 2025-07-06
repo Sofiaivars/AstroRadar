@@ -1,8 +1,23 @@
+const mainURL = "http://localhost:3001"
+
 const cosmoTipCall = async () => {
-  const response = await fetch(`https://glowing-train-74xxpggwgrghw67j-3001.app.github.dev/cosmotip`);
+  const response = await fetch(`${mainURL}/cosmotip`);
 
   const data = await response.json();
   return data;
 }
 
-export { cosmoTipCall }
+const getJSONCoords = async (latitude, longitude) => {
+  const response = await fetch(`${mainURL}/getjson`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ latitude, longitude })
+  });
+
+  const data = await response.json();
+  return data;
+}
+
+export { cosmoTipCall, getJSONCoords }
