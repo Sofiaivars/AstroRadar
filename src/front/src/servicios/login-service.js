@@ -1,5 +1,5 @@
 // Cuando se ejecute en local, cambiar mainURL a http://localhost:3001
-const mainURL = "http://localhost:3001"
+const mainURL = "https://urban-zebra-74xxpggwq9ghrp4j-3001.app.github.dev"
 
 
 const login = async (username, password) => {
