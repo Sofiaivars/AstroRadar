@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './InfoTopComponent.css'
 import { getWeather } from '../../../servicios/weather-service.js'
 import WeatherComponent from './WeatherComponent.jsx'
-import LoaderMini from '../../loaders/loaderMini.jsx'
+import LoaderMini from '../../loaders/LoaderMini.jsx'
 import { reverseGeocodingAPICall } from '../../../servicios/geolocation-service.js'
 import { LocateFixed } from 'lucide-react'
 

@@ -16,13 +16,42 @@ import EventoProgramado from "../components/dashboard/EventoProgramado.jsx";
 import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
 import { getUserLocation } from "../servicios/geolocation-service.js";
 import SideBar from "../components/sidebar/SideBar.jsx";
+import { askAi } from "../servicios/ai_service.js";
 
 function DashboardMain() {
   const [userData, getUserData] = useState({});
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [spots, setSpots] = useState(null)
 
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    localStorage.removeItem("jwt-token");
+    navigate("/");
+  };
+
+const fetchAI = async (lat, lon) => {
+    try {
+      const data = await askAi(lat, lon)
+      setSpots(data.spots)
+    } catch (error) {
+      console.error("Error:", error)
+    }
+  }
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords
+        fetchAI(latitude, longitude)
+      },
+      (err) => {
+        alert("Ubicación no permitida.")
+        console.error(err)
+      }
+    )
+  }, [])
 
   useEffect(() => {
     const getUserDataFromDatabase = async () => {
@@ -63,12 +92,12 @@ function DashboardMain() {
       <div className="flex flex-row items-center justify-center gap-3">
         <SideBar />
 
-        <div className="flex flex-col w-350 h-200 overflow-hidden dashboard--main-container">  {/*Aquí irá el Outlet */}
+        <div className="flex flex-col w-350 h-200 overflow-hidden dashboard--main-container">
           <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
           <div className="flex flex-row gap-3 w-full">
             <div className="flex flex-col w-1/2 gap-1">
               <EventoDestacado />
-              <Map userLocation={userLocation}/>
+              <Map locations={spots} userPosition={userLocation}/>
               <div className="flex flex-row w-full gap-1">
                 <Calendar />
                 <EventoSugerido />

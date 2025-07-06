@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './CosmoDashboard.css'
 import cosmo from './assets/cosmo-dashboard.png'
 import { cosmoTipCall } from '../../../servicios/cosmo-service'
-import LoaderMini from '../../loaders/loaderMini'
+import LoaderMini from '../../loaders/LoaderMini.jsx'
 
 function CosmoDashboard(){
   const [cosmoTip, setCosmoTip] = useState(null)
