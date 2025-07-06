@@ -26,9 +26,6 @@ function DashboardMain() {
 
   const navigate = useNavigate();
 
-
-
-
   const handleClick = () => {
     localStorage.removeItem("jwt-token");
     navigate("/");
@@ -55,7 +52,6 @@ const fetchAI = async (lat, lon) => {
       }
     )
   }, [])
-
 
   useEffect(() => {
     const getUserDataFromDatabase = async () => {
@@ -92,37 +88,36 @@ const fetchAI = async (lat, lon) => {
   return (
     <>
       <Logotipo />
-      <div className="pt-20 px-4">
-        <button
-          className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2 mb-4"
-          onClick={handleClick}
-        >
-          Cerrar Sesión
-        </button>
-        <SideBar />
-        <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
-        <div className="flex gap-4 dashboard--main-container">
-          <div className="flex flex-col gap-3">
-            <EventoDestacado />
-            <Map locations={spots} userPosition={userLocation}/>
-            <div className="flex gap-3">
-              <Calendar />
-              <EventoSugerido />
-            </div>
-          </div>
 
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-3">
-              <MisionActual />
-              <MisionRealizada />
+      <div className="flex flex-row items-center justify-center gap-3">
+        <SideBar />
+
+        <div className="flex flex-col w-350 h-200 overflow-hidden dashboard--main-container">
+          <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
+          <div className="flex flex-row gap-3 w-full">
+            <div className="flex flex-col w-1/2 gap-1">
+              <EventoDestacado />
+              <Map locations={spots} userPosition={userLocation}/>
+              <div className="flex flex-row w-full gap-1">
+                <Calendar />
+                <EventoSugerido />
+              </div>
             </div>
-            <EventoProgramado />
-            <div className="flex w-auto gap-3">
-              <RankingMain />
-              <CosmoDashboard />
+
+            <div className="flex flex-col w-full gap-1">
+              <div className="flex flex-row w-9/10 gap-1">
+                <MisionActual />
+                <MisionRealizada />
+              </div>
+              <EventoProgramado />
+              <div className="flex flex-row w-9/10 gap-1 relative rounded-2xl borde-con-degradado">
+                <RankingMain />
+                <CosmoDashboard />
+              </div>
             </div>
           </div>
         </div>
+        
       </div>
     </>
   );

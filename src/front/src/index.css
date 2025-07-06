@@ -11,3 +11,11 @@ body{
   background-image: url("../public/astroradar-fondo.png");
   background-size: cover;
 }
+
+.borde-con-degradado{
+  background-image:linear-gradient(var(--components-background), var(--components-background)),
+                  linear-gradient(to right, #a955f756, #d846ef5d, #22d3ee9c);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid transparent;
+}

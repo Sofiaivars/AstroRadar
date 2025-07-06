@@ -4,18 +4,11 @@ import { getWeather } from '../../../servicios/weather-service.js'
 import WeatherComponent from './WeatherComponent.jsx'
 import LoaderMini from '../../loaders/LoaderMini.jsx'
 import { reverseGeocodingAPICall } from '../../../servicios/geolocation-service.js'
+import { LocateFixed } from 'lucide-react'
 
 function InfoTopComponent({errorMsg, userLocation}){
   const [weatherInfo, setWeatherInfo] = useState(null)
   const [locateString, setLocateString] = useState(null)
-
-  useEffect(() => {
-    const getWeatherDataFromAPI = async () => {
-      const weatherData = await getWeather("40.463971", "-3.715840")
-      setWeatherInfo(weatherData)
-    }
-    getWeatherDataFromAPI()
-  }, [])
 
   useEffect(() => {
     const getLocateInfo = async () => {
@@ -23,13 +16,24 @@ function InfoTopComponent({errorMsg, userLocation}){
       setLocateString(`${reverseGeocodingData.address.suburb}, ${reverseGeocodingData.address.city}, ${reverseGeocodingData.address.country}`)
     }
     getLocateInfo()
-    console.log(userLocation)
+
+    if(userLocation){   // PENDIENTE AÑADIR PROBABILIDAD DE LLUVIA
+      const getWeatherDataFromAPI = async () => {
+      const weatherData = await getWeather(userLocation.latitude, userLocation.longitude)
+      setWeatherInfo(weatherData)
+    }
+    getWeatherDataFromAPI()
+    }
   }, [userLocation])
 
+  useEffect(() => {
+    console.log(weatherInfo)
+  }, [weatherInfo])
+
   return(
-    <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-7/9 info-component-container'>
+    <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-7/10 borde-con-degradado'>
       <div className='flex ms-5 gap-10'>
-        {errorMsg ? "Sin permisos de ubicación" : locateString ? <p>📍 {locateString}</p>: <LoaderMini />}
+        {errorMsg ? "Sin permisos de ubicación" : locateString ? <div className='flex gap-1'><LocateFixed /><p>{locateString}</p></div> : <LoaderMini />}
         {weatherInfo
         ? <WeatherComponent weatherInfo={weatherInfo}/>
         : <LoaderMini />}

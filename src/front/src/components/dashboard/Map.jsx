@@ -2,7 +2,7 @@ import MapboxMap from "./mapbox/MapboxMap"
 
 const Map = ({locations, userPosition}) => {
     return (<>
-    <div className="relative p-[3px] rounded-xl bg-gradient-to-r from-[var(--astroradar-purple)] to-[#22d3ee] w-[700px] h-[400px] overflow-hidden">
+    <div className="relative rounded-xl overflow-hidden">
   <MapboxMap locations={locations} userPosition={userPosition}/>
 
   <button
@@ -68,6 +68,7 @@ const Map = ({locations, userPosition}) => {
 
     
     </>)
+
 }
 
 export default Map

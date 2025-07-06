@@ -24,7 +24,9 @@ const MapboxMap = ({ locations, userPosition }) => {
   }
 
   return (
-    <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-lg border border-white/10">
+
+    <div className="w-full h-[300px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado">
+
       <MapGL
         {...viewState}
         mapboxAccessToken="pk.eyJ1IjoidG9uaW1pcjEwIiwiYSI6ImNtY201eDFrZTBmcW4ya3M1OWRmOGp0d24ifQ.ywjMvmDuJ2TsnrtQnrXVgw"

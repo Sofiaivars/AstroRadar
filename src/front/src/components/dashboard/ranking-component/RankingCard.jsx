@@ -1,7 +1,7 @@
 function RankingCard({position, name, lastName, location, city, achievements, image}){
 
   return(
-    <div className="flex items-center rounded-3xl min-w-90 p-2 gap-3 ranking-card">
+    <div className="flex items-center rounded-3xl w-full p-1 gap-3 ranking-card">
       <div className="rounded-full border-gray-50 border-3 aspect-square overflow-hidden ms-3 ranking-card-avatar">
         <img src={image} width="50" alt="Avatar"/>
       </div>

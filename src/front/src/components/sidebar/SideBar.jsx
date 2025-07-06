@@ -1,5 +1,5 @@
-import React from "react";
-import { Home, Globe, MapPin, Rocket, Settings } from "lucide-react";
+import { useNavigate } from "react-router";
+import { Home, Globe, MapPin, Rocket, Settings, PowerOff  } from "lucide-react";
 
 const iconList = [
   { icon: <Home size={20} />, name: "Home" },
@@ -9,20 +9,18 @@ const iconList = [
 ];
 
 function SideBar() {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    localStorage.removeItem("jwt-token");
+    navigate("/");
+  };
+  
   return (
     <div
-      className="fixed left-7 flex flex-col justify-between items-center h-[750px] w-12 py-6 rounded-2xl"
-      style={{
-        backgroundImage:
-          "linear-gradient(var(--components-background), var(--components-background)), " +
-          "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)",
-        backgroundOrigin: "border-box",
-        backgroundClip: "padding-box, border-box",
-        border: "2px solid transparent",
-        backgroundColor: "var(--components-background)",
-      }}
+      className="flex flex-col justify-between items-center h-180 p-2 rounded-2xl borde-con-degradado"
     >
-      <div className="flex flex-col gap-4 items-start">
+      <div className="flex flex-col h-full gap-4 items-start">
         {iconList.map((item, index) => (
           <button
             key={index}
@@ -33,7 +31,14 @@ function SideBar() {
           </button>
         ))}
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-col justify-center">
+        <button
+          className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300"
+          title="Settings"
+          onClick={handleClick}
+        >
+          <PowerOff size={20} />
+        </button>
         <button
           className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300"
           title="Settings"
