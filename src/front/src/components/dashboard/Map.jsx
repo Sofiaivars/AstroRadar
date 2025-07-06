@@ -1,9 +1,9 @@
 import MapboxMap from "./mapbox/MapboxMap"
 
-const Map = ({userLocation}) => {
+const Map = ({locations, userPosition}) => {
     return (<>
     <div className="relative p-[3px] rounded-xl bg-gradient-to-r from-[var(--astroradar-purple)] to-[#22d3ee] w-[700px] h-[400px] overflow-hidden">
-  <MapboxMap userLocation={userLocation}/>
+  <MapboxMap locations={locations} userPosition={userPosition}/>
 
   <button
               
@@ -60,7 +60,7 @@ const Map = ({userLocation}) => {
   <div className="bg-white/1 backdrop-blur-xs rounded-md p-4  min-h-[100px] text-[var(--astroradar-white)] text-center">
     <h3 className="text-base font-semibold mb-1">Bases Estelares</h3>
     <p className="text-sm mt-5">
-      12 Bases Estelares desbloqueadas
+      3 Bases estelares cerca
     </p>
   </div>
 </div>

@@ -16,18 +16,46 @@ import EventoProgramado from "../components/dashboard/EventoProgramado.jsx";
 import InfoTopComponent from "../components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
 import { getUserLocation } from "../servicios/geolocation-service.js";
 import SideBar from "../components/sidebar/SideBar.jsx";
+import { askAi } from "../servicios/ai_service.js";
 
 function DashboardMain() {
   const [userData, getUserData] = useState({});
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [spots, setSpots] = useState(null)
 
   const navigate = useNavigate();
+
+
+
 
   const handleClick = () => {
     localStorage.removeItem("jwt-token");
     navigate("/");
   };
+
+const fetchAI = async (lat, lon) => {
+    try {
+      const data = await askAi(lat, lon)
+      setSpots(data.spots)
+    } catch (error) {
+      console.error("Error:", error)
+    }
+  }
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords
+        fetchAI(latitude, longitude)
+      },
+      (err) => {
+        alert("Ubicación no permitida.")
+        console.error(err)
+      }
+    )
+  }, [])
+
 
   useEffect(() => {
     const getUserDataFromDatabase = async () => {
@@ -76,7 +104,7 @@ function DashboardMain() {
         <div className="flex gap-4 dashboard--main-container">
           <div className="flex flex-col gap-3">
             <EventoDestacado />
-            <Map userLocation={userLocation}/>
+            <Map locations={spots} userPosition={userLocation}/>
             <div className="flex gap-3">
               <Calendar />
               <EventoSugerido />

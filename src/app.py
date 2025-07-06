@@ -13,6 +13,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
 from ai_service.cosmo_functions import cosmo_tip
+from ai_service.coodenadas_ai import ask_ai
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -158,7 +159,43 @@ def get_response_from_ai():
         return jsonify(response), 200
     else:
         return jsonify({"message": "Sin respuesta..."})
-    
+
+
+@app.route('/askai', methods=['POST'])
+def get_coodenates_from_ai():
+    data = request.get_json()
+    lat = data.get("latitude")
+    lon = data.get("longitude")
+
+    if lat is None or lon is None:
+        return jsonify({"error": "Faltan coordenadas"}), 400
+
+    prompt = f"""
+Dame 3 lugares para observar eventos astronómicos cerca de esta ubicación: latitud {lat}, longitud {lon}.
+Devuelve solo un JSON con el siguiente formato:
+
+{{
+  "spots": [
+    {{
+      "name": "Nombre del lugar",
+      "location": "Ciudad o País",
+      "coordinates": {{
+        "latitude": ...,
+        "longitude": ...
+      }}
+    }}
+  ]
+}}
+
+No agregues texto fuera del JSON.
+"""
+
+    response = ask_ai(prompt)
+    try:
+        return jsonify(eval(response))  # Usa eval solo si confías en la estructura
+    except Exception as e:
+        return jsonify({"error": "Error al procesar la respuesta de la IA", "raw": response}), 500
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
