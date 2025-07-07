@@ -13,7 +13,7 @@ function InfoTopComponent({errorMsg, userLocation}){
   useEffect(() => {
     const getLocateInfo = async () => {
       const reverseGeocodingData = await reverseGeocodingAPICall(userLocation.latitude, userLocation.longitude)
-      setLocateString(`${reverseGeocodingData.address.suburb}, ${reverseGeocodingData.address.city}, ${reverseGeocodingData.address.country}`)
+      setLocateString(`${reverseGeocodingData.address.quarter}, ${reverseGeocodingData.address.city}, ${reverseGeocodingData.address.country}`)
     }
     getLocateInfo()
 
