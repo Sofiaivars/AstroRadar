@@ -64,7 +64,6 @@ class Event(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     event: Mapped[str] = mapped_column(String(100), nullable=False)
     category: Mapped[str] = mapped_column(String(100), nullable=False)
-    state: Mapped[str] = mapped_column(String(100), nullable=False)
     start_date: Mapped[date] = mapped_column(Date, nullable=False)
     end_date: Mapped[date] = mapped_column(Date, nullable=False)
     moon: Mapped[str] = mapped_column(String(100), nullable=False)
@@ -78,7 +77,6 @@ class Event(db.Model):
             "id": self.id,
             "event": self.event,
             "category": self.category,
-            "state": self.state,
             "start_date": self.start_date,
             "end_date": self.end_date,
             "moon": self.moon,
@@ -93,7 +91,29 @@ class UserMission(db.Model):
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
     base_id: Mapped[int] = mapped_column(ForeignKey("base.id", ondelete="CASCADE"))
     event_id: Mapped[int] = mapped_column(ForeignKey("event.id", ondelete="CASCADE"))
+    state: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     
     missions_user: Mapped["User"] = relationship("User", back_populates="user_missions")
     missions_base: Mapped["Base"] = relationship("Base", back_populates="base_missions")
     missions_event: Mapped["Event"] = relationship("Event", back_populates="event_missions")
+    
+    def serialize(self):
+        return{
+            "id": self.id,
+            "user_id": self.user_id,
+            "base": {
+                "id": self.base_id,
+                "base_name": self.missions_base.base if self.missions_base else None    
+            },
+            "event": {
+                "id": self.event_id,
+                "name": self.missions_event.event if self.missions_event else None,
+                "category": self.missions_event.category if self.missions_event else None,
+                "start_date": self.missions_event.start_date if self.missions_event else None,
+                "end_date": self.missions_event.end_date if self.missions_event else None,
+                "moon": self.missions_event.moon if self.missions_event else None,
+                "visibility": self.missions_event.visibility if self.missions_event else None,
+                "image": self.missions_event.image if self.missions_event else None,
+            },
+            "state": self.state
+        }
