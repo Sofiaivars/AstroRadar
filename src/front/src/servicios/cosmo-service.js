@@ -1,4 +1,4 @@
-const mainURL = "http://localhost:3001"
+const mainURL = "https://cuddly-succotash-74xxpggx9rxcrv44-3001.app.github.dev"
 
 const cosmoTipCall = async () => {
   const response = await fetch(`${mainURL}/cosmotip`);
