@@ -147,14 +147,14 @@ function Step1Page() {
         )}
       </div>
 
-      <div className="bg-gray-900 rounded-xl p-4 mt-2 w-[30%] ml-auto relative mr-10 -top-65 z-40">
-        <h4 className="text-purple-300 font-bold mb-2">✨ Cosmotip</h4>
+      <div className="bg-gray-900 rounded-xl p-4 mt-2 w-[30%] ml-auto relative mr-10 -top-50 z-40">
+        <h4 className="text-purple-300 font-bold mb-4">✨ Cosmotip</h4>
         <p>Para una lluvia de meteoros, elegí un lugar alejado de luces</p>
       </div>
       <img
         src={cosmoTip1}
         alt="Cosmotip"
-        className="w-[20%] ml-auto -mt-80 z-50 relative -mr-4"
+        className="w-[20%] ml-auto -mt-60 z-50 relative -mr-4"
       />
     </div>
   );

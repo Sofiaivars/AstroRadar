@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import StepsComponent from "../components/missionsSteps/StepsComponent";
 import Logotipo from "../components/dashboard/logotipo/Logotipo";
 import { Outlet } from "react-router";
 
 function MissionsPage() {
+  const location = useLocation();
+  const [activeStep, setActiveStep] = useState(0);
+
+  // Mapear ruta actual a índice del step
+  const routeToStepIndex = {
+    "/dashboard/missions/step1": 0,
+    "/dashboard/missions/step2": 1,
+    "/dashboard/missions/step3": 2,
+  };
+
+  useEffect(() => {
+    const step = routeToStepIndex[location.pathname] ?? 0;
+    setActiveStep(step);
+  }, [location.pathname]);
+
   return (
     <>
       <Logotipo />
@@ -21,11 +37,10 @@ function MissionsPage() {
               <span className="text-white">"Lluvia de Perseidas"</span>
             </h2>
             <div className="flex-grow max-w-[700px] ml-8">
-              <StepsComponent />
+              <StepsComponent activeIndex={activeStep} />
             </div>
           </div>
 
-          {/* Aquí se inyectará el contenido de Step1, Step2 o Step3 */}
           <Outlet />
         </div>
       </div>

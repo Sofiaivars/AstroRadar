@@ -3,6 +3,13 @@ import { useNavigate } from "react-router";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
 
 const Step2Page = () => {
+  const navigate = useNavigate();
+
+  const _startMission = () => {
+    // Podés agregar aquí lógica adicional si querés
+    navigate("/dashboard/missions/step3");
+  };
+
   return (
     <div className="text-white mt-4">
       <h3 className="text-lg font-bold">🚀 Iniciar recorrido</h3>
@@ -19,24 +26,25 @@ const Step2Page = () => {
 
       <div className="mt-6 text-center">
         <button
+          onClick={_startMission}
           className="
-    btn-sug
-    group
-    rounded-[12px]
-    p-[1.5px]
-    text-white
-    text-sm
-    h-10
-    w-auto
-    font-medium
-    transition
-    duration-300
-    flex
-    items-center
-    justify-center
-    hover:shadow-2xl
-    hover:shadow-purple-600/30
-  "
+            btn-sug
+            group
+            rounded-[12px]
+            p-[1.5px]
+            text-white
+            text-sm
+            h-10
+            w-auto
+            font-medium
+            transition
+            duration-300
+            flex
+            items-center
+            justify-center
+            hover:shadow-2xl
+            hover:shadow-purple-600/30
+          "
           style={{
             backgroundImage:
               "linear-gradient(var(--components-background), var(--components-background)), " +
@@ -48,21 +56,21 @@ const Step2Page = () => {
         >
           <div
             className="
-      rounded-[12px]
-      w-full
-      h-full
-      flex
-      items-center
-      justify-center
-      transition
-      duration-300
-      ease-in-out
-      group-hover:bg-gradient-to-br
-      group-hover:from-gray-700
-      group-hover:to-gray-900
-      px-6
-      py-3
-    "
+              rounded-[12px]
+              w-full
+              h-full
+              flex
+              items-center
+              justify-center
+              transition
+              duration-300
+              ease-in-out
+              group-hover:bg-gradient-to-br
+              group-hover:from-gray-700
+              group-hover:to-gray-900
+              px-6
+              py-3
+            "
             style={{
               backgroundColor: "var(--components-background)",
             }}
