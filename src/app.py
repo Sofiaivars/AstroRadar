@@ -85,7 +85,7 @@ def serve_any_other_file(path):
     return response
 
 #Crear Token
-@app.route('/token', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def create_token():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
