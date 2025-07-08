@@ -1,12 +1,12 @@
+/* Ya no usamos PrimeReact, así que esto se puede eliminar */
 .custom-steps-galaxy {
   padding-bottom: 1rem;
   position: relative;
   overflow: visible;
 }
-
-.custom-steps-galaxy .p-steps-item {
-  margin-right: 3rem;
-}
-.custom-steps-galaxy .p-steps-item:last-child {
-  margin-right: 0;
+/* Evita que líneas se solapen si no hay suficiente espacio */
+@media (max-width: 640px) {
+  .step-line {
+    display: none;
+  }
 }
