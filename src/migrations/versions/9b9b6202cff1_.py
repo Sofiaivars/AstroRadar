@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 97d737211d2d
+Revision ID: 9b9b6202cff1
 Revises: 
-Create Date: 2025-07-08 13:18:46.026441
+Create Date: 2025-07-08 15:39:41.197166
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '97d737211d2d'
+revision = '9b9b6202cff1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('event', sa.String(length=100), nullable=False),
     sa.Column('category', sa.String(length=100), nullable=False),
-    sa.Column('state', sa.String(length=100), nullable=False),
     sa.Column('start_date', sa.Date(), nullable=False),
     sa.Column('end_date', sa.Date(), nullable=False),
     sa.Column('moon', sa.String(length=100), nullable=False),
@@ -60,6 +59,7 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('base_id', sa.Integer(), nullable=False),
     sa.Column('event_id', sa.Integer(), nullable=False),
+    sa.Column('state', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['base_id'], ['base.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['event_id'], ['event.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ondelete='CASCADE'),
