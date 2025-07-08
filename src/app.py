@@ -131,7 +131,7 @@ def signup():
     country = data.get("country")
     password = data.get("password")
     image = data.get("image")
-    rol = "admin"
+    rol = "user"
     if not username or not password:
         return jsonify({ "msg": "Faltan campos obligatorios." }), 400
     existing_user = User.query.filter_by(username=username).first()
