@@ -20,8 +20,8 @@ class User(db.Model):
     rol: Mapped[str] = mapped_column(String(20), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     
-    user_base: Mapped["Base"] = relationship("Base", back_populates="base_user", cascade="all, delete-orphan")
-    user_mission: Mapped["UserMission"] = relationship("UserMission", back_populates="mission_user")
+    user_bases: Mapped[list["Base"]] = relationship("Base", back_populates="bases_user", cascade="all, delete-orphan")
+    user_missions: Mapped[list["UserMission"]] = relationship("UserMission", back_populates="missions_user")
 
     def serialize(self):
         return {
@@ -46,10 +46,10 @@ class Base(db.Model):
     latitude: Mapped[str] = mapped_column(String(50), nullable=False)
     longitude: Mapped[str] = mapped_column(String(50), nullable=False)
     
-    base_user: Mapped["User"] = relationship("User", back_populates="user_base")
-    base_mission: Mapped["UserMission"] = relationship("UserMission", back_populates="mission_base")
+    bases_user: Mapped["User"] = relationship("User", back_populates="user_bases")
+    base_missions: Mapped[list["UserMission"]] = relationship("UserMission", back_populates="missions_base")
     
-    def serialice(self):
+    def serialize(self):
         return{
             "id": self.id,
             "user_id": self.user_id,
@@ -71,7 +71,7 @@ class Event(db.Model):
     visibility: Mapped[str] = mapped_column(String(100), nullable=False)
     image: Mapped[str] = mapped_column(Text, nullable=False)
     
-    event_mission: Mapped["Event"] = relationship("UserMission", back_populates="mission_event")
+    event_missions: Mapped[list["UserMission"]] = relationship("UserMission", back_populates="missions_event")
     
     def serialize(self):
         return{
@@ -94,6 +94,6 @@ class UserMission(db.Model):
     base_id: Mapped[int] = mapped_column(ForeignKey("base.id", ondelete="CASCADE"))
     event_id: Mapped[int] = mapped_column(ForeignKey("event.id", ondelete="CASCADE"))
     
-    mission_user: Mapped["User"] = relationship("User", back_populates="user_mission")
-    mission_base: Mapped["Base"] = relationship("Base", back_populates="base_mission")
-    mission_event: Mapped["Event"] = relationship("Event", back_populates="event_mission")
+    missions_user: Mapped["User"] = relationship("User", back_populates="user_missions")
+    missions_base: Mapped["Base"] = relationship("Base", back_populates="base_missions")
+    missions_event: Mapped["Event"] = relationship("Event", back_populates="event_missions")
