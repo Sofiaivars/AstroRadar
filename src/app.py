@@ -130,6 +130,8 @@ def signup():
     city = data.get("city")
     country = data.get("country")
     password = data.get("password")
+    image = data.get("image")
+    rol = "admin"
     if not username or not password:
         return jsonify({ "msg": "Faltan campos obligatorios." }), 400
     existing_user = User.query.filter_by(username=username).first()
@@ -138,7 +140,7 @@ def signup():
     
     hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
     
-    new_user = User(username=username, password=hashed_password, name=name, lastname=lastname, email=email, city=city, country=country, is_active=True)
+    new_user = User(username=username, password=hashed_password, name=name, lastname=lastname, email=email, city=city, country=country, image=image, rol=rol, is_active=False,)
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"usename": username, "email": email}), 200

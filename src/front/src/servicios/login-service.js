@@ -24,11 +24,11 @@ const login = async (username, password) => {
 }
 
 // SignUp
-const signUp = async (username, password, name, lastname, email, city, country) => {
+const signUp = async (username, password, name, lastname, email, city, country, image) => {
   const response = await fetch(`${mainURL}/signup`, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password, name, lastname, email, city, country })
+    body: JSON.stringify({ username, password, name, lastname, email, city, country, image })
   });
 
   if (!response.ok) {

@@ -5,12 +5,12 @@ import { signUp } from "../servicios/login-service.js"
 function SignUpPage(){
   const navigate = useNavigate()
 
-  const handleClick = async (username, password, email, name, lastname, city, country) => {
+  const handleClick = async (username, password, email, name, lastname, city, country, image) => {
     try{
-      if(username || password || email || name || lastname || city || country){
+      if(username || password || email || name || lastname || city || country || image){
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(emailRegex.test(email)){
-          await signUp(username, password, name, lastname, email, city, country)
+          await signUp(username, password, name, lastname, email, city, country, image)
           return navigate('/')
         }else{
           alert("Formato de email incorrecto")
