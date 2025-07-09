@@ -20,8 +20,20 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
       </div>
       <div className="flex flex-col w-1/5 gap-3">
         <p>{eventName}</p>
-        <p>{eventStart}</p>
-        <p>{eventEnd}</p>
+        <p>
+          {new Date(eventStart).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          })}
+        </p>
+        <p>
+          {new Date(eventEnd).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          })}
+        </p>
       </div>
       <div className="flex flex-col gap-3 w-2/5 me-3">
         <p>{eventVisibility}</p>
