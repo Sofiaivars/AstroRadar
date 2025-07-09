@@ -34,11 +34,7 @@ const router = createBrowserRouter([
               { path: "step3", Component: Step3Page },
             ],
           },
-          { 
-            path: 'events', 
-            Component: EventsPage,
-            
-          },
+          { path: 'events', Component: EventsPage },
         ],
       },
       { path: "/about-us", Component: AboutUs },

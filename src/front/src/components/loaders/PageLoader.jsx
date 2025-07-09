@@ -8,7 +8,7 @@ function PageLoader(){
       <div id="planetTrail2"></div>
       <div id="planetTrail3"></div>
 
-      <div class="planets">
+      <div className="planets">
         <div id="planet"></div>
         <div id="star"></div>
 
