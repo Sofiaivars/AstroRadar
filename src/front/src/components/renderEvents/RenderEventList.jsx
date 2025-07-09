@@ -19,7 +19,7 @@ function RenderEventList({eventList, renderCategory}){
   }, [renderCategory, eventList])
 
   return(
-    <div className="rounded-2xl overflow-hidden">
+    <div className="rounded-2xl w-full h-full overflow-hidden">
       <div className="flex flex-col gap-3 w-full h-full rounded-2xl overflow-y-auto p-3 render-events-list borde-con-degradado">
         {eventList && renderList
           ? (renderList.map((astroEvent) => {
