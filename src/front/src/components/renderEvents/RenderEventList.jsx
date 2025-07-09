@@ -8,12 +8,15 @@ function RenderEventList({eventList, renderCategory}){
 
   useEffect(() => {
     const setList = () => {
-      if(renderCategory !== "all"){
-        const filteredList = eventList.filter((event) => event.category === renderCategory)
-        return setRenderList(filteredList)
-      }
+      if(eventList){
+        const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+        if(renderCategory !== "all"){
+          const filteredList = sortedList.filter((event) => event.category === renderCategory)
+          return setRenderList(filteredList)
+        }
 
-      return setRenderList(eventList)
+        return setRenderList(sortedList)
+      }
     }
     setList()
   }, [renderCategory, eventList])
