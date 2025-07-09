@@ -6,7 +6,6 @@ const Step2Page = () => {
   const navigate = useNavigate();
 
   const _startMission = () => {
-    // Podés agregar aquí lógica adicional si querés
     navigate("/dashboard/missions/step3");
   };
 
