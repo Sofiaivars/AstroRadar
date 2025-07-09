@@ -59,7 +59,7 @@ const MapboxMap = ({ locations, userPosition }) => {
   };
 
   return (
-    <div className="w-full h-[300px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado bg-[#0e0e0e]">
+    <div className="w-full h-[320px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado bg-[#0e0e0e]">
       {isLoading ? (
         <div className="flex items-center justify-center h-full text-white text-sm opacity-60">
           <LoaderMini />

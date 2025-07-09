@@ -10,6 +10,7 @@ import DashboardComponents from "./src/components/dashboard/DashboardComponents.
 import Step1Page from "./src/pages/Step1Page.jsx";
 import Step2Page from "./src/pages/Step2Page.jsx";
 import Step3Page from "./src/pages/Step3Page.jsx";
+import EventsPage from "./src/pages/EventsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
               { path: "step2", Component: Step2Page },
               { path: "step3", Component: Step3Page },
             ],
+          },
+          { 
+            path: 'events', 
+            Component: EventsPage,
+            
           },
         ],
       },

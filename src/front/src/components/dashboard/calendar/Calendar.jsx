@@ -7,7 +7,7 @@ export default function InlineDemo() {
   const [date, setDate] = useState(null);
 
   return (
-    <div className="shadow-lg w-1/2 h-70 rounded-2xl overflow-hidden borde-con-degradado">
+    <div className="shadow-lg w-1/2 h-71 rounded-2xl overflow-hidden borde-con-degradado">
       <Calendar
         className="calendar-class w-full h-full"
         value={date}

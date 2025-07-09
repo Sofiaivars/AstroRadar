@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router"
+
 const EventoSugerido = () => {
+  const navigate = useNavigate()
 
   return (
     <>
-      <div className="p-[3px] rounded-xl w-[350px] h-70">
+      <div className="rounded-xl w-[350px] h-71">
         <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
   
           <div className="w-[50%] h-full">
@@ -46,6 +49,7 @@ const EventoSugerido = () => {
                 backgroundClip: "padding-box, border-box",
                 border: "2px solid transparent",  
               }}
+              onClick={() => navigate('/dashboard/events')}
             >
               <div
                 className="
