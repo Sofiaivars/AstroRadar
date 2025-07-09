@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router"
+import { List } from "lucide-react";
 
 const EventoSugerido = () => {
   const navigate = useNavigate()
@@ -69,7 +70,7 @@ const EventoSugerido = () => {
                   backgroundColor: "var(--components-background)",
                 }}
               >
-                <span>&#62;</span>
+                <span><List size={17}/></span>
               </div>
             </button>
           </div>
