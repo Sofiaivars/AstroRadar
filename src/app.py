@@ -16,6 +16,7 @@ from api.commands import setup_commands
 from flask_cors import CORS
 from ai_service.cosmo_functions import cosmo_tip
 from ai_service.coodenadas_ai import ask_ai
+from datetime import datetime
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -226,15 +227,28 @@ def get_missions_by_id(user_id):
 @app.route('/saveevents', methods=['POST'])
 def save_events_to_db():
     data = request.get_json()
-    event = data.get("event")
-    start_date = data.get("fecha_inicio")
-    end_date = data.get("fecha_fin")
+    
+    if not data:
+        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+    
+    event = data.get("evento")
+    start_date = datetime.strptime(data.get("fecha_inicio"), "%Y-%m-%d").date()
+    end_date = datetime.strptime(data.get("fecha_fin"), "%Y-%m-%d").date()
     category = data.get("tipo")
     visibility = data.get("visibilidad")
     moon = data.get("fase_lunar")
-    image = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-    if not data:
-        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+    
+    if category == "lluvia de meteoros":
+        image = "https://images.theconversation.com/files/564819/original/file-20231211-25-v7fc5g.jpg?ixlib=rb-4.1.0&rect=207%2C145%2C4684%2C2729&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip"
+    elif category == "eclipse lunar":
+        image = "https://static.nationalgeographic.es/files/styles/image_3200/public/4931.600x450.jpg?w=1900&h=1425"
+    elif category == "eclipse solar":
+        image = "https://content.nationalgeographic.com.es/medio/2025/06/25/eclipse-solar-marzo_0195214f_250625113231_800x800.webp"
+    elif category == "evento planetario":
+        image = "https://phantom-marca-mx.unidadeditorial.es/cae3f4d74008c3912e5cd8c85787a18e/resize/828/f/jpg/mx/assets/multimedia/imagenes/2025/01/21/17374997597311.jpg"
+    else:
+        image = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+    
     new_event = Event(event=event, category=category, start_date=start_date, end_date=end_date, moon=moon, visibility=visibility, image=image)
     db.session.add(new_event)
     db.session.commit()
