@@ -31,8 +31,16 @@ function RenderEventList({eventList, renderCategory}){
                   eventImg={astroEvent.image}
                   eventName={astroEvent.event}
                   eventCategory={astroEvent.category}
-                  eventStart={astroEvent.start_date}
-                  eventEnd={astroEvent.end_date}
+                  eventStart={new Date(astroEvent.start_date).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                  eventEnd={new Date(astroEvent.end_date).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
                   eventVisibility={astroEvent.visibility}
                   eventMoon={astroEvent.moon}
                 />
