@@ -1,4 +1,6 @@
-const mainURL = 'http://localhost:3001'
+// CREAR .env en la carpeta front. front/.env
+// CREAR variable VITE_SERVICES_URL y el valor es vuestro backend
+const mainURL = import.meta.env.VITE_SERVICES_URL;
 
 const getEventsFromAPI = async () => {
   const response = await fetch(`${mainURL}/events`, {
