@@ -229,10 +229,16 @@ def save_events_to_db():
     event = data.get("event")
     start_date = data.get("fecha_inicio")
     end_date = data.get("fecha_fin")
-    type = data.get("tipo")
+    category = data.get("tipo")
     visibility = data.get("visibilidad")
     moon = data.get("fase_lunar")
-    
+    image = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+    if not data:
+        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+    new_event = Event(event=event, category=category, start_date=start_date, end_date=end_date, moon=moon, visibility=visibility, image=image)
+    db.session.add(new_event)
+    db.session.commit()
+    return jsonify({"event": event}), 200
     
 
 # this only runs if `$ python src/main.py` is executed
