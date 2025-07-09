@@ -1,5 +1,5 @@
 // Cuando se ejecute en local, cambiar mainURL a http://localhost:3001
-const mainURL = "https://cuddly-succotash-74xxpggx9rxcrv44-3001.app.github.dev"
+const mainURL = "https://crispy-robot-gwpp7gg6g55h9rv7-3001.app.github.dev"
 
 const login = async (username, password) => {
   const response = await fetch(`${mainURL}/login`, {

@@ -1,11 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { updateMissionData } from "../servicios/mission-service.js";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
-
+import { getUserLocation } from "../servicios/geolocation-service";
+import { getJSONCoords } from "../servicios/cosmo-service.js";
+import Map from "../components/dashboard/Map.jsx"
 function Step1Page() {
   const [location, setLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+  const [spots, setSpots] = useState(null)
   const navigate = useNavigate();
+
+  const fetchAI = async (lat, lon) => {
+    try {
+      const data = await getJSONCoords(lat, lon)
+      setSpots(data.spots)
+    } catch (error) {
+      console.error("Error:", error)
+    }
+  }
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords
+        fetchAI(latitude, longitude)
+      },
+      (err) => {
+        alert("Ubicación no permitida.")
+        console.error(err)
+      }
+    )
+  }, [])
+
+
+  useEffect(() => {
+    const getUserDataFromDatabase = async () => {
+      const data = await getUserInfo();
+      return getUserData(data);
+    };
+
+    getUserDataFromDatabase();
+
+    getUserLocation(
+      (coords) => {
+        setUserLocation(coords);
+        setErrorMsg(null);
+      },
+      (mensajeError) => {
+        setErrorMsg(mensajeError);
+      }
+    );
+  }, []);
 
   const _handleSelectLocation = () => {
     setLocation({
@@ -28,7 +74,7 @@ function Step1Page() {
       </h3>
       {/* //Arroba is ur time! */}
       <div className="bg-gray-800 rounded-xl p-4 h-[300px] w-[80%]">
-        <p>[ Aca metemos el maravilloso Mapbox de arroba ]</p>
+        <Map locations={spots} userPosition={userLocation}/>
         <button
           onClick={_handleSelectLocation}
           className="
