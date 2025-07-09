@@ -5,9 +5,11 @@ import os, hashlib
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
-from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required #👽
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from api.utils import APIException, generate_sitemap
-from api.models import db, User
+from api.models import db, User, Event, UserMission
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -173,30 +175,65 @@ def get_coodenates_from_ai():
         return jsonify({"error": "Faltan coordenadas"}), 400
 
     prompt = f"""
-Dame 3 lugares para observar eventos astronómicos cerca de esta ubicación: latitud {lat}, longitud {lon}.
-Devuelve solo un JSON con el siguiente formato:
+            Dame 3 lugares para observar eventos astronómicos cerca de esta ubicación: latitud {lat}, longitud {lon}.
+            Devuelve solo un JSON con el siguiente formato:
 
-{{
-  "spots": [
-    {{
-      "name": "Nombre del lugar",
-      "location": "Ciudad o País",
-      "coordinates": {{
-        "latitude": ...,
-        "longitude": ...
-      }}
-    }}
-  ]
-}}
+            {{
+            "spots": [
+                {{
+                "name": "Nombre del lugar",
+                "location": "Ciudad o País",
+                "coordinates": {{
+                    "latitude": ...,
+                    "longitude": ...
+                }}
+                }}
+            ]
+            }}
 
-No agregues texto fuera del JSON.
-"""
+            No agregues texto fuera del JSON."""
 
     response = ask_ai(prompt)
     try:
         return jsonify(eval(response))  # Usa eval solo si confías en la estructura
     except Exception as e:
         return jsonify({"error": "Error al procesar la respuesta de la IA", "raw": response}), 500
+    
+# EVENTS 
+@app.route('/events/', methods=['GET'])
+def get_events():
+    events = Event.query.all()
+    if not events:
+        return jsonify({"msg": "No se han encontrado eventos."}), 404
+    return jsonify([event.serialize() for event in events]), 200
+
+# MISSIONS BY USER WIP!!!
+@app.route('/usermissions/<int:user_id>', methods=['GET'])
+def get_missions_by_id(user_id):
+    statement = (
+        select(UserMission)
+        .options(
+            selectinload(UserMission.missions_base),
+            selectinload(UserMission.missions_event)
+        ).where(UserMission.user_id == user_id)
+    )
+    missions = db.session.execute(statement).scalars().all()
+    if not missions:
+        return jsonify({"msg": "El usuario no tiene misiones guardadas."}), 404
+    return jsonify([mission.serialize() for mission in missions]), 200
+
+# ENDPOINT TEMPORAL PARA GUARDAR EVENTOS
+@app.route('/saveevents', methods=['POST'])
+def save_events_to_db():
+    data = request.get_json()
+    event = data.get("event")
+    start_date = data.get("fecha_inicio")
+    end_date = data.get("fecha_fin")
+    type = data.get("tipo")
+    visibility = data.get("visibilidad")
+    moon = data.get("fase_lunar")
+    
+    
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
