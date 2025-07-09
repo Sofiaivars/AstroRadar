@@ -156,7 +156,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                     onClick={handleAddNewSpot}
                     className="mt-1 px-2 py-1 bg-emerald-500 text-white rounded text-sm hover:bg-emerald-600"
                   >
-                    Añadir punto
+                    Añadir ubicación
                   </button>
                 </div>
               </Popup>
