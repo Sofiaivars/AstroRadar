@@ -9,7 +9,7 @@ from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, Event, UserMission
+from api.models import db, User, Event, UserMission, Base
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -254,6 +254,43 @@ def save_events_to_db():
     db.session.commit()
     return jsonify({"event": event}), 200
     
+
+@app.route('/base', methods=['POST'])
+@jwt_required()
+def create_base():
+    user_id = get_jwt_identity()  # ID del usuario desde el token JWT
+
+    data = request.get_json()
+
+    # Validaciones básicas
+    base_name = data.get("base")
+    latitude = data.get("latitude")
+    longitude = data.get("longitude")
+
+    if not base_name or not latitude or not longitude:
+        return jsonify({"msg": "Faltan datos obligatorios"}), 400
+
+    # Crear nueva base
+    new_base = Base(
+        user_id=user_id,
+        base=base_name,
+        latitude=latitude,
+        longitude=longitude
+    )
+
+    try:
+        db.session.add(new_base)
+        db.session.commit()
+        return jsonify({
+            "msg": "Base creada correctamente",
+            "base": new_base.serialize()
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "Error al guardar la base", "error": str(e)}), 500
+
+
+
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

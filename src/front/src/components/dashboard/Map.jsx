@@ -25,54 +25,6 @@ const Map = ({ locations, userPosition, onSelectBase }) => {
       />
 
       {/* Botón de explorar */}
-      <button
-        className="
-          absolute bottom-8 right-6
-          group
-          rounded-[12px]
-          p-[1.5px]
-          text-white
-          text-sm
-          h-10
-          w-40
-          font-medium
-          transition
-          duration-300
-          flex
-          items-center
-          justify-center
-          hover:shadow-2xl
-          hover:shadow-purple-600/30
-        "
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--components-background), var(--components-background)), " +
-            "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)",
-          backgroundOrigin: "border-box",
-          backgroundClip: "padding-box, border-box",
-          border: "2px solid transparent",
-        }}
-      >
-        <div
-          className="
-            rounded-[12px]
-            w-full
-            h-full
-            flex
-            items-center
-            justify-center
-            transition
-            duration-300
-            ease-in-out
-            group-hover:bg-gradient-to-br
-            group-hover:from-gray-700
-            group-hover:to-gray-900
-          "
-          style={{ backgroundColor: 'var(--components-background)' }}
-        >
-          Explorar
-        </div>
-      </button>
 
       {/* Mensaje inferior con la base seleccionada */}
       <div className="absolute bottom-8 left-6 p-[2px] rounded-md border-2 border-gray-500 max-w-[280px]">

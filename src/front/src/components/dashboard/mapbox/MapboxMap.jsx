@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import LoaderMini from '../../loaders/LoaderMini.jsx';
+import useGlobalReducer from '../../../hooks/useGlobalReducer.jsx';
 
 const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
+  const { dispatch } = useGlobalReducer();
+
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
@@ -58,18 +61,46 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
     setSelectedSpot(null);
   };
 
-  const handleSelectBase = (spot) => {
-    if (onSelectBase) {
-      onSelectBase({
-        name: spot.name,
-        latitude: spot.coordinates.latitude,
-        longitude: spot.coordinates.longitude,
-      });
-    }
+  const handleSelectBase = async (spot) => {
+    const token = localStorage.getItem("jwt-token");
+    if (!token) return alert("No hay token");
 
-    setShowSavedMessage(true);
-    setTimeout(() => setShowSavedMessage(false), 2000);
-    setSelectedSpot(null);
+    const payload = {
+      name: spot.name,
+      latitude: spot.coordinates.latitude,
+      longitude: spot.coordinates.longitude,
+    };
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SERVICES_URL}/base`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          base: payload.name,
+          latitude: payload.latitude,
+          longitude: payload.longitude,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_SELECTED_BASE", payload });
+        if (onSelectBase) onSelectBase(payload);
+        setShowSavedMessage(true);
+        setTimeout(() => setShowSavedMessage(false), 2000);
+        setSelectedSpot(null);
+      } else {
+        console.error("Error al guardar la base:", data);
+        alert(data.msg || "Error al guardar la base");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      alert("Error al conectar con el servidor");
+    }
   };
 
   return (
@@ -88,7 +119,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
             mapStyle="mapbox://styles/mapbox/dark-v11"
             style={{ width: '100%', height: '100%' }}
           >
-            {/* Puntos generados por IA */}
             {locations.map((loc, idx) => (
               <Marker
                 key={`ia-${idx}`}
@@ -103,7 +133,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
               />
             ))}
 
-            {/* Punto creado por el usuario */}
             {userLocations.map((loc, idx) => (
               <Marker
                 key={`user-${idx}`}
@@ -118,7 +147,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
               />
             ))}
 
-            {/* Tu ubicación */}
             {userPosition && (
               <Marker
                 longitude={userPosition.longitude}
@@ -127,7 +155,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
               />
             )}
 
-            {/* Popup para crear nuevo punto */}
             {newSpot && (
               <Popup
                 longitude={newSpot.longitude}
@@ -162,7 +189,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
               </Popup>
             )}
 
-            {/* Popup de punto seleccionado */}
             {selectedSpot && (
               <Popup
                 longitude={selectedSpot.coordinates.longitude}
@@ -198,7 +224,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
             )}
           </MapGL>
 
-          {/* Mensaje de guardado */}
           {showSavedMessage && (
             <div className="absolute top-2 right-2 bg-green-600 text-white text-xs px-3 py-1 rounded shadow">
               Base estelar guardada ✅
