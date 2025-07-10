@@ -62,7 +62,6 @@ const getUserInfo = async () => {
   }
 
   const data = await response.json();
-  console.log(`Datos solicitados: ${data}`);
   return data;
 }
 

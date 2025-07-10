@@ -16,14 +16,9 @@ function EventsPage(){
   }, [])
 
   useEffect(() => {
-    console.log(eventList)
     const dataToCategories = getCategories(eventList)
     setCategories(dataToCategories)
   }, [eventList])
-
-  useEffect(() => {
-    console.log(renderCategory)
-  }, [renderCategory])
 
   return(
     <div className="flex flex-col w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
