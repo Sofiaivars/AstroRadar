@@ -1,0 +1,13 @@
+/*SCROLLBAR*/
+.render-events-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.render-events-list::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.render-events-list::-webkit-scrollbar-thumb {
+  background-color: #36b9da8f;
+  border-radius: 10px;
+}

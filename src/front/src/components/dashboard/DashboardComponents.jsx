@@ -10,7 +10,6 @@ import EventoProgramado from "./EventoProgramado.jsx";
 import InfoTopComponent from "./InfoTopComponent/InfoTopComponent.jsx";
 import PageLoader from "../loaders/PageLoader.jsx";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { getJSONCoords } from "../../servicios/cosmo-service.js";
 import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
@@ -20,8 +19,6 @@ function DashboardComponents(){
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [spots, setSpots] = useState(null)
-
-  const navigate = useNavigate();
 
   const fetchAI = async (lat, lon) => {
     try {
@@ -79,7 +76,7 @@ function DashboardComponents(){
   return(
     <>
       <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
-      <div className="flex flex-row gap-3 w-full">
+      <div className="flex flex-row gap-3 w-full h-full">
         <div className="flex flex-col w-1/2 gap-1">
           <EventoDestacado />
           <Map locations={spots} userPosition={userLocation}/>
@@ -89,13 +86,13 @@ function DashboardComponents(){
           </div>
         </div>
 
-        <div className="flex flex-col w-full gap-1">
-          <div className="flex flex-row w-9/10 gap-1">
+        <div className="flex flex-col w-1/2 gap-1">
+          <div className="flex flex-row w-full gap-1">
             <MisionActual />
             <MisionRealizada />
           </div>
           <EventoProgramado />
-          <div className="flex flex-row w-9/10 gap-1 relative rounded-2xl borde-con-degradado">
+          <div className="flex flex-row items-center w-full h-full gap-1 relative rounded-2xl borde-con-degradado">
             <RankingMain />
             <CosmoDashboard />
           </div>
