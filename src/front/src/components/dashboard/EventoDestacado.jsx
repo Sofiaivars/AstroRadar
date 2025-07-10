@@ -1,35 +1,79 @@
-const EventoDestacado = () => {
+import { useEffect, useState } from 'react'
+import useGlobalReducer from '../../hooks/useGlobalReducer.jsx'
+import LoaderMini from '../loaders/LoaderMini.jsx'
+import { Telescope, Moon } from 'lucide-react'
+import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
 
+const EventoDestacado = () => {
+  const [eventList, setEventList] = useState(null)
+  const [firstEvent, setFirstEvent] = useState(null)
+  const { store } = useGlobalReducer()
+
+  const handleClick = () => {
+    const data = {
+      event: firstEvent.event,
+      category: firstEvent.category,
+      startDate: firstEvent.start_date,
+      endDate: firstEvent.end_date,
+      image: firstEvent.image,
+      moon: firstEvent.moon,
+      visibility: firstEvent.visibility
+    }
+    return console.log(data)
+  }
+
+  useEffect(() => {
+    setEventList(store.eventList)
+  }, [])
+
+  useEffect(() => {
+    if(eventList){
+      const now = new Date()
+      const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+      const upEvents = sortedList.filter((e) => new Date(e.start_date) >= now)
+      setFirstEvent(upEvents[0])
+    }
+  }, [eventList])
 
   return (<>
-    <div className="p-[3px] rounded-xl w-full h-[140px]">
+    <div className="rounded-xl w-full h-[140px]">
       <div className="flex w-full h-full bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
-        
         
         <div className="w-[30%] h-full">
           <img
-            src="https://cloudfront-us-east-1.images.arcpublishing.com/infobae/D3OR62KRQC5GAB32WYNEVGWHCM.jpg" 
+            src={firstEvent ? firstEvent.image : "https://linda-hoang.com/wp-content/uploads/2014/10/img-placeholder-dark.jpg"} 
             alt="Lluvia de meteoros"
             className="w-full h-full object-cover"
           />
         </div>
 
         {/* Contenido central */}
-        <div className="flex flex-col justify-start px-4 py-3 w-[50%]">
-          <h3 className="text-lg font-semibold mb-1">Lluvia de meteoros</h3>
-          <p className="text-xs mb-1 mt-3">
-            No te pierdas la última lluvia de perseidas este viernes!
+        <div className="flex flex-col justify-start gap-2 px-4 py-3 w-[50%]">
+          <h3 className="text-lg font-semibold">{firstEvent ? firstEvent.event : <LoaderMini/>}</h3>
+          <p className="text-xs mt-2">
+            Categoría: {firstEvent ? firstEvent.category : "Cargando..."}
           </p>
-          <p className="text-xs mt-3">
-            Visión: Cielo despejado. No necesitas ir lejos.
-          </p>
+          <div className='flex flex-row gap-4 items-center mt-2'>
+            <div className='flex flex-row gap-1 items-center'>
+              <Telescope size={25}/>
+              <p className="text-xs mt-3">
+                {firstEvent ? firstEvent.visibility : "Cargando..."}
+              </p>
+            </div>
+            <div className='flex flex-row gap-1 items-center'>
+              <Moon size={25}/>
+              <p className="text-xs mt-3">
+                Luna {firstEvent ? firstEvent.moon : "Cargando..."}
+              </p>
+            </div>
+          </div>
         </div>
 
         
         <div className="flex flex-col justify-between items-end pr-4 py-3 w-[20%]">
-          <p className="text-sm font-bold text-[var(--astroradar-white)] whitespace-nowrap">
-            en 48hs 37min
-          </p>
+          <div className='flex text-sm items-center'>
+            {firstEvent ? <CountdownComponent eventStart={firstEvent.start_date}/> : "Cargando..."}
+          </div>
           <button className="
             group
             rounded-[12px]
@@ -54,6 +98,7 @@ const EventoDestacado = () => {
               backgroundClip: "padding-box, border-box",
               border: "2px solid transparent",
             }}
+            onClick={handleClick}
           >
             <div className="
               rounded-[12px]
