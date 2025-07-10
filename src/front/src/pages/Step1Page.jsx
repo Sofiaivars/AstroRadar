@@ -22,6 +22,7 @@ function Step1Page() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         fetchAI(coords.latitude, coords.longitude);
+
       },
       (err) => {
         alert("Ubicación no permitida.");
@@ -38,7 +39,6 @@ function Step1Page() {
       console.error("Error al obtener puntos IA:", error);
     }
   };
-
   // Obtener ubicación del dispositivo para el marcador morado
   useEffect(() => {
     getUserLocation(
@@ -46,7 +46,7 @@ function Step1Page() {
       (mensajeError) => setErrorMsg(mensajeError)
     );
   }, []);
-
+  
   // Botón “Seleccionar ubicación”
   const _handleSelectLocation = () => {
     if (!store.selectedBase) {
@@ -54,7 +54,7 @@ function Step1Page() {
       return;
     }
 
-    setLocation({
+    setLocation({    
       name: store.selectedBase.name,
       lat: store.selectedBase.latitude,
       lng: store.selectedBase.longitude,
@@ -78,11 +78,12 @@ function Step1Page() {
   };
 
   return (
-    <div className="flex flex-col gap-4 text-white overflow-y-auto max-h-[480px] pr-4">
+    <>    
+     <div className="flex flex-col gap-4 text-white pr-4">
       <h3 className="text-lg font-bold">🌍 Seleccioná la ubicación del evento</h3>
 
       {/* Mapa con puntos */}
-      <div className="bg-gray-800 rounded-xl p-4 h-[300px] w-[80%]">
+      <div className="bg-gray-800 rounded-xl p-4 w-full h-[500px] relative">
         <Map
           locations={spots}
           userPosition={userPosition}
@@ -146,22 +147,21 @@ function Step1Page() {
                 Confirmar base estelar
               </div>
             </button>
-          </>
+          </div>
         )}
       </div>
+      {/* COSMOTIP--falta implementar ia */}
+      <div className="fixed bottom-60 right-20 z-50 bg-gray-900 rounded-xl p-4 shadow-lg max-w-[400px]">
 
-      {/* Cosmotip */}
-      <div className="bg-gray-900 rounded-xl p-4 mt-2 w-[30%] ml-auto relative mr-10 -top-50 z-40">
         <h4 className="text-purple-300 font-bold mb-4">✨ Cosmotip</h4>
         <p>Para una lluvia de meteoros, elegí un lugar alejado de luces</p>
       </div>
       <img
         src={cosmoTip1}
         alt="Cosmotip"
-        className="w-[20%] ml-auto -mt-60 z-50 relative -mr-4"
+        className="fixed bottom-10 right-10 w-[12%] rounded-md z-50"
       />
-    </div>
+    </>
   );
 }
-
 export default Step1Page;

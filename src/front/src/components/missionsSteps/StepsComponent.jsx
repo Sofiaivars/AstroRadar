@@ -14,8 +14,9 @@ const mensajes = [
 ];
 function StepsComponent({ activeIndex = 0 }) {
   return (
-    <div className="w-full flex flex-col items-center gap-6">
-      <div className="relative flex justify-between w-full max-w-xl items-center px-4">
+    <div className="w-full flex flex-row items-end gap-2">
+      {/* CONTENEDOR DE LOS STEPS */}
+      <div className="relative flex justify-between w-full max-w-xl items-center pl-22 gap-6">
         {items.map((item, index) => {
           const isActive = index === activeIndex;
           const isCompleted = index < activeIndex;
@@ -26,7 +27,6 @@ function StepsComponent({ activeIndex = 0 }) {
               key={index}
               className="relative flex-1 flex flex-col items-center z-10"
             >
-              {/* aca el problemiki de la animacion de la linea q empieza */}
               <div
                 className="relative w-full flex items-center"
                 style={{ height: 44 }}
@@ -56,13 +56,14 @@ function StepsComponent({ activeIndex = 0 }) {
                 >
                   {isCompleted ? "✓" : index + 1}
                 </div>
-                {/* aca manejo el progeso*/}
+
+                {/* Animación de línea de progreso */}
                 {!isFinalStep && isCompleted && (
                   <motion.div
                     className="absolute top-1/2 h-[4px] bg-gradient-to-r from-cyan-600 to-violet-600 rounded-md z-10"
                     style={{
                       left: "44px",
-                      width: "calc(100% - 44px)",
+                      width: "calc(100% + 22px)",
                       transform: "translateY(-50%)",
                       transformOrigin: "left",
                     }}
@@ -75,6 +76,7 @@ function StepsComponent({ activeIndex = 0 }) {
                   />
                 )}
 
+                {/* Glow del paso activo */}
                 {isActive && (
                   <motion.div
                     className="absolute w-24 h-24 rounded-full bg-purple-500 blur-[45px] z-0"
@@ -90,16 +92,19 @@ function StepsComponent({ activeIndex = 0 }) {
                   />
                 )}
               </div>
+
+              {/* Etiqueta del paso */}
               <span
-                className={`text-sm font-medium mt-4 transition-transform duration-300 ease-in-out text-center
-    ${isActive || isCompleted ? "text-white" : "text-gray-200"}`}
+                className={`text-sm font-medium mt-4 transition-transform duration-300 ease-in-out 
+                  ${isActive || isCompleted ? "text-white" : "text-gray-200"}`}
                 style={{
-                  transform: `${
+                  position: "absolute",
+                  top: "calc(100% + 4px)", // separa del círculo
+                  left: "16%",
+                  transform: `translateX(-50%) ${
                     isActive ? "scale(1.15)" : "scale(1)"
-                  } translateX(-65px)`,
-                  minWidth: "100px",
+                  }`,
                   whiteSpace: "nowrap",
-                  display: "inline-block",
                 }}
               >
                 {item.label}
@@ -109,13 +114,19 @@ function StepsComponent({ activeIndex = 0 }) {
         })}
       </div>
 
-      {/* MENSAJE ACTUAL */}
+      {/* MENSAJE ACTUAL A LA DERECHA */}
       <motion.div
         key={activeIndex}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mr-[90px] text-purple-300 text-lg font-semibold"
+        className="text-left text-purple-300 text-lg font-semibold"
+        style={{
+          whiteSpace: "nowrap",
+          minWidth: "300px", // sigue dando espacio fijo
+          textAlign: "left",
+          marginRight: "24px", // para que el texto respire
+        }}
       >
         {mensajes[activeIndex]}
       </motion.div>

@@ -9,6 +9,7 @@ const Step2Page = () => {
   const [missionStarted, setMissionStarted] = useState(false);
 
   const _startMission = () => {
+
     if (!store.selectedBase) {
       alert("No hay base seleccionada.");
       return;
