@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import StepsComponent from "../components/missionsSteps/StepsComponent";
-import Logotipo from "../components/dashboard/logotipo/Logotipo";
 import { Outlet } from "react-router";
 
 function MissionsPage() {
@@ -20,14 +19,10 @@ function MissionsPage() {
 
   return (
     <>
-      <Logotipo />
-      <div
-        className="flex min-h-[700px] min-w-[1280px] justify-center items-center relative"
-        style={{ height: "700px" }}
-      >
+      <div className="flex w-full h-full justify-center items-center relative rounded-2xl borde-con-degradado">
         <div
-          className="flex flex-col flex-1 px-6 rounded-2xl p-8 space-y-8 borde-con-degradado relative overlay"
-          style={{ width: "1100px", height: "700px" }}
+          className="flex flex-col flex-1 rounded-2xl w-full p-5 space-y-8 relative overlay"
+          style={{ height: "700px" }}
         >
           <div className="flex w-full justify-between items-start mt-6 ml-6">
             <h2 className="text-xl font-bold text-purple-300 whitespace-nowrap">
