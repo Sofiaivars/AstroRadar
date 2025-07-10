@@ -1,4 +1,4 @@
-import { Droplet, MoonStar, Sunrise, ThermometerSnowflake, ThermometerSun, DropletOff, Cloudy, Wind } from "lucide-react";
+import { Droplet, MoonStar, Sunrise, ThermometerSnowflake, ThermometerSun, DropletOff, Cloudy, Wind, Umbrella, UmbrellaOff } from "lucide-react";
 
 function WeatherComponent({weatherInfo}){
 
@@ -22,6 +22,10 @@ function WeatherComponent({weatherInfo}){
       <div className="flex gap-1">
         <Wind/>
         <p>{`${weatherInfo.current.wind_speed_10m}km/h`}</p>
+      </div>
+      <div className="flex gap-1">
+        {weatherInfo.current.rain > 0 ? <Umbrella /> : <UmbrellaOff />}
+        <p>{`${weatherInfo.current.rain}mm`}</p>
       </div>
     </>
   )
