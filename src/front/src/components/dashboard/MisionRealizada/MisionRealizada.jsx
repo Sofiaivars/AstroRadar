@@ -1,7 +1,10 @@
 import React from "react";
 import fondoMisionRealizada from "./Assets/ultima-mision.jpg";
+import { useNavigate } from "react-router";
 
 const MisionRealizada = () => {
+  const navigate = useNavigate();
+
   const missionName = "Luna llena";
   const missionStatus = "Ultima mision realizada";
   //   const location = "46269 Tous, Valencia";
@@ -9,10 +12,10 @@ const MisionRealizada = () => {
     { name: "🎖️Nueva base estelar", description: "46269 Tous, Valencia" },
     { name: "🎖️Cazador de perseidas", description: "9 misiones completadas" },
   ];
-  const handleClick = () => {
-    console.log("Botón clickeado");
-  };
 
+  const handleClick = () => {
+    navigate("/dashboard/completed-missions");
+  };
   return (
     <div className="rounded-[16px] w-1/2 h-70 borde-con-degradado">
       <div
