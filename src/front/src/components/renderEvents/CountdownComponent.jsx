@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import NumberFlow from "@number-flow/react"
 
 function CountdownComponent({ eventStart }){
   const [timer, setTimer] = useState({days: 0, hours: 0, minutes: 0, seconds: 0})
@@ -37,10 +38,22 @@ function CountdownComponent({ eventStart }){
       {timer
       ? (
         <>
-          <p>{timer.days} D</p>
-          <p>{timer.hours} H</p>
-          <p>{timer.minutes} M</p>
-          <p>{timer.seconds} S</p>
+          <div className="flex flex-row items-center gap-1">
+            <NumberFlow value={timer.days} format={{ minimumIntegerDigits: 3 }}/> 
+            <p>D</p>
+          </div>
+          <div className="flex flex-row items-center gap-1">
+            <NumberFlow value={timer.hours} format={{ minimumIntegerDigits: 2 }}/> 
+            <p>H</p>
+          </div>
+          <div className="flex flex-row items-center gap-1">
+            <NumberFlow value={timer.minutes} format={{ minimumIntegerDigits: 2 }}/> 
+            <p>M</p>
+          </div>
+          <div className="flex flex-row items-center gap-1">
+            <NumberFlow value={timer.seconds} format={{ minimumIntegerDigits: 2 }}/> 
+            <p>S</p>
+          </div>
         </>
         )
       : <p>Cerrado!</p>}
