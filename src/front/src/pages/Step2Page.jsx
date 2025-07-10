@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const Step2Page = () => {
   const navigate = useNavigate();
+  const { store } = useGlobalReducer(); // accedemos al store global
+  const [missionStarted, setMissionStarted] = useState(false);
 
   const _startMission = () => {
+
+    if (!store.selectedBase) {
+      alert("No hay base seleccionada.");
+      return;
+    }
+
+    const { latitude, longitude } = store.selectedBase;
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+
+    window.open(googleMapsUrl, "_blank"); // abre en nueva pestaña
+
+    setMissionStarted(true);
+  };
+
+  const _arrivedAtBase = () => {
     navigate("/dashboard/missions/step3");
   };
 
@@ -23,60 +41,48 @@ const Step2Page = () => {
         </ul>
       </div>
 
-      <div className="mt-6 text-center">
-        <button
-          onClick={_startMission}
-          className="
-            btn-sug
-            group
-            rounded-[12px]
-            p-[1.5px]
-            text-white
-            text-sm
-            h-10
-            w-auto
-            font-medium
-            transition
-            duration-300
-            flex
-            items-center
-            justify-center
-            hover:shadow-2xl
-            hover:shadow-purple-600/30
-          "
-          style={{
-            backgroundImage:
-              "linear-gradient(var(--components-background), var(--components-background)), " +
-              "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)",
-            backgroundOrigin: "border-box",
-            backgroundClip: "padding-box, border-box",
-            border: "2px solid transparent",
-          }}
-        >
-          <div
-            className="
-              rounded-[12px]
-              w-full
-              h-full
-              flex
-              items-center
-              justify-center
-              transition
-              duration-300
-              ease-in-out
-              group-hover:bg-gradient-to-br
-              group-hover:from-gray-700
-              group-hover:to-gray-900
-              px-6
-              py-3
-            "
+      <div className="mt-6 text-center space-y-3">
+        {!missionStarted ? (
+          <button
+            onClick={_startMission}
+            className="btn-sug group rounded-[12px] p-[1.5px] text-white text-sm h-10 w-auto font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
             style={{
-              backgroundColor: "var(--components-background)",
+              backgroundImage:
+                "linear-gradient(var(--components-background), var(--components-background)), " +
+                "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+              border: "2px solid transparent",
             }}
           >
-            Iniciar recorrido
-          </div>
-        </button>
+            <div
+              className="rounded-[12px] w-full h-full flex items-center justify-center transition duration-300 ease-in-out group-hover:bg-gradient-to-br group-hover:from-gray-700 group-hover:to-gray-900 px-6 py-3"
+              style={{ backgroundColor: "var(--components-background)" }}
+            >
+              Iniciar recorrido
+            </div>
+          </button>
+        ) : (
+          <button
+            onClick={_arrivedAtBase}
+            className="btn-sug group rounded-[12px] p-[1.5px] text-white text-sm h-10 w-auto font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
+            style={{
+              backgroundImage:
+                "linear-gradient(var(--components-background), var(--components-background)), " +
+                "linear-gradient(to right, #22d3ee, #d946ef, #a855f7)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+              border: "2px solid transparent",
+            }}
+          >
+            <div
+              className="rounded-[12px] w-full h-full flex items-center justify-center transition duration-300 ease-in-out group-hover:bg-gradient-to-br group-hover:from-gray-700 group-hover:to-gray-900 px-6 py-3"
+              style={{ backgroundColor: "var(--components-background)" }}
+            >
+              He llegado a mi base
+            </div>
+          </button>
+        )}
       </div>
 
       <div className="bg-gray-900 rounded-xl p-4 mt-2 w-[30%] ml-auto relative mr-10 -top-30 z-40">

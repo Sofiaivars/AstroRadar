@@ -1,7 +1,7 @@
 const EventoDestacado = () => {
 
     return (<>
-    <div className="p-[3px] rounded-xl w-[700px] h-[140px]">
+    <div className="p-[3px] rounded-xl w-full h-[140px]">
       <div className="flex w-full h-full bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
         
         

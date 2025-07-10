@@ -1,4 +1,6 @@
-const mainURL = "https://crispy-robot-gwpp7gg6g55h9rv7-3001.app.github.dev"
+// CREAR .env en la carpeta front. front/.env
+// CREAR variable VITE_SERVICES_URL y el valor es vuestro backend
+const mainURL = import.meta.env.VITE_SERVICES_URL;
 
 const cosmoTipCall = async () => {
   const response = await fetch(`${mainURL}/cosmotip`);
