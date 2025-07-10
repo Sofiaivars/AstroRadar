@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getCategories, getEventsFromAPI } from "../servicios/events-missions-service"
+import { getCategories } from "../servicios/events-missions-service"
 import RenderEventList from "../components/renderEvents/RenderEventList"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx"
 
@@ -9,7 +9,7 @@ function EventsPage(){
   const categoryList = categories ? Object.keys(categories) : []
   const [renderCategory, setRenderCategory] = useState("all")
 
-  const { store, dispatch } = useGlobalReducer()
+  const { store } = useGlobalReducer()
 
   useEffect(() => {
     setEventList(store.eventList)

@@ -7,7 +7,7 @@ function RankingMain(){
     { name: "María", lastName: "González", location: "Triana", city: "Sevilla", achievements: 98, image:"https://upload.wikimedia.org/wikipedia/commons/b/b8/Laser_Towards_Milky_Ways_Centre.jpg"},
     { name: "Luis", lastName: "Martínez", location: "Gràcia", city: "Barcelona", achievements: 110, image:"https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/14E7A/production/_109062658_hi048321534.jpg" },
     { name: "Ana", lastName: "López", location: "Chamberí", city: "Madrid", achievements: 105, image:"https://resources.perimeterinstitute.ca/cdn/shop/products/Gr6SpaceImageStore.png?v=1603818769" },
-    { name: "Pedro", lastName: "Ramírez", location: "Casco Antiguo", city: "Zaragoza", achievements: 89, image:"https://astronomyaustralia.org.au/wp-content/uploads/2024/02/First-all-sky-data-release-image.jpeg" },
+    { name: "Pedro", lastName: "Ramírez", location: "Casco Antiguo", city: "Zaragoza", achievements: 89, image:"https://w7.pngwing.com/pngs/345/350/png-transparent-spider-man-drawing-internet-meme-know-your-meme-spiderman-comics-leaf-hand-thumbnail.png" },
     { name: "Lucía", lastName: "Hernández", location: "Gros", city: "San Sebastián", achievements: 115, image:"https://www.astronomyforbeginners.com/wp-content/uploads/2019/12/astronomy-facts.jpg" },
     { name: "Javier", lastName: "Serrano", location: "Elviña", city: "A Coruña", achievements: 100, image:"https://assets-prd.ignimgs.com/2024/09/04/astro-bot-review-blog-1725456007634.jpg" },
     { name: "Carmen", lastName: "Navarro", location: "Ensanche", city: "Murcia", achievements: 94, image:"https://alphauniverseglobal.media.zestyio.com/Alpha-Universe-Original_JPEG---Full-size--highest-quality.jpg" },
