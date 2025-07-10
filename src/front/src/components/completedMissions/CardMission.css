@@ -1,0 +1,110 @@
+
+.glow-1, .glow-2, .glow-3 {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(70, 204, 148, 0.4) 0%, transparent 40%);
+  filter: blur(25px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.glow-1 {
+  width: 120px;
+  height: 120px;
+  top: 10%;
+  left: 10%;
+}
+.glow-2 {
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+.glow-3 {
+  width: 140px;
+  height: 140px;
+  bottom: 15%;
+  left: 40%;
+}
+.group:hover .glow-1,
+.group:hover .glow-2,
+.group:hover .glow-3 {
+  opacity: 1;
+}
+.card-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+.card-particles span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat 3s infinite ease-in-out;
+  animation-delay: calc(var(--i) * 0.4s);
+}
+.cyan-particle {
+  background: #00ffc8;
+  box-shadow: 0 0 8px #00ffc8;
+}
+.purple-particle {
+  background: #f5e1ff;
+  box-shadow: 0 0 10px #f5e1ff;
+}
+/* Aca posiciona las PARTICULAS! */
+.card-particles span:nth-child(1)  { top: 10%; left: 10%; }
+.card-particles span:nth-child(2)  { top: 20%; right: 15%; }
+.card-particles span:nth-child(3)  { top: 30%; left: 30%; }
+.card-particles span:nth-child(4)  { top: 40%; right: 25%; }
+.card-particles span:nth-child(5)  { top: 50%; left: 50%; }
+.card-particles span:nth-child(6)  { top: 60%; right: 35%; }
+.card-particles span:nth-child(7)  { top: 70%; left: 20%; }
+.card-particles span:nth-child(8)  { top: 80%; right: 10%; }
+.card-particles span:nth-child(9)  { top: 15%; left: 60%; }
+.card-particles span:nth-child(10) { top: 25%; right: 50%; }
+.card-particles span:nth-child(11) { top: 35%; left: 70%; }
+.card-particles span:nth-child(12) { top: 45%; right: 60%; }
+.card-particles span:nth-child(13) { top: 55%; left: 40%; }
+.card-particles span:nth-child(14) { top: 65%; right: 70%; }
+.card-particles span:nth-child(15) { top: 75%; left: 80%; }
+.card-particles span:nth-child(16) { top: 85%; right: 40%; }
+.card-particles span:nth-child(17) { top: 12%; left: 80%; }
+.card-particles span:nth-child(18) { top: 22%; right: 30%; }
+.card-particles span:nth-child(19) { top: 32%; left: 10%; }
+.card-particles span:nth-child(20) { top: 42%; right: 20%; }
+.card-particles span:nth-child(21) { top: 52%; left: 90%; }
+.card-particles span:nth-child(22) { top: 62%; right: 80%; }
+.card-particles span:nth-child(23) { top: 72%; left: 5%; }
+.card-particles span:nth-child(24) { top: 82%; right: 5%; }
+
+@keyframes particleFloat {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(4px, -6px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(8px, -12px);
+    opacity: 0;
+  }
+}
+.text-glow-gradient::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  filter: blur(4px);
+  opacity: 0.5;
+  background: linear-gradient(to right, #9ee9b9, #22d3ee);
+   background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
