@@ -35,6 +35,7 @@ function RenderEventList({eventList, renderCategory}){
                   eventEnd={astroEvent.end_date}
                   eventVisibility={astroEvent.visibility}
                   eventMoon={astroEvent.moon}
+                  eventId={astroEvent.id}
                 />
               })
             )
