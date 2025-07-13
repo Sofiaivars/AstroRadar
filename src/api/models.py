@@ -42,7 +42,7 @@ class Base(db.Model):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id', ondelete="CASCADE"))
-    base: Mapped[str] = mapped_column(String(100), nullable=False)
+    base: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
     latitude: Mapped[str] = mapped_column(String(50), nullable=False)
     longitude: Mapped[str] = mapped_column(String(50), nullable=False)
     
