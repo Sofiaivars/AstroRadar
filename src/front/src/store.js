@@ -4,6 +4,7 @@ export const initialStore = () => {
     suggestedCoords: [],
     selectedBase: null,
     eventList: [],
+    userData: null,
   }
 };
 
@@ -15,20 +16,23 @@ export default function storeReducer(store, action = {}) {
         userLocation: action.payload,
       }
 
-   case "SET_SELECTED_BASE":
-  return {
-    ...store,
-    selectedBase: {
-      name: action.payload.name,
-      coordinates: {
-        latitude: action.payload.coordinates.latitude,
-        longitude: action.payload.coordinates.longitude,
-      },
-    },
-  };
+    case "SET_SELECTED_BASE":
+      return {
+        ...store,
+        selectedBase: {
+          name: action.payload.name,
+          coordinates: {
+            latitude: action.payload.coordinates.latitude,
+            longitude: action.payload.coordinates.longitude,
+          },
+        },
+      };
 
     case "SET_EVENT_LIST":
       return { ...store, eventList: [...action.payload] }
+
+    case "ADD_USER_DATA":
+      return { ...store, userData: action.payload }
 
     default:
       return store;

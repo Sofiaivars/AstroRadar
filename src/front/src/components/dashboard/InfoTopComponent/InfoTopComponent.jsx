@@ -26,10 +26,6 @@ function InfoTopComponent({errorMsg, userLocation}){
     }
   }, [userLocation])
 
-  useEffect(() => {
-    console.log(weatherInfo)
-  }, [weatherInfo])
-
   return(
     <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-full self-start borde-con-degradado'>
       <div className='flex ms-5 gap-10'>

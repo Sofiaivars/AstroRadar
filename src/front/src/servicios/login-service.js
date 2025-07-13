@@ -65,4 +65,10 @@ const getUserInfo = async () => {
   return data;
 }
 
-export { login, getUserInfo, signUp };
+const getUsersFromDatabase = async () => {
+  const response = await fetch(`${mainURL}/users`);
+  const data = await response.json();
+  return data;
+}
+
+export { login, getUserInfo, signUp, getUsersFromDatabase };

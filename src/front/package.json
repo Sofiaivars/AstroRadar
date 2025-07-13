@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.14.3",
+    "@cloudinary/url-gen": "^1.21.0",
     "@number-flow/react": "^0.5.10",
     "@tailwindcss/vite": "^4.1.10",
     "canvas-confetti": "^1.9.3",

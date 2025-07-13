@@ -1,4 +1,4 @@
-function RankingCard({position, name, lastName, location, city, achievements, image}){
+function RankingCard({position, name, lastName, country, city, achievements, image}){
 
   return(
     <div className="flex items-center rounded-3xl w-full p-1 gap-3 ranking-card">
@@ -8,7 +8,7 @@ function RankingCard({position, name, lastName, location, city, achievements, im
       <div className="font-bold ranking-card-rank">#{position}</div>
       <div className="flex flex-col ms-3 ranking-card-info">
         <p className="text-lg font-bold ranking-card-name">{`${name} ${lastName}`}</p>
-        <p className="text-xs ranking-card-location">{`${location}, ${city}`} | {achievements} Logros</p>
+        <p className="text-xs ranking-card-location">{`${city}, ${country}`} | {achievements} Logros</p>
       </div>
     </div>
   )
