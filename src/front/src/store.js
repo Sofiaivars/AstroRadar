@@ -4,7 +4,7 @@ export const initialStore = () => {
     suggestedCoords: [],
     selectedBase: null,
     eventList: [],
-    userData: [],
+    userData: null,
   }
 };
 

@@ -16,7 +16,7 @@ import { getUserInfo } from "../../servicios/login-service.js";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 
 function DashboardComponents(){
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [spots, setSpots] = useState(null)
@@ -33,7 +33,8 @@ function DashboardComponents(){
   }
 
   useEffect(() => {
-    if(store.userData.length === 0){
+    if(!store.userData){
+      console.log('Obteniendo datos de usuario...')
       const getUserDataFromDatabase = async () => {
         const data = await getUserInfo();
         dispatch({ type: 'ADD_USER_DATA', payload: data })
@@ -73,7 +74,7 @@ function DashboardComponents(){
     }
   }, [userLocation])
 
-  if (Object.keys(userData).length === 0) {
+  if (!userData) {
     return (
       <div className="flex flex-col justify-center items-center">
         <PageLoader />
