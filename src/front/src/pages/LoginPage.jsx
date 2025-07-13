@@ -19,23 +19,14 @@ function LoginPage(){
       console.log(`Error en el login => ${error}`)
     }
   }
-
-  const deleteToken = () => {
-    localStorage.removeItem("jwt-token")
-  }
-
-  useEffect(()=>{
-    const tokenData = localStorage.getItem("jwt-token")
-    console.log(tokenData)
-  }, [])
   
   return (
     <>
       <LoginForm 
         handleClick={handleClick}
       />
-      <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={deleteToken}>Borrar Token</button>
-      <button className="bg-amber-900 hover:bg-amber-300 text-white rounded-3xl p-2" onClick={() => navigate('/signup')}>Registro</button>
+
+      <button className="bg-purple-900 hover:bg-purple-300 text-white rounded-3xl p-2" onClick={() => navigate('/signup')}>Registro</button>
     </>
   )
 }
