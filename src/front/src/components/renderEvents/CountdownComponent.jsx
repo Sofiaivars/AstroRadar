@@ -38,20 +38,28 @@ function CountdownComponent({ eventStart }){
       {timer
       ? (
         <>
-          <div className="flex flex-row items-center gap-1">
-            <NumberFlow value={timer.days} format={{ minimumIntegerDigits: 3 }}/> 
+          <div className="flex flex-row items-center">
+            <div className="min-w-5">
+              <NumberFlow value={timer.days} format={{ minimumIntegerDigits: 3 }}/> 
+            </div> 
             <p>D</p>
           </div>
-          <div className="flex flex-row items-center gap-1">
-            <NumberFlow value={timer.hours} format={{ minimumIntegerDigits: 2 }}/> 
+          <div className="flex flex-row items-center">
+            <div className="min-w-5">
+              <NumberFlow value={timer.hours} format={{ minimumIntegerDigits: 2 }}/> 
+            </div>
             <p>H</p>
           </div>
-          <div className="flex flex-row items-center gap-1">
-            <NumberFlow value={timer.minutes} format={{ minimumIntegerDigits: 2 }}/> 
+          <div className="flex flex-row items-center">
+            <div className="min-w-5">
+              <NumberFlow value={timer.minutes} format={{ minimumIntegerDigits: 2 }}/> 
+            </div>
             <p>M</p>
           </div>
-          <div className="flex flex-row items-center gap-1">
-            <NumberFlow value={timer.seconds} format={{ minimumIntegerDigits: 2 }}/> 
+          <div className="flex flex-row items-center">
+            <div className="min-w-5">
+              <NumberFlow value={timer.seconds} format={{ minimumIntegerDigits: 2 }}/> 
+            </div>
             <p>S</p>
           </div>
         </>
