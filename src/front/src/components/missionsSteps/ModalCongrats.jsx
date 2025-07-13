@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import "./ModalCongrats.css";
+import cosmoDab from "../../pages/assest/cosmo-dab.png";
 
 const ModalCongrats = () => {
   const navigate = useNavigate();
@@ -8,11 +9,7 @@ const ModalCongrats = () => {
   return (
     <div className="modal-congrats-wrapper">
       <div className="modal-congrats animate-glow">
-        <img
-          src="/assest/cosmo-volador-gif.gif"
-          alt="Cosmo feliz"
-          className="cosmo-img"
-        />
+        <img src={cosmoDab} alt="Cosmo DAB" className="cosmo-img" />
         <h2 className="title">¡Misión completada!</h2>
         <p className="description">¡Buen trabajo, cazador espacial! 🚀</p>
         <button
