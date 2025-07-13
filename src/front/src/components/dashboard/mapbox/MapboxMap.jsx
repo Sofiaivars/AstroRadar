@@ -4,6 +4,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import LoaderMini from '../../loaders/LoaderMini.jsx';
 import useGlobalReducer from '../../../hooks/useGlobalReducer.jsx';
 
+
+
 const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
   const { dispatch } = useGlobalReducer();
 
@@ -18,6 +20,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
   const [newSpot, setNewSpot] = useState(null);
   const [newSpotName, setNewSpotName] = useState('');
   const [showSavedMessage, setShowSavedMessage] = useState(false);
+  const [userBases, setUserBases] = useState([]);
 
   useEffect(() => {
     if (Array.isArray(locations) && locations.length > 0) {
@@ -28,6 +31,51 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
       }));
     }
   }, [locations]);
+
+  useEffect(() => {
+    const fetchUserBases = async () => {
+      const token = localStorage.getItem('jwt-token');
+      if (!token) return;
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_SERVICES_URL}/getbases`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.ok && Array.isArray(data.bases)) {
+          const rawBases = data.bases.map((b) => ({
+            name: b.base,
+            coordinates: {
+              latitude: parseFloat(b.latitude),
+              longitude: parseFloat(b.longitude),
+            },
+          }));
+
+          // Eliminar duplicados por nombre
+          const seenNames = new Set();
+          const filteredBases = rawBases.filter((base) => {
+            const name = base.name.toLowerCase();
+            if (seenNames.has(name)) return false;
+            seenNames.add(name);
+            return true;
+          });
+
+          setUserBases(filteredBases);
+        } else {
+          console.warn('No se pudieron cargar las bases del usuario:', data?.msg);
+        }
+      } catch (error) {
+        console.error('Error al obtener bases del usuario:', error);
+      }
+    };
+
+    fetchUserBases();
+  }, []);
 
   const isLoading = !Array.isArray(locations) || locations.length === 0;
 
@@ -67,8 +115,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
 
     const payload = {
       name: spot.name,
-      latitude: spot.coordinates.latitude,
-      longitude: spot.coordinates.longitude,
+      coordinates: spot.coordinates,
     };
 
     try {
@@ -80,8 +127,8 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
         },
         body: JSON.stringify({
           base: payload.name,
-          latitude: payload.latitude,
-          longitude: payload.longitude,
+          latitude: payload.coordinates.latitude,
+          longitude: payload.coordinates.longitude,
         }),
       });
 
@@ -90,6 +137,15 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
       if (response.ok) {
         dispatch({ type: "SET_SELECTED_BASE", payload });
         if (onSelectBase) onSelectBase(payload);
+
+        // Evitar duplicados por nombre
+        setUserBases((prev) => {
+          const exists = prev.some(
+            (b) => b.name.toLowerCase() === payload.name.toLowerCase()
+          );
+          return exists ? prev : [...prev, payload];
+        });
+
         setShowSavedMessage(true);
         setTimeout(() => setShowSavedMessage(false), 2000);
         setSelectedSpot(null);
@@ -125,6 +181,20 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                 longitude={loc.coordinates.longitude}
                 latitude={loc.coordinates.latitude}
                 color="#22d3ee"
+                onClick={(e) => {
+                  e.originalEvent.stopPropagation();
+                  setSelectedSpot(loc);
+                  setNewSpot(null);
+                }}
+              />
+            ))}
+
+            {userBases.map((loc, idx) => (
+              <Marker
+                key={`base-${idx}`}
+                longitude={loc.coordinates.longitude}
+                latitude={loc.coordinates.latitude}
+                color="#2929a1ff"
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
                   setSelectedSpot(loc);

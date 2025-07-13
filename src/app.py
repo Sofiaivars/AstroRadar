@@ -176,7 +176,7 @@ def get_coodenates_from_ai():
         return jsonify({"error": "Faltan coordenadas"}), 400
 
     prompt = f"""
-            Dame 3 lugares para observar eventos astronómicos cerca de esta ubicación: latitud {lat}, longitud {lon}.
+            Dame 3 lugares para observar eventos astronómicos a menos de 50km de esta ubicación: latitud {lat}, longitud {lon}. 
             Devuelve solo un JSON con el siguiente formato:
 
             {{
@@ -290,7 +290,17 @@ def create_base():
         return jsonify({"msg": "Error al guardar la base", "error": str(e)}), 500
 
 
+@app.route('/getbases', methods=['GET'])
+@jwt_required()
+def get_user_bases():
+    user_id = get_jwt_identity()
+    
+    user = db.session.get(User, user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
 
+    bases = Base.query.filter_by(user_id=user.id).all()
+    return jsonify({"bases": [b.serialize() for b in bases]}), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

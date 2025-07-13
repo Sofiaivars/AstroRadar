@@ -15,15 +15,17 @@ export default function storeReducer(store, action = {}) {
         userLocation: action.payload,
       }
 
-    case "SET_SELECTED_BASE":
-      return {
-        ...store,
-        selectedBase: {
-          name: action.payload.name,
-          latitude: action.payload.latitude,
-          longitude: action.payload.longitude,
-        },
-      };
+   case "SET_SELECTED_BASE":
+  return {
+    ...store,
+    selectedBase: {
+      name: action.payload.name,
+      coordinates: {
+        latitude: action.payload.coordinates.latitude,
+        longitude: action.payload.coordinates.longitude,
+      },
+    },
+  };
 
     case "SET_EVENT_LIST":
       return { ...store, eventList: [...action.payload] }

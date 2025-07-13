@@ -22,7 +22,6 @@ function Step1Page() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         fetchAI(coords.latitude, coords.longitude);
-
       },
       (err) => {
         alert("Ubicación no permitida.");
@@ -39,6 +38,7 @@ function Step1Page() {
       console.error("Error al obtener puntos IA:", error);
     }
   };
+
   // Obtener ubicación del dispositivo para el marcador morado
   useEffect(() => {
     getUserLocation(
@@ -46,23 +46,6 @@ function Step1Page() {
       (mensajeError) => setErrorMsg(mensajeError)
     );
   }, []);
-  
-  // Botón “Seleccionar ubicación”
-  const _handleSelectLocation = () => {
-    if (!store.selectedBase) {
-      alert("Primero selecciona una base en el mapa.");
-      return;
-    }
-
-    setLocation({    
-      name: store.selectedBase.name,
-      lat: store.selectedBase.latitude,
-      lng: store.selectedBase.longitude,
-    });
-
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
-  };
 
   // Botón “Confirmar base estelar”
   const _confirmLocation = () => {
@@ -72,9 +55,18 @@ function Step1Page() {
     navigate("/dashboard/missions/step2");
   };
 
-  // Callback para actualizar el store global
+  // Al seleccionar base desde el mapa
   const handleSelectBase = (base) => {
     dispatch({ type: "SET_SELECTED_BASE", payload: base });
+
+    setLocation({
+      name: base.name,
+      lat: base.coordinates.latitude,
+      lng: base.coordinates.longitude,
+    });
+
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000);
   };
 
   return (
@@ -104,10 +96,11 @@ function Step1Page() {
                 <span className="text-white font-semibold">{location.name}</span>
               </div>
             )}
-            <div className="flex flex-row items-center gap-5">
-              {/* Botón Seleccionar ubicación */}
+
+            {/* Botón de confirmación */}
+            {location && (
               <button
-                onClick={_handleSelectLocation}
+                onClick={_confirmLocation}
                 className="rounded-[12px] text-white text-sm h-10 w-auto font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
                 style={{
                   backgroundImage:
@@ -122,41 +115,15 @@ function Step1Page() {
                   className="rounded-[12px] p-3 w-full h-full flex items-center justify-center transition duration-300 ease-in-out group-hover:bg-gradient-to-br group-hover:from-gray-700 group-hover:to-gray-900"
                   style={{ backgroundColor: "var(--components-background)" }}
                 >
-                  Seleccionar ubicación
+                  Confirmar base estelar
                 </div>
               </button>
-
-              {/* Botón de confirmación */}
-              {location && (
-                <>
-                  <button
-                    onClick={_confirmLocation}
-                    className="rounded-[12px] text-white text-sm h-10 w-auto font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(var(--components-background), var(--components-background)), " +
-                        "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)",
-                      backgroundOrigin: "border-box",
-                      backgroundClip: "padding-box, border-box",
-                      border: "2px solid transparent",
-                    }}
-                  >
-                    <div
-                      className="rounded-[12px] p-3 w-full h-full flex items-center justify-center transition duration-300 ease-in-out group-hover:bg-gradient-to-br group-hover:from-gray-700 group-hover:to-gray-900"
-                      style={{ backgroundColor: "var(--components-background)" }}
-                    >
-                      Confirmar base estelar
-                    </div>
-                  </button>
-                </> 
-              )}
-            </div>
+            )}
           </div>
         </div>
 
         {/* COSMOTIP--falta implementar ia */}
         <div className="fixed bottom-60 right-20 z-50 bg-gray-900 rounded-xl p-4 shadow-lg max-w-[400px]">
-
           <h4 className="text-purple-300 font-bold mb-4">✨ Cosmotip</h4>
           <p>Para una lluvia de meteoros, elegí un lugar alejado de luces</p>
         </div>
@@ -167,6 +134,7 @@ function Step1Page() {
         />
       </div>
     </>
-  )
+  );
 }
+
 export default Step1Page;

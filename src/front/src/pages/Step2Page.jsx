@@ -15,7 +15,7 @@ const Step2Page = () => {
       return;
     }
 
-    const { latitude, longitude } = store.selectedBase;
+    const { latitude, longitude } = store.selectedBase.coordinates;
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
 
     window.open(googleMapsUrl, "_blank"); // abre en nueva pestaña
