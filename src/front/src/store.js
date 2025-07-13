@@ -4,6 +4,7 @@ export const initialStore = () => {
     suggestedCoords: [],
     selectedBase: null,
     eventList: [],
+    userData: [],
   }
 };
 
@@ -29,6 +30,9 @@ export default function storeReducer(store, action = {}) {
 
     case "SET_EVENT_LIST":
       return { ...store, eventList: [...action.payload] }
+
+    case "ADD_USER_DATA":
+      return { ...store, userData: action.payload }
 
     default:
       return store;
