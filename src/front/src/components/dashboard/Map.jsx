@@ -33,7 +33,7 @@ const Map = ({ locations, userPosition, onSelectBase }) => {
           <p className="text-sm mt-5">
             {store.selectedBase
               ? `Base seleccionada: ${store.selectedBase.name}`
-              : '3 Bases estelares cerca'}
+              : 'Tus Bases Estelares'}
           </p>
         </div>
       </div>

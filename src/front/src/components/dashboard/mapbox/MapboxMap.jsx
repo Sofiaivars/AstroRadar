@@ -194,7 +194,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                 key={`base-${idx}`}
                 longitude={loc.coordinates.longitude}
                 latitude={loc.coordinates.latitude}
-                color="#0a0a1bbf"
+                color="#2929a1ff"
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
                   setSelectedSpot(loc);
