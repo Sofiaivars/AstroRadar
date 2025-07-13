@@ -155,16 +155,19 @@ def get_users_from_db():
         return jsonify({"msg": "No hay datos de usuario."}), 200
     return jsonify([user.serialize() for user in users]), 200
 
-# Cosmo dashboard AI endpoint
-@app.route('/cosmotip', methods=['GET'])
+@app.route('/cosmotip', methods=['POST'])
 def get_response_from_ai():
-    response = cosmo_tip()
+    data = request.get_json()
+    prompt = data.get("prompt")
+
+    if not prompt:
+        return jsonify({"error": "Prompt no proporcionado"}), 400
+
+    response = cosmo_tip(prompt)
     if response:
-        print(response)
         return jsonify(response), 200
     else:
-        return jsonify({"message": "Sin respuesta..."})
-
+        return jsonify({"message": "Sin respuesta..."}), 500
 
 @app.route('/getjson', methods=['POST'])
 def get_coodenates_from_ai():

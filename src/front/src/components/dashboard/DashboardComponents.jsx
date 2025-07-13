@@ -15,22 +15,23 @@ import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 
-function DashboardComponents(){
+function DashboardComponents() {
   const [userData, getUserData] = useState({});
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [spots, setSpots] = useState(null)
+  const [spots, setSpots] = useState(null);
 
-  const { store, dispatch } = useGlobalReducer()
-
+  const { store, dispatch } = useGlobalReducer();
+  const promptDashboard =
+    "Dame un tip para la visualización de eventos astronómicos, relacionado con la localización, contaminación lumínica, climatología y más cosas del estilo. La respuesta no debe tener más de 12 palabras.";
   const fetchAI = async (lat, lon) => {
     try {
-      const data = await getJSONCoords(lat, lon)
-      setSpots(data.spots)
+      const data = await getJSONCoords(lat, lon);
+      setSpots(data.spots);
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error:", error);
     }
-  }
+  };
 
   useEffect(() => {
     const getUserDataFromDatabase = async () => {
@@ -40,31 +41,31 @@ function DashboardComponents(){
 
     getUserDataFromDatabase();
 
-    if(!store.userLocation){
-      console.log('Obteniendo ubicación...')
+    if (!store.userLocation) {
+      console.log("Obteniendo ubicación...");
       getUserLocation(
         (coords) => {
-          dispatch({ type: 'ADD_USER_LOCATION', payload: coords });
+          dispatch({ type: "ADD_USER_LOCATION", payload: coords });
           setErrorMsg(null);
         },
         (mensajeError) => {
           setErrorMsg(mensajeError);
         }
-      )
+      );
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if(store.userLocation){
-      setUserLocation(store.userLocation)
+    if (store.userLocation) {
+      setUserLocation(store.userLocation);
     }
-  }, [store.userLocation])
+  }, [store.userLocation]);
 
   useEffect(() => {
-    if(userLocation){
-      fetchAI(userLocation.latitude, userLocation.longitude)
+    if (userLocation) {
+      fetchAI(userLocation.latitude, userLocation.longitude);
     }
-  }, [userLocation])
+  }, [userLocation]);
 
   useEffect(() => {
     console.log(`user-data: ${JSON.stringify(userData)}`);
@@ -78,13 +79,13 @@ function DashboardComponents(){
     );
   }
 
-  return(
+  return (
     <>
       <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
       <div className="flex flex-row gap-3 w-full h-full">
         <div className="flex flex-col w-1/2 gap-1">
           <EventoDestacado />
-          <Map locations={spots} userPosition={userLocation}/>
+          <Map locations={spots} userPosition={userLocation} />
           <div className="flex flex-row w-full gap-1">
             <Calendar />
             <EventoSugerido />
@@ -99,12 +100,12 @@ function DashboardComponents(){
           <EventoProgramado />
           <div className="flex flex-row items-center w-full h-full gap-1 relative rounded-2xl borde-con-degradado">
             <RankingMain />
-            <CosmoDashboard />
+            <CosmoDashboard prompt={promptDashboard} />
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default DashboardComponents
+export default DashboardComponents;

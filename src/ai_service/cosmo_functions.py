@@ -2,17 +2,18 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-def cosmo_tip():
-    prompt = "Dame un tip para la visualización de eventos astronómicos, relacionado con la localización, contaminación lumínica, climatología y más cosas del estilo. La respuesta no debe tener más de 10 palabras."
-    
+def cosmo_tip(prompt):
     load_dotenv()
     openai_key = os.getenv("OPENAI_API_KEY")
     
     client = OpenAI(api_key=openai_key)
     
-    response = client.responses.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        input=prompt
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=50
     )
-    
-    return response.output_text
+
+    return {"output": response.choices[0].message.content}

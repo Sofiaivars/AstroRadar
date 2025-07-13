@@ -2,21 +2,45 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { updateMissionData } from "../servicios/mission-service.js";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
+import { cosmoTipCall, getJSONCoords } from "../servicios/cosmo-service.js";
 import { getUserLocation } from "../servicios/geolocation-service";
-import { getJSONCoords } from "../servicios/cosmo-service.js";
 import Map from "../components/dashboard/Map.jsx";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 function Step1Page() {
-  const [spots, setSpots] = useState(null);               // puntos IA
+  const [spots, setSpots] = useState(null); // puntos IA
   const [userPosition, setUserPosition] = useState(null); // coordenadas del dispositivo
-  const [location, setLocation] = useState(null);         // base seleccionada
+  const [location, setLocation] = useState(null); // base seleccionada
   const [showSuccess, setShowSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer(); // acceso al store global
 
+  const [cosmoTip, setCosmoTip] = useState(null);
+  const [cosmoError, setCosmoError] = useState(null);
+  const promptStep1 = userPosition
+    ? `Dame un tip de no mas de 12 palabras recomendando una buena ubicación cerca de latitud ${userPosition.latitude} y longitud ${userPosition.longitude} para observar el evento astronomico de la mision.`
+    : null;
+
+  useEffect(() => {
+    if (!promptStep1) return;
+
+    const fetchCosmoTip = async () => {
+      setCosmoTip(null);
+      setCosmoError(null);
+
+      try {
+        const response = await cosmoTipCall(promptStep1);
+        setCosmoTip(response.output);
+      } catch (error) {
+        setCosmoError("No se pudo obtener el tip de IA");
+        console.error(error);
+      }
+    };
+
+    fetchCosmoTip();
+  }, [promptStep1]);
   // Cargar puntos IA al iniciar
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -70,9 +94,11 @@ function Step1Page() {
   };
 
   return (
-    <>    
+    <>
       <div className="flex flex-col gap-4 text-white pr-4 relative">
-        <h3 className="text-lg font-bold">🌍 Seleccioná la ubicación del evento</h3>
+        <h3 className="text-lg font-bold">
+          🌍 Seleccioná la ubicación del evento
+        </h3>
 
         {/* Mapa con puntos */}
         <div className="flex flex-col bg-gray-800 rounded-xl p-4 w-full h-[500px] relative gap-3">
@@ -93,7 +119,9 @@ function Step1Page() {
             {location && (
               <div className="bg-gray-900 rounded-xl text-center p-4 text-sm text-gray-300">
                 ✅ Ubicación seleccionada:{" "}
-                <span className="text-white font-semibold">{location.name}</span>
+                <span className="text-white font-semibold">
+                  {location.name}
+                </span>
               </div>
             )}
 
@@ -125,7 +153,9 @@ function Step1Page() {
         {/* COSMOTIP--falta implementar ia */}
         <div className="fixed bottom-60 right-20 z-50 bg-gray-900 rounded-xl p-4 shadow-lg max-w-[400px]">
           <h4 className="text-purple-300 font-bold mb-4">✨ Cosmotip</h4>
-          <p>Para una lluvia de meteoros, elegí un lugar alejado de luces</p>
+          {cosmoError && <p className="text-red-700 text-sm">{cosmoError}</p>}
+          {!cosmoTip && !cosmoError && <p>Cargando tip de IA...</p>}
+          {cosmoTip && <p>{cosmoTip}</p>}
         </div>
         <img
           src={cosmoTip1}

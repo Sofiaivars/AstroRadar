@@ -1,15 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { cosmoTipCall, getJSONCoords } from "../servicios/cosmo-service.js";
+import { getUserLocation } from "../servicios/geolocation-service.js";
 
 const Step2Page = () => {
   const navigate = useNavigate();
   const { store } = useGlobalReducer(); // accedemos al store global
   const [missionStarted, setMissionStarted] = useState(false);
+  const [cosmoTip, setCosmoTip] = useState(null);
+  const [cosmoError, setCosmoError] = useState(null);
+  const promptStep2 = getUserLocation
+    ? `Dame un tip de no mas de 12 palabras con una recomendacion antes de inciar mi recorrido a la base estelerar seleccionada ${location}.`
+    : null;
 
+  useEffect(() => {
+    if (!promptStep2) return;
+
+    const fetchCosmoTip = async () => {
+      setCosmoTip(null);
+      setCosmoError(null);
+
+      try {
+        const response = await cosmoTipCall(promptStep2);
+        setCosmoTip(response.output);
+      } catch (error) {
+        setCosmoError("No se pudo obtener el tip de IA");
+        console.error(error);
+      }
+    };
+
+    fetchCosmoTip();
+  }, [promptStep2]);
   const _startMission = () => {
-
     if (!store.selectedBase) {
       alert("No hay base seleccionada.");
       return;
@@ -85,14 +109,16 @@ const Step2Page = () => {
         )}
       </div>
 
-      <div className="bg-gray-900 rounded-xl p-4 mt-2 w-[30%] ml-auto relative mr-10 -top-30 z-40">
-        <h4 className="text-purple-300 font-bold mb-2">✨ Cosmotip</h4>
-        <p>Recuerda mirar el clima antes de iniciar tu recorrido</p>
+      <div className="fixed bottom-60 right-20 z-50 bg-gray-900 rounded-xl p-4 shadow-lg max-w-[400px]">
+        <h4 className="text-purple-300 font-bold mb-4">✨ Cosmotip</h4>
+        {cosmoError && <p className="text-red-700 text-sm">{cosmoError}</p>}
+        {!cosmoTip && !cosmoError && <p>Cargando tip de IA...</p>}
+        {cosmoTip && <p>{cosmoTip}</p>}
       </div>
       <img
         src={cosmoTip1}
         alt="Cosmotip"
-        className="w-[20%] ml-auto -mt-40 z-50 relative -mr-4"
+        className="fixed bottom-10 right-10 w-[12%] rounded-md z-50"
       />
     </div>
   );
