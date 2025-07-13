@@ -13,12 +13,15 @@ import { useEffect, useState } from "react";
 import { getJSONCoords } from "../../servicios/cosmo-service.js";
 import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
+import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 
 function DashboardComponents(){
   const [userData, getUserData] = useState({});
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [spots, setSpots] = useState(null)
+
+  const { store, dispatch } = useGlobalReducer()
 
   const fetchAI = async (lat, lon) => {
     try {
@@ -30,19 +33,6 @@ function DashboardComponents(){
   }
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords
-        fetchAI(latitude, longitude)
-      },
-      (err) => {
-        alert("Ubicación no permitida.")
-        console.error(err)
-      }
-    )
-  }, [])
-
-  useEffect(() => {
     const getUserDataFromDatabase = async () => {
       const data = await getUserInfo();
       return getUserData(data);
@@ -50,16 +40,31 @@ function DashboardComponents(){
 
     getUserDataFromDatabase();
 
-    getUserLocation(
-      (coords) => {
-        setUserLocation(coords);
-        setErrorMsg(null);
-      },
-      (mensajeError) => {
-        setErrorMsg(mensajeError);
-      }
-    );
-  }, []);
+    if(!store.userLocation){
+      console.log('Obteniendo ubicación...')
+      getUserLocation(
+        (coords) => {
+          dispatch({ type: 'ADD_USER_LOCATION', payload: coords });
+          setErrorMsg(null);
+        },
+        (mensajeError) => {
+          setErrorMsg(mensajeError);
+        }
+      )
+    }
+  }, [])
+
+  useEffect(() => {
+    if(store.userLocation){
+      setUserLocation(store.userLocation)
+    }
+  }, [store.userLocation])
+
+  useEffect(() => {
+    if(userLocation){
+      fetchAI(userLocation.latitude, userLocation.longitude)
+    }
+  }, [userLocation])
 
   useEffect(() => {
     console.log(`user-data: ${JSON.stringify(userData)}`);
