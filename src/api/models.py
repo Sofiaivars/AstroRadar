@@ -89,9 +89,10 @@ class UserMission(db.Model):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
-    base_id: Mapped[int] = mapped_column(ForeignKey("base.id", ondelete="CASCADE"))
+    base_id: Mapped[int] = mapped_column(ForeignKey("base.id", ondelete="CASCADE"), nullable=True)
     event_id: Mapped[int] = mapped_column(ForeignKey("event.id", ondelete="CASCADE"))
     state: Mapped[bool] = mapped_column(Boolean(), nullable=False)
+    image: Mapped[str] = mapped_column(Text, nullable=True)
     
     missions_user: Mapped["User"] = relationship("User", back_populates="user_missions")
     missions_base: Mapped["Base"] = relationship("Base", back_populates="base_missions")
@@ -113,7 +114,7 @@ class UserMission(db.Model):
                 "end_date": self.missions_event.end_date if self.missions_event else None,
                 "moon": self.missions_event.moon if self.missions_event else None,
                 "visibility": self.missions_event.visibility if self.missions_event else None,
-                "image": self.missions_event.image if self.missions_event else None,
             },
-            "state": self.state
+            "state": self.state,
+            "image": self.image
         }
