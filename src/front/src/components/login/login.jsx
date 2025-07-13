@@ -32,7 +32,7 @@ function LoginForm({handleClick}){
           <LoginButton handleClick={() => handleClick(username, password)}/>
           <div className="flex justify-between">
             <a href="#" className='hover:text-purple-500 text-sm forgot'>Olvidaste la contraseña?</a>
-            <button className="hover:text-purple-500 text-sm" onClick={() => navigate('/signup')}>No tengo cuenta</button>
+            <button className="hover:text-purple-500 text-sm cursor-pointer" onClick={() => navigate('/signup')}>No tengo cuenta</button>
           </div>
         </div>
           
