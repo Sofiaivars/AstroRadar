@@ -54,6 +54,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
               latitude: parseFloat(b.latitude),
               longitude: parseFloat(b.longitude),
             },
+            id: b.id
           }));
 
           // Eliminar duplicados por nombre
@@ -158,6 +159,10 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
       alert("Error al conectar con el servidor");
     }
   };
+
+  useEffect(() => {
+    console.log(selectedSpot)
+  }, [selectedSpot])
 
   return (
     <div className="w-full h-[320px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado bg-[#0e0e0e]">
