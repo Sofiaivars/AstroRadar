@@ -1,6 +1,7 @@
 // CREAR .env en la carpeta front. front/.env
 // CREAR variable VITE_SERVICES_URL y el valor es vuestro backend
 const mainURL = import.meta.env.VITE_SERVICES_URL;
+const isskey = import.meta.env.VITE_ISS_KEY;
 
 const getEventsFromAPI = async () => {
   const response = await fetch(`${mainURL}/events`, {
@@ -25,4 +26,16 @@ const getCategories = (list) => {
   return
 }
 
-export { getEventsFromAPI, getCategories }
+const getISSPasses = async (latitude, longitude) => {
+  const response = await fetch(`https://api.n2yo.com/rest/v1/satellite/visualpasses/25544/${latitude}/${longitude}/700/2/300/&apiKey=${isskey}`);
+  const data = await response.json()
+  return data
+}
+
+const getAboveSatellites = async (latitude, longitude) => {
+  const response = await fetch(`https://api.n2yo.com/rest/v1/satellite/above/${latitude}/${longitude}/700/70/18/&apiKey=${isskey}`)
+  const data = await response.json()
+  return data.info
+}
+
+export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites }
