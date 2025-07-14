@@ -176,7 +176,7 @@ def get_coodenates_from_ai():
         return jsonify({"error": "Faltan coordenadas"}), 400
 
     prompt = f"""
-            Dame 3 lugares para observar eventos astronómicos a menos de 50km de esta ubicación: latitud {lat}, longitud {lon}. 
+            Dame 4 lugares para observar eventos astronómicos a menos de 50km de esta ubicación: latitud {lat}, longitud {lon}. 
             Devuelve solo un JSON con el siguiente formato:
 
             {{

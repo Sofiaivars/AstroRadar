@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import LoginForm from "../components/login/Login.jsx"
+import LoginForm from "../components/login/login.jsx"
 import { login } from '../servicios/login-service.js'
 import { useNavigate } from "react-router"
 import logo from '/logo-esquina.png'

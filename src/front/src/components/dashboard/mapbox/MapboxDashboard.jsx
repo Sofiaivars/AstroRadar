@@ -6,7 +6,7 @@ import useGlobalReducer from '../../../hooks/useGlobalReducer.jsx';
 
 
 
-const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
+const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
   const { dispatch } = useGlobalReducer();
 
   const [viewState, setViewState] = useState({
@@ -32,7 +32,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
     }
   }, [locations]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchUserBases = async () => {
       const token = localStorage.getItem('jwt-token');
       if (!token) return;
@@ -76,7 +76,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
     };
 
     fetchUserBases();
-  }, []);
+  }, []);*/
 
   const isLoading = !Array.isArray(locations) || locations.length === 0;
 
@@ -92,7 +92,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
     setSelectedSpot(null);
   };
 
-  /*const handleAddNewSpot = () => {
+  const handleAddNewSpot = () => {
     if (newSpotName.trim() === '') return;
     const newLocation = {
       name: newSpotName.trim(),
@@ -101,14 +101,14 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
     setUserLocations([newLocation]);
     setNewSpot(null);
     setNewSpotName('');
-  };*/
+  };
 
-  /*const handleDeleteUserSpot = () => {
+  const handleDeleteUserSpot = () => {
     setUserLocations([]);
     setNewSpot(null);
     setNewSpotName('');
     setSelectedSpot(null);
-  };*/
+  };
 
   const handleSelectBase = async (spot) => {
     const token = localStorage.getItem("jwt-token");
@@ -180,7 +180,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
             mapStyle="mapbox://styles/mapbox/dark-v11"
             style={{ width: '100%', height: '100%' }}
           >
-            {/* {locations.map((loc, idx) => (
+            {locations.map((loc, idx) => (
               <Marker
                 key={`ia-${idx}`}
                 longitude={loc.coordinates.longitude}
@@ -192,9 +192,9 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                   setNewSpot(null);
                 }}
               />
-            ))} */}
+            ))}
 
-            {userBases.map((loc, idx) => (
+            {/* {userBases.map((loc, idx) => (
               <Marker
                 key={`base-${idx}`}
                 longitude={loc.coordinates.longitude}
@@ -206,9 +206,9 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                   setNewSpot(null);
                 }}
               />
-            ))}
+            ))} */}
 
-            {/* {userLocations.map((loc, idx) => (
+            {userLocations.map((loc, idx) => (
               <Marker
                 key={`user-${idx}`}
                 longitude={loc.coordinates.longitude}
@@ -220,7 +220,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                   setNewSpot(null);
                 }}
               />
-            ))} */}
+            ))}
 
             {userPosition && (
               <Marker
@@ -230,7 +230,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
               />
             )}
 
-            {/* {newSpot && (
+            {newSpot && (
               <Popup
                 longitude={newSpot.longitude}
                 latitude={newSpot.latitude}
@@ -262,7 +262,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                   </button>
                 </div>
               </Popup>
-            )} */}
+            )}
 
             {selectedSpot && (
               <Popup
@@ -286,14 +286,14 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                   >
                     Seleccionar esta base
                   </button>
-                  {/* {selectedSpot.isUser && (
+                  {selectedSpot.isUser && (
                     <button
                       onClick={handleDeleteUserSpot}
                       className="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600 block"
                     >
                       Borrar punto
                     </button>
-                  )} */}
+                  )}
                 </div>
               </Popup>
             )}
@@ -310,4 +310,4 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
   );
 };
 
-export default MapboxMap;
+export default MapboxDashboard;
