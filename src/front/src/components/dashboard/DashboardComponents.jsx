@@ -1,5 +1,5 @@
 import EventoDestacado from "./EventoDestacado.jsx";
-import Map from "./Map.jsx";
+import MapDashboard from "./MapDashboard.jsx";
 import RankingMain from "./ranking-component/RankingMain";
 import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard";
 import MisionActual from "./MisionActual/MisionActual";
@@ -14,6 +14,7 @@ import { getJSONCoords } from "../../servicios/cosmo-service.js";
 import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
+import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
 
 function DashboardComponents(){
   const [userData, setUserData] = useState(null);
@@ -88,7 +89,7 @@ function DashboardComponents(){
       <div className="flex flex-row gap-3 w-full h-full">
         <div className="flex flex-col w-1/2 gap-1">
           <EventoDestacado />
-          <Map locations={spots} userPosition={userLocation}/>
+          <MapboxDashboard locations={spots} userPosition={userLocation}/>
           <div className="flex flex-row w-full gap-1">
             <Calendar />
             <EventoSugerido />
