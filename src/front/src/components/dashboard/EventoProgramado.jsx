@@ -1,12 +1,24 @@
 import { List } from "lucide-react";
 import { useNavigate } from "react-router";
+import useGlobalReducer from '../../hooks/useGlobalReducer.jsx'
+import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
+import LoaderMini from '../loaders/LoaderMini.jsx'
+import { useEffect, useState } from "react";
 
 const EventoProgramado = () => {
+  const [firstIssPass, setFirstIssPass] = useState()
   const navigate = useNavigate()
+  const { store } = useGlobalReducer()
+
+  useEffect(() => {
+    if(store.issPassesList){
+      setFirstIssPass(store.issPassesList.passes[0])
+    }
+  }, [])
 
     return (<>
      <div className="rounded-xl w-full h-[190px]">
-      <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
+      <div className="flex w-full h-full bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
         
         
         <div className="w-[30%] h-full">
@@ -18,20 +30,19 @@ const EventoProgramado = () => {
         </div>
 
         {/* Contenido central */}
-        <div className="flex flex-col justify-start px-4 py-3 w-[50%]">
-            <p className="text-sm mb-1 mt-1">PROXIMO EVENTO PROGRAMADO</p>
-          <h3 className="text-lg font-semibold mb-1 mt-2">ISS: Paso de la ISS por España</h3>
+        <div className="flex flex-col justify-start px-4 py-3 mt-4 w-[50%]">
+          <h3 className="text-lg font-semibold mb-1 mt-2">Próximo paso cercano de la ISS</h3>
           <p className="text-xs mb-1 mt-3">
-            La Estación Espacial Internacional será visible cruzando el cielo como una estrella brillante ¡No te lo pierdas! Solo dura unos minutos y se ve a simple vista
+            La Estación Espacial Internacional será visible cruzando el cielo como una estrella brillante ¡No te lo pierdas! Solo dura unos minutos y se ve a simple vista.
           </p>
           
         </div>
 
         
         <div className="flex flex-col justify-between items-end pr-4 py-3 w-[20%]">
-          <p className="text-sm font-bold text-[var(--astroradar-white)] whitespace-nowrap">
-            en 12hs 43min
-          </p>
+          <div className="text-sm">
+            {firstIssPass ? <CountdownComponent eventStart={new Date(firstIssPass.startVisibility * 1000).toUTCString()}/> : <LoaderMini/>}
+          </div>
           <button
               
               className="
