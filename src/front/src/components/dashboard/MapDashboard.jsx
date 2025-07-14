@@ -30,7 +30,7 @@ const MapDashboard = ({ locations, userPosition, onSelectBase }) => {
           <p className="text-sm mt-5">
             {store.selectedBase
               ? `Base seleccionada: ${store.selectedBase.name}`
-              : 'Tus Bases Estelares'}
+              : 'SELECCIONA TU BASE ESTELAR'}
           </p>
         </div>
       </div>
