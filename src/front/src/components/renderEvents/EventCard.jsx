@@ -18,7 +18,7 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
   }
 
   return(
-    <div className="flex rounded-2xl w-full items-center gap-3 text-sm bg-purple-300 borde-con-degradado">
+    <div className="flex rounded-2xl w-full items-center gap-3 text-sm border-b-2 border-purple-800">
       <div className="flex w-50 max-h-33 rounded-l-2xl overflow-hidden">
         <img src={eventImg} alt={eventCategory} className="w-full h-full object-cover" />
       </div>
