@@ -31,7 +31,7 @@ const EventoProgramado = () => {
 
         {/* Contenido central */}
         <div className="flex flex-col justify-start px-4 py-3 mt-4 w-[50%]">
-          <h3 className="text-lg font-semibold mb-1 mt-2">Próximo paso cercano de la ISS</h3>
+          <h3 className="text-lg font-semibold mb-1 mt-2">Próximo paso cercano de la ISS:</h3>
           <p className="text-xs mb-1 mt-3">
             La Estación Espacial Internacional será visible cruzando el cielo como una estrella brillante ¡No te lo pierdas! Solo dura unos minutos y se ve a simple vista.
           </p>
