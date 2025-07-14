@@ -12,6 +12,7 @@ import Step2Page from "./src/pages/Step2Page.jsx";
 import Step3Page from "./src/pages/Step3Page.jsx";
 import EventsPage from "./src/pages/EventsPage.jsx";
 import CompletedMissionsPage from "./src/pages/CompletedMissionsPage.jsx";
+import SatellitePage from "./src/pages/SatellitePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
           },
           { path: "completed-missions", Component: CompletedMissionsPage },
           { path: "events", Component: EventsPage },
+          { path: "iss", Component: SatellitePage },
         ],
       },
       { path: "/about-us", Component: AboutUs },
