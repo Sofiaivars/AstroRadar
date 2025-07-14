@@ -9,7 +9,7 @@ function SatellitePage(){
   const [location, setLocation] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const { store } = useGlobalReducer()
+  const { store, dispatch } = useGlobalReducer()
   
   useEffect(() => {
     setLocation(store.userLocation)
@@ -17,10 +17,10 @@ function SatellitePage(){
 
   useEffect(() => {
     const getISSPassesFromAPI = async () => {
-      if (location && !isLoaded) {
+      if (location && !isLoaded && !store.issPassesList) {
         try {
           const issData = await getISSPasses(location.latitude, location.longitude)
-          setIssPasses(issData)
+          dispatch({ type: "SET_ISS_PASSES", payload: issData })
           setIsLoaded(true)
           console.log('Cargados pasos ISS...')
         } catch (error) {
@@ -29,18 +29,22 @@ function SatellitePage(){
       }
     }
     getISSPassesFromAPI()
-  }, [location, isLoaded])
+  }, [location, isLoaded, store.issPassesList])
 
   useEffect(() => {
-    console.log(issPasses)
-  }, [issPasses])
+    if(!issPasses){
+      console.log(store.issPassesList)
+      setIssPasses(store.issPassesList)
+    }
+  }, [issPasses, store.issPassesList])
   return(
     <div className="flex flex-col items-center justify-center w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
       <div className="flex flex-col items-center justify-center gap-3 w-6/7 h-6/7 overflow-y-auto render-iss-passes">
         {issPasses
-          ? issPasses.passes.map((iss) => {
+          ? issPasses.passes.map((iss, index) => {
               return (
                 <ISSCard 
+                  key={index}
                   issImg={"https://static.euronews.com/articles/stories/08/58/46/10/1536x864_cmsv2_f37c6ed4-36d6-5c98-9591-8770770ec419-8584610.jpg"}
                   issDuration={iss.duration}
                   issStart={iss.startVisibility}

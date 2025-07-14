@@ -5,6 +5,7 @@ export const initialStore = () => {
     selectedBase: null,
     eventList: [],
     userData: null,
+    issPassesList: null,
   }
 };
 
@@ -30,6 +31,9 @@ export default function storeReducer(store, action = {}) {
 
     case "SET_EVENT_LIST":
       return { ...store, eventList: [...action.payload] }
+
+    case "SET_ISS_PASSES":
+      return { ...store, issPassesList: action.payload }
 
     case "ADD_USER_DATA":
       return { ...store, userData: action.payload }
