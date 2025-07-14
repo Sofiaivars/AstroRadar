@@ -27,8 +27,18 @@ const getCategories = (list) => {
 }
 
 const getISSPasses = async (latitude, longitude) => {
-  const response = await fetch(`https://api.n2yo.com/rest/v1/satellite/visualpasses/25544/${latitude}/${longitude}/700/2/300/&apiKey=${isskey}`);
-  const data = await response.json()
+  const response = await fetch(`${mainURL}/isspasses`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ latitude, longitude })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error al solicitar pasos de la ISS");
+  }
+
+  const data = await response.json();
   return data
 }
 
