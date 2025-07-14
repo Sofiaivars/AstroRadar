@@ -22,6 +22,7 @@ sqlalchemy = "*"
 colorama = "*"
 flask-cors = "*"
 openai = "*"
+requests = "*"
 
 [requires]
 python_version = "3.13"

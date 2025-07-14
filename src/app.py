@@ -17,6 +17,7 @@ from flask_cors import CORS
 from ai_service.cosmo_functions import cosmo_tip
 from ai_service.coodenadas_ai import ask_ai
 from datetime import datetime
+import requests
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -289,7 +290,6 @@ def create_base():
         db.session.rollback()
         return jsonify({"msg": "Error al guardar la base", "error": str(e)}), 500
 
-
 @app.route('/getbases', methods=['GET'])
 @jwt_required()
 def get_user_bases():
@@ -301,6 +301,26 @@ def get_user_bases():
 
     bases = Base.query.filter_by(user_id=user.id).all()
     return jsonify({"bases": [b.serialize() for b in bases]}), 200
+
+@app.route('/isspasses', methods=['POST'])
+def get_iss_passes():
+    data = request.get_json()
+    
+    if not data :
+        return jsonify({"msg": "Sin datos"}), 400
+    
+    latitude = data.get('latitude')
+    longitude = data.get('longitude')
+    
+    if latitude is None or longitude is None:
+        return jsonify({"msg": "Faltan latitud o longitud"}), 400
+    
+    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/visualpasses/25544/{latitude}/{longitude}/700/2/300/&apiKey=GP8GZ9-6PRTJJ-RKJE6A-5J1L')
+    if response.status_code == 200:
+        data = response.json()
+        return jsonify(data)
+    else:
+        print(f'Sin respuesta: {response.status_code}') 
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

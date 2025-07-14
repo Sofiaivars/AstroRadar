@@ -1,6 +1,6 @@
 /*SCROLLBAR*/
 .render-events-list::-webkit-scrollbar {
-  width: 5px;
+  width: 3px;
 }
 
 .render-events-list::-webkit-scrollbar-track {
@@ -8,6 +8,6 @@
 }
 
 .render-events-list::-webkit-scrollbar-thumb {
-  background-color: #36b9da8f;
+  background-color: #36b9da36;
   border-radius: 10px;
 }

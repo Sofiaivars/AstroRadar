@@ -21,7 +21,7 @@ function LoginForm({handleClick}){
   return (
     <>
       <div className="flex flex-col p-3 rounded-2xl borde-con-degradado justify-between shadow-lg shadow-purple-300 login-card">
-        <h1 className="text-center text-xl subtitle">¡Nos alegra volverte a ver!</h1>
+        <h1 className="text-center text-xl mb-5 subtitle">¡Nos alegra volverte a ver!</h1>
         <div className="flex flex-col gap-3">
           <input type="text" className="p-2 rounded-2xl login-inputs" id="login-username" placeholder="Nombre de usuario" value={username} onChange={handleInputChange} />
           <input type="password" className="p-2 rounded-2xl login-inputs" id="login-password" placeholder="Password" value={password} onChange={handleInputChange}/>
