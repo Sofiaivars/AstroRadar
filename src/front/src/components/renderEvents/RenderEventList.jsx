@@ -22,26 +22,24 @@ function RenderEventList({eventList, renderCategory}){
   }, [renderCategory, eventList])
 
   return(
-    <div className="rounded-2xl w-full h-full overflow-hidden">
-      <div className="flex flex-col gap-3 w-full h-full rounded-2xl overflow-y-auto p-3 render-events-list borde-con-degradado">
-        {eventList && renderList
-          ? (renderList.map((astroEvent) => {
-                return <EventCard 
-                  key={astroEvent.id}
-                  eventImg={astroEvent.image}
-                  eventName={astroEvent.event}
-                  eventCategory={astroEvent.category}
-                  eventStart={astroEvent.start_date}
-                  eventEnd={astroEvent.end_date}
-                  eventVisibility={astroEvent.visibility}
-                  eventMoon={astroEvent.moon}
-                  eventId={astroEvent.id}
-                />
-              })
-            )
-          : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>}
-      </div>
-    </div>
+    <div className="flex flex-col gap-3 w-full h-full overflow-y-auto p-3 render-events-list">
+      {eventList && renderList
+        ? (renderList.map((astroEvent) => {
+              return <EventCard 
+                key={astroEvent.id}
+                eventImg={astroEvent.image}
+                eventName={astroEvent.event}
+                eventCategory={astroEvent.category}
+                eventStart={astroEvent.start_date}
+                eventEnd={astroEvent.end_date}
+                eventVisibility={astroEvent.visibility}
+                eventMoon={astroEvent.moon}
+                eventId={astroEvent.id}
+              />
+            })
+          )
+        : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>}
+    </div> 
   )
 }
 
