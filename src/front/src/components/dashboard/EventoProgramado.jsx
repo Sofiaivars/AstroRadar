@@ -1,4 +1,8 @@
+import { List } from "lucide-react";
+import { useNavigate } from "react-router";
+
 const EventoProgramado = () => {
+  const navigate = useNavigate()
 
     return (<>
      <div className="rounded-xl w-full h-[190px]">
@@ -58,6 +62,7 @@ const EventoProgramado = () => {
                
                 
               }}
+              onClick={() => navigate('/dashboard/iss')}
             >
               <div
                 className="
@@ -78,7 +83,7 @@ const EventoProgramado = () => {
                   backgroundColor: "var(--components-background)",
                 }}
               >
-                <span>&#62;</span>
+                <span><List size={17}/></span>
               </div>
             </button>
         </div>
