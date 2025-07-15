@@ -41,7 +41,7 @@ const getCategories = (list) => {
   return
 }
 
-//Añadir evento a UserMissions
+//Añadir evento a UserMissions================================
 const addUserMission = async (user_id, event_id, state) => {
   const response = await fetch(`${mainURL}/add-user-mission`, {
     method: 'POST',
@@ -60,10 +60,45 @@ const addUserMission = async (user_id, event_id, state) => {
 
 // Obtener userMissions
 const getUserMissions = async (userId) => {
-  const response = await fetch(`${mainURL}/usermissions/${userId}`);
+  try {
+    const response = await fetch(`${mainURL}/usermissions/${userId}`);
+    if (!response.ok) {
+      if (response.status === 404) {
+        return [];
+      }
+      throw Error("Error al obtener misiones del usuario.");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error en getUserMissions: ${error}`);
+    return [];
+  }
+}
+
+// Actualizar state de una misión por id
+const updateMissionState = async (missionId, missionState) => {
+  const response = await fetch(`${mainURL}/update_mission_state/${missionId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ state: missionState })
+  });
+
   if (!response.ok) {
     const errorData = await response.json();
-    throw Error(errorData.msg || "Error al obtener misiones del usuario.");
+    throw Error(errorData.msg || "Error al actualizar state.");
+  }
+  const data = await response.json();
+  return data;
+
+}
+
+const deleteMission = async (missionId) => {
+  const response = await fetch(`${mainURL}/delete-mission/${missionId}`, {
+    method: 'DELETE'
+  });
+  if (!response.ok) {
+    throw new Error(`Error al borrar misión: ${response.statusText}`);
   }
   const data = await response.json();
   return data;
@@ -92,4 +127,4 @@ const getAboveSatellites = async (latitude, longitude) => {
   return data.info
 }
 
-export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions }
+export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions, updateMissionState, deleteMission }

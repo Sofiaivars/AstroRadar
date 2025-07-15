@@ -209,7 +209,7 @@ def get_events():
         return jsonify({"msg": "No se han encontrado eventos."}), 404
     return jsonify([event.serialize() for event in events]), 200
 
-# MISSIONS BY USER WIP!!!
+# MISSIONS BY USER
 @app.route('/usermissions/<int:user_id>', methods=['GET'])
 def get_missions_by_id(user_id):
     statement = (
@@ -241,6 +241,38 @@ def add_user_mission():
     db.session.add(new_user_mission)
     db.session.commit()
     return jsonify({"user_id": user_id, "event_id": event_id, "state": state}), 200
+
+# ACTUALIZAR CAMPO STATE DE USERMISSION
+@app.route('/update_mission_state/<int:mission_id>', methods=['PUT'])
+def update_mission_state(mission_id):
+    data = request.get_json()
+    if not data:
+        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+    
+    new_state = data.get('state')
+    
+    mission = UserMission.query.get(mission_id)
+    if not mission:
+        return jsonify({"error": "Mission not found!"}), 404
+    
+    mission.state = new_state
+    db.session.commit()
+    
+    return jsonify(mission.serialize()), 200
+
+# BORRAR USER MISSION
+@app.route('/delete-mission/<int:mission_id>', methods=['DELETE'])
+def delete_mission(mission_id):
+    mission = UserMission.query.get(mission_id)
+    
+    if not mission:
+        return jsonify({"error": "Misión no encontrada"}), 404
+    
+    db.session.delete(mission)
+    db.session.commit()
+    
+    return jsonify({"message": f'Misión {mission_id} eliminada correctamente.'}), 200
+    
 
 # ENDPOINT TEMPORAL PARA GUARDAR EVENTOS
 @app.route('/saveevents', methods=['POST'])

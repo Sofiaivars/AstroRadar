@@ -2,21 +2,53 @@ import './RenderEventList.css'
 import { useEffect, useState } from "react"
 import EventCard from "./EventCard"
 import PageLoader from "../loaders/PageLoader"
-import { getUserMissions } from '../../servicios/events-missions-service'
 import UserMissionCard from './UserMissionCard'
+import { deleteMission, getUserMissions, updateMissionState } from "../../servicios/events-missions-service";
 
 function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
-  const [userMissionsList, setUserMissionsList] = useState(null)
+  const [userMissionsList, setUserMissionsList] = useState([])
+
+  const getUserMissionsFromDB = async () => {
+    const response = await getUserMissions(userId)
+    setUserMissionsList(response)
+  } 
+
+  const checkActiveMissions = async () => {
+    const activeMissionsData = await getUserMissions(userId)
+    const filteredList = [...activeMissionsData].filter((mission) => mission.state === "active")
+    if(filteredList.length >= 1){
+      return true
+    }
+    return false
+  }
+
+  const handleUserMissionButton = async (missionId) => {
+    try{
+      const isMoreThanOneActive = await checkActiveMissions()
+      if(isMoreThanOneActive){
+        return alert("Ya tienes una misión en curso.")
+      }
+      const response = await updateMissionState(missionId, "active")
+      await getUserMissionsFromDB()
+      return console.log(response)
+    }catch(error){
+      console.error(`Error al actualizar estado de misión: ${error}`)
+    }
+  }
+
+  const deleteUserMission = async (missionId) => {
+    try{
+      await deleteMission(missionId)
+      await getUserMissionsFromDB()
+      return alert(`Misión ${missionId} borrada correctamente.`);
+    }catch(error){
+      console.error(`Error al borrar misión: ${error}`);
+    }
+  }
 
   useEffect(() => {
-    if(!userMissionsList){
-      const getUserMissionsFromDB = async () => {
-        const response = await getUserMissions(userId)
-        setUserMissionsList(response)
-      } 
-      getUserMissionsFromDB()
-    }
+    getUserMissionsFromDB()
   }, [renderCategory])
 
   useEffect(() => {
@@ -55,7 +87,7 @@ function RenderEventList({eventList, renderCategory, userId}){
               })
             )
           : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>
-        : userMissionsList
+        : (userMissionsList.length > 0)
             ? (userMissionsList.map((mission) => {
                 return (
                   <UserMissionCard
@@ -69,11 +101,14 @@ function RenderEventList({eventList, renderCategory, userId}){
                     eventMoon={mission.event.moon}
                     eventId={mission.event.id}
                     missionState={mission.state}
+                    missionId={mission.id}
                     userId={mission.user_id}
+                    handleClick={handleUserMissionButton}
+                    deleteUserMission={deleteUserMission}
                   />
                 )
               }))
-            : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>
+            : <div className="flex items-center justify-center w-full h-full">No tienes misiones guardadas...</div>
       }
     </div> 
   )
