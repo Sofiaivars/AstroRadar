@@ -4,6 +4,7 @@ import RenderEventList from "../components/renderEvents/RenderEventList"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx"
 import LoaderMini from '../components/loaders/LoaderMini.jsx'
 import './EventsPage.css'
+import PageLoader from "../components/loaders/PageLoader.jsx"
 
 function EventsPage(){
   const [eventList, setEventList] = useState(null)
@@ -15,11 +16,9 @@ function EventsPage(){
   const { store } = useGlobalReducer()
   
   useEffect(() => {
-    setEventList(store.eventList)
-    if(!userId){
-      setUserId(store.userData.id)
-    }
-  }, [])
+    if (store?.eventList) setEventList(store.eventList);
+    if (store?.userData?.id) setUserId(store.userData.id);
+  }, [store]);
 
   useEffect(() => {
     if(eventList){
@@ -58,7 +57,15 @@ function EventsPage(){
             })
           : <LoaderMini/>}
       </div>
-      <RenderEventList eventList={eventList} renderCategory={renderCategory} userId={userId}/>
+      {eventList && store.userData
+      ? <RenderEventList eventList={eventList} renderCategory={renderCategory} userId={userId}/>
+      : store?.userData === null
+        ? (
+            <div className="flex flex-col items-center justify-center h-full w-full text-center p-6">
+              <p>⚠️ Datos no disponibles, vuelve al DASHBOARD</p>
+            </div>
+          )
+        : <div className="flex flex-col items-center justify-center h-full w-full text-center p-6"><PageLoader/></div>}
     </div>
   )
 }

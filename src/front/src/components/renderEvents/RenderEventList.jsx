@@ -2,21 +2,43 @@ import './RenderEventList.css'
 import { useEffect, useState } from "react"
 import EventCard from "./EventCard"
 import PageLoader from "../loaders/PageLoader"
-import { getUserMissions } from '../../servicios/events-missions-service'
 import UserMissionCard from './UserMissionCard'
+import { getUserMissions, updateMissionState } from "../../servicios/events-missions-service";
 
 function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
   const [userMissionsList, setUserMissionsList] = useState(null)
 
-  useEffect(() => {
-    if(!userMissionsList){
-      const getUserMissionsFromDB = async () => {
+  const getUserMissionsFromDB = async () => {
         const response = await getUserMissions(userId)
         setUserMissionsList(response)
       } 
-      getUserMissionsFromDB()
+
+  const checkActiveMissions = async () => {
+    const activeMissionsData = await getUserMissions(userId)
+    const filteredList = [...activeMissionsData].filter((mission) => mission.state === "active")
+    if(filteredList.length > 1){
+      return true
     }
+    return false
+  }
+
+  const handleUserMissionButton = async (missionId) => {
+    try{
+      const isMoreThanOneActive = await checkActiveMissions()
+      if(isMoreThanOneActive){
+        return console.log("Ya tienes una misión en curso.")
+      }
+      const response = await updateMissionState(missionId, "active")
+      await getUserMissionsFromDB()
+      return console.log(response)
+    }catch(error){
+      console.error(`Error al actualizar estado de misión: ${error}`)
+    }
+  }
+
+  useEffect(() => {
+    getUserMissionsFromDB()
   }, [renderCategory])
 
   useEffect(() => {
@@ -69,7 +91,9 @@ function RenderEventList({eventList, renderCategory, userId}){
                     eventMoon={mission.event.moon}
                     eventId={mission.event.id}
                     missionState={mission.state}
+                    missionId={mission.id}
                     userId={mission.user_id}
+                    handleClick={handleUserMissionButton}
                   />
                 )
               }))

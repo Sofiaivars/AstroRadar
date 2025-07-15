@@ -41,7 +41,7 @@ const getCategories = (list) => {
   return
 }
 
-//Añadir evento a UserMissions
+//Añadir evento a UserMissions================================
 const addUserMission = async (user_id, event_id, state) => {
   const response = await fetch(`${mainURL}/add-user-mission`, {
     method: 'POST',
@@ -68,6 +68,23 @@ const getUserMissions = async (userId) => {
   const data = await response.json();
   return data;
 }
+
+// Actualizar state de una misión por id
+const updateMissionState = async (missionId, missionState) => {
+  const response = await fetch(`${mainURL}/update_mission_state/${missionId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ state: missionState })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error al actualizar state.");
+  }
+  const data = await response.json();
+  return data;
+
+}
 //==========================================================
 
 const getISSPasses = async (latitude, longitude) => {
@@ -92,4 +109,4 @@ const getAboveSatellites = async (latitude, longitude) => {
   return data.info
 }
 
-export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions }
+export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions, updateMissionState }
