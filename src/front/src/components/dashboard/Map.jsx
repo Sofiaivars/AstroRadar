@@ -16,7 +16,7 @@ const Map = ({ locations, userPosition, onSelectBase }) => {
   };
 
   return (
-    <div className="relative rounded-xl overflow-hidden">
+    <div className="relative rounded-xl overflow-hidden h-[500px]">
       <MapboxMap
         locations={locations}
         userPosition={userPosition}
@@ -27,7 +27,7 @@ const Map = ({ locations, userPosition, onSelectBase }) => {
       {/* Botón de explorar */}
 
       {/* Mensaje inferior con la base seleccionada */}
-      <div className="absolute bottom-8 left-6 p-[2px] rounded-md border-2 border-gray-500 max-w-[280px]">
+      <div className="absolute bottom-8 left-6 p-[2px] rounded-md border-2 border-gray-500 max-w-[280px] ">
         <div className="bg-white/1 backdrop-blur-xs rounded-md p-4 min-h-[100px] text-[var(--astroradar-white)] text-center">
           <h3 className="text-base font-semibold mb-1">Bases Estelares</h3>
           <p className="text-sm mt-5">

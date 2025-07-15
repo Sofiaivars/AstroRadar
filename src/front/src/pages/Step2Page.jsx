@@ -1,25 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const Step2Page = () => {
   const navigate = useNavigate();
-  const { store } = useGlobalReducer(); // accedemos al store global
+  const { store, dispatch } = useGlobalReducer();
   const [missionStarted, setMissionStarted] = useState(false);
 
-  const _startMission = () => {
+  useEffect(() => {
+    // Intentamos obtener la ubicación del usuario al montar el componente
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          dispatch({
+            type: "ADD_USER_LOCATION",
+            payload: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            },
+          });
+        },
+        (error) => {
+          console.error("Error obteniendo la ubicación del usuario:", error);
+        }
+      );
+    } else {
+      console.error("La geolocalización no está soportada por este navegador.");
+    }
+  }, [dispatch]);
 
+  const _startMission = () => {
     if (!store.selectedBase) {
       alert("No hay base seleccionada.");
       return;
     }
 
     const { latitude, longitude } = store.selectedBase.coordinates;
-    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
 
-    window.open(googleMapsUrl, "_blank"); // abre en nueva pestaña
+    // URL para navegar con indicaciones desde la ubicación del usuario
+    const { userLocation } = store;
+    const googleMapsUrl = userLocation
+      ? `https://www.google.com/maps/dir/?api=1&origin=${userLocation.latitude},${userLocation.longitude}&destination=${latitude},${longitude}`
+      : `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
 
+    window.open(googleMapsUrl, "_blank");
     setMissionStarted(true);
   };
 

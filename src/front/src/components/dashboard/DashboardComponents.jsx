@@ -89,7 +89,7 @@ function DashboardComponents(){
       <div className="flex flex-row gap-3 w-full h-full">
         <div className="flex flex-col w-1/2 gap-1">
           <EventoDestacado />
-          <MapboxDashboard locations={spots} userPosition={userLocation}/>
+          <MapDashboard locations={spots} userPosition={userLocation}/>
           <div className="flex flex-row w-full gap-1">
             <Calendar />
             <EventoSugerido />
