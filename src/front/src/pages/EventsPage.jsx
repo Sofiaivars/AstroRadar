@@ -5,6 +5,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx"
 import LoaderMini from '../components/loaders/LoaderMini.jsx'
 import './EventsPage.css'
 import PageLoader from "../components/loaders/PageLoader.jsx"
+import { useNavigate } from "react-router"
 
 function EventsPage(){
   const [eventList, setEventList] = useState(null)
@@ -14,6 +15,7 @@ function EventsPage(){
   const [userId, setUserId] = useState(null)
 
   const { store } = useGlobalReducer()
+  const navigate = useNavigate()
   
   useEffect(() => {
     if (store?.eventList) setEventList(store.eventList);
@@ -26,6 +28,12 @@ function EventsPage(){
       setCategories(dataToCategories)
     }
   }, [eventList])
+
+  useEffect(() => {
+    if(store?.userData === null){
+      return navigate('/dashboard')
+    }
+  }, [store?.userData, navigate])
 
   return(
     <div className="flex flex-col w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">

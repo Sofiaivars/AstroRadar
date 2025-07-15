@@ -41,6 +41,7 @@ function RenderEventList({eventList, renderCategory, userId}){
     try{
       await deleteMission(missionId)
       await getUserMissionsFromDB()
+      setUserMissionsList(null)
       return alert(`Misión ${missionId} borrada correctamente.`);
     }catch(error){
       console.error(`Error al borrar misión: ${error}`);
