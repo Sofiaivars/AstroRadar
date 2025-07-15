@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import EventCard from "./EventCard"
 import PageLoader from "../loaders/PageLoader"
 
-function RenderEventList({eventList, renderCategory}){
+function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
 
   useEffect(() => {
@@ -32,6 +32,7 @@ function RenderEventList({eventList, renderCategory}){
                 eventVisibility={astroEvent.visibility}
                 eventMoon={astroEvent.moon}
                 eventId={astroEvent.id}
+                userId={userId}
               />
             })
           )

@@ -9,11 +9,15 @@ function EventsPage(){
   const [categories, setCategories] = useState(null)
   const categoryList = categories ? Object.keys(categories) : []
   const [renderCategory, setRenderCategory] = useState("all")
+  const [userId, setUserId] = useState(null)
 
   const { store } = useGlobalReducer()
-
+  
   useEffect(() => {
     setEventList(store.eventList)
+    if(!userId){
+      setUserId(store.userData.id)
+    }
   }, [])
 
   useEffect(() => {
@@ -46,7 +50,7 @@ function EventsPage(){
             })
           : <LoaderMini/>}
       </div>
-      <RenderEventList eventList={eventList} renderCategory={renderCategory}/>
+      <RenderEventList eventList={eventList} renderCategory={renderCategory} userId={userId}/>
     </div>
   )
 }

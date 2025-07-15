@@ -1,18 +1,16 @@
 import { CalendarDays, CalendarClock, CalendarOff, Telescope, Moon, Hourglass } from "lucide-react";
 import CountdownComponent from "./CountdownComponent";
 
-function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, eventId}){
+function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, eventId, userId}){
 
   const handleClick = () => {
+    if(!userId || !eventId){
+      return console.log('userId o eventId vacíos.')
+    }
     const data = {
-      event: eventName,
-      category: eventCategory,
-      startDate: eventStart,
-      endDate: eventEnd,
-      image: eventImg,
-      moon: eventMoon,
-      visibility: eventVisibility,
-      id: eventId
+      user_id: userId,
+      event_id: eventId,
+      state: 'scheduled'
     }
     return console.log(data)
   }
