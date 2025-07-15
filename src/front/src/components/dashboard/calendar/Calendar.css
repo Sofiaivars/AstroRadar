@@ -1,16 +1,24 @@
 body {
   overflow: hidden;
 }
-.p-datepicker-calendar td {
-  padding: 0.25rem !important;
-  min-width: 1.5rem;
-  height: 1.2rem;
+.calendar-class .p-datepicker {
+  width: 350px !important;
+  height: 285px !important;
+  max-height: 100% !important;
+  overflow: hidden !important;  
+}
+.calendar-class .p-datepicker-inline {
+  width: 300px !important;
+}
+.calendar-class .p-datepicker-inline {
+  width: 300px;
+  height: auto;
+}
+.calendar-class .p-datepicker-calendar th,
+.calendar-class .p-datepicker-calendar td,
+.calendar-class .p-datepicker-header {
+  font-size: 0.75rem !important;
+  padding: 0 !important;
+  margin-top: -0.25rem !important;
 }
 
-.p-datepicker-calendar td span {
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-.calendar-class :deep(.p-calendar) {
-  border-radius: 16px !important;
-}
