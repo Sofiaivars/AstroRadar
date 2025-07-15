@@ -3,6 +3,7 @@ import { getCategories } from "../servicios/events-missions-service"
 import RenderEventList from "../components/renderEvents/RenderEventList"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx"
 import LoaderMini from '../components/loaders/LoaderMini.jsx'
+import './EventsPage.css'
 
 function EventsPage(){
   const [eventList, setEventList] = useState(null)
@@ -30,6 +31,13 @@ function EventsPage(){
   return(
     <div className="flex flex-col w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
       <div className="flex justify-center items-center rounded-2xl w-full gap-5 pb-3 botonera">
+        <button 
+          className="rounded-2xl p-2 hover:bg-purple-300 transition-colors duration-500 cursor-pointer borde-con-degradado" 
+          onClick={() => setRenderCategory("scheduled")}
+        >
+          Misiones programadas
+        </button>
+        <div className="h-full rounded-2xl separator"></div>
         <button 
           className="rounded-2xl p-2 hover:bg-purple-300 transition-colors duration-500 cursor-pointer borde-con-degradado" 
           onClick={() => setRenderCategory("all")}

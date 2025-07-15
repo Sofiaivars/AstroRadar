@@ -58,6 +58,16 @@ const addUserMission = async (user_id, event_id, state) => {
   return data;
 }
 
+// Obtener userMissions
+const getUserMissions = async (userId) => {
+  const response = await fetch(`${mainURL}/usermissions/${userId}`);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error al obtener misiones del usuario.");
+  }
+  const data = await response.json();
+  return data;
+}
 //==========================================================
 
 const getISSPasses = async (latitude, longitude) => {
@@ -82,4 +92,4 @@ const getAboveSatellites = async (latitude, longitude) => {
   return data.info
 }
 
-export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission }
+export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions }
