@@ -3,21 +3,21 @@ import { useEffect, useState } from "react"
 import EventCard from "./EventCard"
 import PageLoader from "../loaders/PageLoader"
 import UserMissionCard from './UserMissionCard'
-import { getUserMissions, updateMissionState } from "../../servicios/events-missions-service";
+import { deleteMission, getUserMissions, updateMissionState } from "../../servicios/events-missions-service";
 
 function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
   const [userMissionsList, setUserMissionsList] = useState(null)
 
   const getUserMissionsFromDB = async () => {
-        const response = await getUserMissions(userId)
-        setUserMissionsList(response)
-      } 
+    const response = await getUserMissions(userId)
+    setUserMissionsList(response)
+  } 
 
   const checkActiveMissions = async () => {
     const activeMissionsData = await getUserMissions(userId)
     const filteredList = [...activeMissionsData].filter((mission) => mission.state === "active")
-    if(filteredList.length > 1){
+    if(filteredList.length >= 1){
       return true
     }
     return false
@@ -27,7 +27,7 @@ function RenderEventList({eventList, renderCategory, userId}){
     try{
       const isMoreThanOneActive = await checkActiveMissions()
       if(isMoreThanOneActive){
-        return console.log("Ya tienes una misión en curso.")
+        return alert("Ya tienes una misión en curso.")
       }
       const response = await updateMissionState(missionId, "active")
       await getUserMissionsFromDB()
@@ -35,6 +35,17 @@ function RenderEventList({eventList, renderCategory, userId}){
     }catch(error){
       console.error(`Error al actualizar estado de misión: ${error}`)
     }
+  }
+
+  const deleteUserMission = async (missionId) => {
+    try{
+      await deleteMission(missionId)
+      await getUserMissionsFromDB()
+      return alert(`Misión ${missionId} borrada correctamente.`);
+    }catch(error){
+      console.error(`Error al borrar misión: ${error}`);
+    }
+    
   }
 
   useEffect(() => {
@@ -94,6 +105,7 @@ function RenderEventList({eventList, renderCategory, userId}){
                     missionId={mission.id}
                     userId={mission.user_id}
                     handleClick={handleUserMissionButton}
+                    deleteUserMission={deleteUserMission}
                   />
                 )
               }))

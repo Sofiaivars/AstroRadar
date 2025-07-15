@@ -85,6 +85,17 @@ const updateMissionState = async (missionId, missionState) => {
   return data;
 
 }
+
+const deleteMission = async (missionId) => {
+  const response = await fetch(`${mainURL}/delete-mission/${missionId}`, {
+    method: 'DELETE'
+  });
+  if (!response.ok) {
+    throw new Error(`Error al borrar misión: ${response.statusText}`);
+  }
+  const data = await response.json();
+  return data;
+}
 //==========================================================
 
 const getISSPasses = async (latitude, longitude) => {
@@ -109,4 +120,4 @@ const getAboveSatellites = async (latitude, longitude) => {
   return data.info
 }
 
-export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions, updateMissionState }
+export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions, updateMissionState, deleteMission }

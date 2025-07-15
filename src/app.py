@@ -260,6 +260,20 @@ def update_mission_state(mission_id):
     
     return jsonify(mission.serialize()), 200
 
+# BORRAR USER MISSION
+@app.route('/delete-mission/<int:mission_id>', methods=['DELETE'])
+def delete_mission(mission_id):
+    mission = UserMission.query.get(mission_id)
+    
+    if not mission:
+        return jsonify({"error": "Misión no encontrada"}), 404
+    
+    db.session.delete(mission)
+    db.session.commit()
+    
+    return jsonify({"message": f'Misión {mission_id} eliminada correctamente.'}), 200
+    
+
 # ENDPOINT TEMPORAL PARA GUARDAR EVENTOS
 @app.route('/saveevents', methods=['POST'])
 def save_events_to_db():
