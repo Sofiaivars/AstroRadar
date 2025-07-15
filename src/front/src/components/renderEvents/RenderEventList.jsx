@@ -7,7 +7,7 @@ import { deleteMission, getUserMissions, updateMissionState } from "../../servic
 
 function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
-  const [userMissionsList, setUserMissionsList] = useState(null)
+  const [userMissionsList, setUserMissionsList] = useState([])
 
   const getUserMissionsFromDB = async () => {
     const response = await getUserMissions(userId)
@@ -41,12 +41,10 @@ function RenderEventList({eventList, renderCategory, userId}){
     try{
       await deleteMission(missionId)
       await getUserMissionsFromDB()
-      setUserMissionsList(null)
       return alert(`Misión ${missionId} borrada correctamente.`);
     }catch(error){
       console.error(`Error al borrar misión: ${error}`);
     }
-    
   }
 
   useEffect(() => {
@@ -89,7 +87,7 @@ function RenderEventList({eventList, renderCategory, userId}){
               })
             )
           : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>
-        : userMissionsList
+        : (userMissionsList.length > 0)
             ? (userMissionsList.map((mission) => {
                 return (
                   <UserMissionCard
@@ -110,7 +108,7 @@ function RenderEventList({eventList, renderCategory, userId}){
                   />
                 )
               }))
-            : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>
+            : <div className="flex items-center justify-center w-full h-full">No tienes misiones guardadas...</div>
       }
     </div> 
   )

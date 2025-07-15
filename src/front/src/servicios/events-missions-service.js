@@ -60,13 +60,20 @@ const addUserMission = async (user_id, event_id, state) => {
 
 // Obtener userMissions
 const getUserMissions = async (userId) => {
-  const response = await fetch(`${mainURL}/usermissions/${userId}`);
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw Error(errorData.msg || "Error al obtener misiones del usuario.");
+  try {
+    const response = await fetch(`${mainURL}/usermissions/${userId}`);
+    if (!response.ok) {
+      if (response.status === 404) {
+        return [];
+      }
+      throw Error("Error al obtener misiones del usuario.");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error en getUserMissions: ${error}`);
+    return [];
   }
-  const data = await response.json();
-  return data;
 }
 
 // Actualizar state de una misión por id
