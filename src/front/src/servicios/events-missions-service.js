@@ -41,6 +41,25 @@ const getCategories = (list) => {
   return
 }
 
+//Añadir evento a UserMissions
+const addUserMission = async (user_id, event_id, state) => {
+  const response = await fetch(`${mainURL}/add-user-mission`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id, event_id, state })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error al enviar userMission");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+//==========================================================
+
 const getISSPasses = async (latitude, longitude) => {
   const response = await fetch(`${mainURL}/isspasses`, {
     method: 'POST',
@@ -63,4 +82,4 @@ const getAboveSatellites = async (latitude, longitude) => {
   return data.info
 }
 
-export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites }
+export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission }
