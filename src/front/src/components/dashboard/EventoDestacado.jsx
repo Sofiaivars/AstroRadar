@@ -3,23 +3,21 @@ import useGlobalReducer from '../../hooks/useGlobalReducer.jsx'
 import LoaderMini from '../loaders/LoaderMini.jsx'
 import { Telescope, Moon } from 'lucide-react'
 import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
+import { addUserMission } from '../../servicios/events-missions-service.js'
 
 const EventoDestacado = () => {
   const [eventList, setEventList] = useState(null)
   const [firstEvent, setFirstEvent] = useState(null)
   const { store } = useGlobalReducer()
 
-  const handleClick = () => {
-    const data = {
-      event: firstEvent.event,
-      category: firstEvent.category,
-      startDate: firstEvent.start_date,
-      endDate: firstEvent.end_date,
-      image: firstEvent.image,
-      moon: firstEvent.moon,
-      visibility: firstEvent.visibility
+  const handleClick = async () => {
+    if(!store.userData.id || !firstEvent.id){
+      return console.log('userId o eventId vacíos.')
     }
-    return console.log(data)
+    const missionState = "scheduled"
+    const response = await addUserMission(store.userData.id, firstEvent.id, missionState)
+    console.log(response)
+    return alert("Misión guardarda correctamente.")
   }
 
   useEffect(() => {
