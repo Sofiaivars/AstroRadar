@@ -4,11 +4,26 @@ const mainURL = import.meta.env.VITE_SERVICES_URL;
 const isskey = import.meta.env.VITE_ISS_KEY;
 
 const getEventsFromAPI = async () => {
-  const response = await fetch(`${mainURL}/events`, {
-    method: 'GET'
-  });
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(`${mainURL}/events`, {
+      method: 'GET'
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        console.warn('La ruta /events no fue encontrada.');
+        return [];
+      }
+      throw new Error(`Error al obtener eventos: ${response.status}`)
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error al obtener eventos de la BD: ${error}`);
+    return [];
+  }
+
 }
 
 const getCategories = (list) => {

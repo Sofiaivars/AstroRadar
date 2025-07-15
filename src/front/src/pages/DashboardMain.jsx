@@ -1,21 +1,7 @@
 import { Outlet } from "react-router";
 import SideBar from "../components/sidebar/SideBar.jsx";
-import { useEffect } from "react";
-import { getEventsFromAPI } from "../servicios/events-missions-service.js";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 function DashboardMain() {
-  const { store, dispatch } = useGlobalReducer()
-
-  useEffect(() => {
-    if(!Array.isArray(store.eventList) || store.eventList.length === 0){
-      const getEvents = async () => {
-        const eventsFromAPI = await getEventsFromAPI()
-        dispatch({ type: "SET_EVENT_LIST", payload: eventsFromAPI })
-      }
-      getEvents()
-    }
-  }, [])
 
   return (
     <>

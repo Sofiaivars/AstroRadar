@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getCategories } from "../servicios/events-missions-service"
 import RenderEventList from "../components/renderEvents/RenderEventList"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx"
+import LoaderMini from '../components/loaders/LoaderMini.jsx'
 
 function EventsPage(){
   const [eventList, setEventList] = useState(null)
@@ -16,8 +17,10 @@ function EventsPage(){
   }, [])
 
   useEffect(() => {
-    const dataToCategories = getCategories(eventList)
-    setCategories(dataToCategories)
+    if(eventList){
+      const dataToCategories = getCategories(eventList)
+      setCategories(dataToCategories)
+    }
   }, [eventList])
 
   return(
@@ -29,17 +32,19 @@ function EventsPage(){
         >
           Mostrar todos
         </button>
-        {categoryList.map((key, index) => {
-          return (
-            <button 
-              key={`${key}${index}`}
-              className="rounded-2xl p-2 hover:bg-purple-300 transition-colors duration-500 cursor-pointer borde-con-degradado" 
-              onClick={() => setRenderCategory(key)}
-            >
-              {key}
-            </button>
-          )
-        })}
+        {categories
+          ? categoryList.map((key, index) => {
+              return (
+                <button 
+                  key={`${key}${index}`}
+                  className="rounded-2xl p-2 hover:bg-purple-300 transition-colors duration-500 cursor-pointer borde-con-degradado" 
+                  onClick={() => setRenderCategory(key)}
+                >
+                  {key}
+                </button>
+              )
+            })
+          : <LoaderMini/>}
       </div>
       <RenderEventList eventList={eventList} renderCategory={renderCategory}/>
     </div>

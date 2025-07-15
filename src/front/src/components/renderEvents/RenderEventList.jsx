@@ -7,23 +7,24 @@ function RenderEventList({eventList, renderCategory}){
   const [renderList, setRenderList] = useState(eventList)
 
   useEffect(() => {
-    const setList = () => {
-      if(eventList){
-        const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
-        if(renderCategory !== "all"){
-          const filteredList = sortedList.filter((event) => event.category === renderCategory)
-          return setRenderList(filteredList)
-        }
-
+    if(eventList){
+      const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+      if(renderCategory !== "all"){
+        const filteredList = sortedList.filter((event) => event.category === renderCategory)
+        setRenderList(filteredList)
+      } else {
         return setRenderList(sortedList)
       }
     }
-    setList()
   }, [renderCategory, eventList])
+
+  useEffect(() => {
+    console.log(eventList)
+  }, [eventList])
 
   return(
     <div className="flex flex-col gap-3 w-full h-full overflow-y-auto p-3 render-events-list">
-      {eventList && renderList
+      {Array.isArray(eventList) && eventList.length > 0 && renderList.length > 0
         ? (renderList.map((astroEvent) => {
               return <EventCard 
                 key={astroEvent.id}
