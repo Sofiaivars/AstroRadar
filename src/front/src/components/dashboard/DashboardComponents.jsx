@@ -15,12 +15,14 @@ import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
+import { getISSPasses } from "../../servicios/events-missions-service.js";
 
 function DashboardComponents(){
   const [userData, setUserData] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [spots, setSpots] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const { store, dispatch } = useGlobalReducer()
 
@@ -59,8 +61,11 @@ function DashboardComponents(){
   }, [])
 
   useEffect(() => {
-    console.log(store.userData)
-    setUserData(store.userData)
+    if(store.userData){
+      console.log(store.userData)
+      setUserData(store.userData)
+      setIsLoaded(true)
+    }
   }, [store.userData])
 
   useEffect(() => {
@@ -70,12 +75,22 @@ function DashboardComponents(){
   }, [store.userLocation])
 
   useEffect(() => {
+    const getISSPassesFromAPI = async () => {
+      try {
+        const issData = await getISSPasses(userLocation.latitude, userLocation.longitude)
+        dispatch({ type: "SET_ISS_PASSES", payload: issData })
+        console.log('Cargados pasos ISS...')
+      } catch (error) {
+        console.error("Error obteniendo datos de ISS:", error)
+      }
+    }
     if(userLocation){
       fetchAI(userLocation.latitude, userLocation.longitude)
+      getISSPassesFromAPI()
     }
   }, [userLocation])
 
-  if (!userData) {
+  if (!isLoaded) {
     return (
       <div className="flex flex-col justify-center items-center">
         <PageLoader />

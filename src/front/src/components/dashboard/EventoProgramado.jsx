@@ -14,7 +14,7 @@ const EventoProgramado = () => {
     if(store.issPassesList){
       setFirstIssPass(store.issPassesList.passes[0])
     }
-  }, [])
+  }, [store.issPassesList])
 
     return (<>
      <div className="rounded-xl w-full h-[190px]">

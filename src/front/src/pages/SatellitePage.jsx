@@ -1,46 +1,25 @@
 import { useEffect, useState } from "react"
 import ISSCard from "../components/renderISSPasses/ISSCard"
-import { getISSPasses } from "../servicios/events-missions-service"
 import useGlobalReducer from '../hooks/useGlobalReducer.jsx'
 import PageLoader from '../components/loaders/PageLoader.jsx'
 
 function SatellitePage(){
   const [issPasses, setIssPasses] = useState(null)
-  const [location, setLocation] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const { store, dispatch } = useGlobalReducer()
-  
-  useEffect(() => {
-    setLocation(store.userLocation)
-  }, [store.userLocation])
-
-  useEffect(() => {
-    const getISSPassesFromAPI = async () => {
-      if (location && !isLoaded && !store.issPassesList) {
-        try {
-          const issData = await getISSPasses(location.latitude, location.longitude)
-          dispatch({ type: "SET_ISS_PASSES", payload: issData })
-          setIsLoaded(true)
-          console.log('Cargados pasos ISS...')
-        } catch (error) {
-          console.error("Error obteniendo datos de ISS:", error)
-        }
-      }
-    }
-    getISSPassesFromAPI()
-  }, [location, isLoaded, store.issPassesList])
+  const { store } = useGlobalReducer()
 
   useEffect(() => {
     if(!issPasses){
       console.log(store.issPassesList)
       setIssPasses(store.issPassesList)
+      setIsLoaded(true)
     }
   }, [issPasses, store.issPassesList])
   return(
     <div className="flex flex-col items-center justify-center w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
       <div className="flex flex-col items-center justify-center gap-3 w-6/7 h-6/7 overflow-y-auto render-iss-passes">
-        {issPasses
+        {issPasses && isLoaded
           ? issPasses.passes.map((iss, index) => {
               return (
                 <ISSCard 
