@@ -2,43 +2,79 @@ import './RenderEventList.css'
 import { useEffect, useState } from "react"
 import EventCard from "./EventCard"
 import PageLoader from "../loaders/PageLoader"
+import { getUserMissions } from '../../servicios/events-missions-service'
+import UserMissionCard from './UserMissionCard'
 
-function RenderEventList({eventList, renderCategory}){
+function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
+  const [userMissionsList, setUserMissionsList] = useState(null)
 
   useEffect(() => {
-    const setList = () => {
-      if(eventList){
-        const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
-        if(renderCategory !== "all"){
-          const filteredList = sortedList.filter((event) => event.category === renderCategory)
-          return setRenderList(filteredList)
-        }
+    if(!userMissionsList){
+      const getUserMissionsFromDB = async () => {
+        const response = await getUserMissions(userId)
+        setUserMissionsList(response)
+      } 
+      getUserMissionsFromDB()
+    }
+  }, [renderCategory])
 
+  useEffect(() => {
+    console.log(userMissionsList)
+  }, [userMissionsList])
+
+  useEffect(() => {
+    if(eventList){
+      const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+      if(renderCategory !== "all"){
+        const filteredList = sortedList.filter((event) => event.category === renderCategory)
+        setRenderList(filteredList)
+      } else {
         return setRenderList(sortedList)
       }
     }
-    setList()
   }, [renderCategory, eventList])
 
   return(
     <div className="flex flex-col gap-3 w-full h-full overflow-y-auto p-3 render-events-list">
-      {eventList && renderList
-        ? (renderList.map((astroEvent) => {
-              return <EventCard 
-                key={astroEvent.id}
-                eventImg={astroEvent.image}
-                eventName={astroEvent.event}
-                eventCategory={astroEvent.category}
-                eventStart={astroEvent.start_date}
-                eventEnd={astroEvent.end_date}
-                eventVisibility={astroEvent.visibility}
-                eventMoon={astroEvent.moon}
-                eventId={astroEvent.id}
-              />
-            })
-          )
-        : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>}
+      {renderCategory !== "scheduled"
+        ? Array.isArray(eventList) && Array.isArray(renderList) && renderList.length > 0
+          ? (renderList.map((astroEvent) => {
+                return <EventCard 
+                  key={astroEvent.id}
+                  eventImg={astroEvent.image}
+                  eventName={astroEvent.event}
+                  eventCategory={astroEvent.category}
+                  eventStart={astroEvent.start_date}
+                  eventEnd={astroEvent.end_date}
+                  eventVisibility={astroEvent.visibility}
+                  eventMoon={astroEvent.moon}
+                  eventId={astroEvent.id}
+                  userId={userId}
+                />
+              })
+            )
+          : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>
+        : userMissionsList
+            ? (userMissionsList.map((mission) => {
+                return (
+                  <UserMissionCard
+                    key={mission.id}
+                    eventImg={mission.image}
+                    eventName={mission.event.name}
+                    eventCategory={mission.event.category}
+                    eventStart={mission.event.start_date}
+                    eventEnd={mission.event.end_date}
+                    eventVisibility={mission.event.visibility}
+                    eventMoon={mission.event.moon}
+                    eventId={mission.event.id}
+                    missionState={mission.state}
+                    userId={mission.user_id}
+                  />
+                )
+              }))
+            : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>
+      }
     </div> 
   )
 }

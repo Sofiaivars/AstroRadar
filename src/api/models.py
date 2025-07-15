@@ -91,7 +91,7 @@ class UserMission(db.Model):
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
     base_id: Mapped[int] = mapped_column(ForeignKey("base.id", ondelete="CASCADE"), nullable=True)
     event_id: Mapped[int] = mapped_column(ForeignKey("event.id", ondelete="CASCADE"))
-    state: Mapped[bool] = mapped_column(Boolean(), nullable=False)
+    state: Mapped[str] = mapped_column(String(15), nullable=False)
     image: Mapped[str] = mapped_column(Text, nullable=True)
     
     missions_user: Mapped["User"] = relationship("User", back_populates="user_missions")
