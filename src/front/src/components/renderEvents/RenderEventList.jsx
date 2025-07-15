@@ -18,13 +18,9 @@ function RenderEventList({eventList, renderCategory}){
     }
   }, [renderCategory, eventList])
 
-  useEffect(() => {
-    console.log(eventList)
-  }, [eventList])
-
   return(
     <div className="flex flex-col gap-3 w-full h-full overflow-y-auto p-3 render-events-list">
-      {Array.isArray(eventList) && eventList.length > 0 && renderList.length > 0
+      {Array.isArray(eventList) && Array.isArray(renderList) && renderList.length > 0
         ? (renderList.map((astroEvent) => {
               return <EventCard 
                 key={astroEvent.id}
