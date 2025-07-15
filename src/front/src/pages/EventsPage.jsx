@@ -34,6 +34,11 @@ function EventsPage(){
       return navigate('/dashboard')
     }
   }, [store?.userData, navigate])
+  
+  if (store?.userData === null) {
+    // Bloquea renderizado mientras redirige
+    return null;
+  }
 
   return(
     <div className="flex flex-col w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
