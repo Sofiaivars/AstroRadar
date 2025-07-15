@@ -4,11 +4,26 @@ const mainURL = import.meta.env.VITE_SERVICES_URL;
 const isskey = import.meta.env.VITE_ISS_KEY;
 
 const getEventsFromAPI = async () => {
-  const response = await fetch(`${mainURL}/events`, {
-    method: 'GET'
-  });
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(`${mainURL}/events`, {
+      method: 'GET'
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        console.warn('La ruta /events no fue encontrada.');
+        return [];
+      }
+      throw new Error(`Error al obtener eventos: ${response.status}`)
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error al obtener eventos de la BD: ${error}`);
+    return [];
+  }
+
 }
 
 const getCategories = (list) => {
@@ -25,6 +40,35 @@ const getCategories = (list) => {
   }
   return
 }
+
+//Añadir evento a UserMissions
+const addUserMission = async (user_id, event_id, state) => {
+  const response = await fetch(`${mainURL}/add-user-mission`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id, event_id, state })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error al enviar userMission");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+// Obtener userMissions
+const getUserMissions = async (userId) => {
+  const response = await fetch(`${mainURL}/usermissions/${userId}`);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error al obtener misiones del usuario.");
+  }
+  const data = await response.json();
+  return data;
+}
+//==========================================================
 
 const getISSPasses = async (latitude, longitude) => {
   const response = await fetch(`${mainURL}/isspasses`, {
@@ -48,4 +92,4 @@ const getAboveSatellites = async (latitude, longitude) => {
   return data.info
 }
 
-export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites }
+export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions }

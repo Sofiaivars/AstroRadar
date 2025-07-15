@@ -15,7 +15,7 @@ import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
-import { getISSPasses } from "../../servicios/events-missions-service.js";
+import { getEventsFromAPI, getISSPasses } from "../../servicios/events-missions-service.js";
 
 function DashboardComponents(){
   const [userData, setUserData] = useState(null);
@@ -58,6 +58,23 @@ function DashboardComponents(){
         }
       )
     }
+
+    if(!Array.isArray(store.eventList) || store.eventList.length === 0){
+      try{
+        const getEvents = async () => {
+          const eventsFromAPI = await getEventsFromAPI()
+          dispatch({ type: "SET_EVENT_LIST", payload: eventsFromAPI })
+        }
+        getEvents()
+      }catch(error){
+        console.error(error)
+      }
+      
+    }
+  }, [])
+
+  useEffect(() => {
+    
   }, [])
 
   useEffect(() => {

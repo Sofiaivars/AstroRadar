@@ -224,6 +224,24 @@ def get_missions_by_id(user_id):
         return jsonify({"msg": "El usuario no tiene misiones guardadas."}), 404
     return jsonify([mission.serialize() for mission in missions]), 200
 
+#ADD USER MISSION
+@app.route('/add-user-mission', methods=['POST'])
+def add_user_mission():
+    data = request.get_json()
+    if not data:
+        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+    
+    user_id = data.get("user_id")
+    event_id = data.get("event_id")
+    state = data.get("state")
+    if not user_id or not event_id or not state:
+        return jsonify({"msg": "Faltan datos obligatorios"}), 400
+    
+    new_user_mission = UserMission(user_id=user_id, base_id="", event_id=event_id, state=state, image="")
+    db.session.add(new_user_mission)
+    db.session.commit()
+    return jsonify({"user_id": user_id, "event_id": event_id, "state": state}), 200
+
 # ENDPOINT TEMPORAL PARA GUARDAR EVENTOS
 @app.route('/saveevents', methods=['POST'])
 def save_events_to_db():
