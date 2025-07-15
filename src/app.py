@@ -10,7 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from api.utils import APIException, generate_sitemap
 from api.models import db, User, Event, UserMission, Base
-from api.routes import api
+from api.routes import umissions
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
@@ -50,7 +50,7 @@ app.config["JWT_SECRET_KEY"] = "contraseñamegaultrahipersecretaindescifrable123
 jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix
-app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(umissions, url_prefix='/umissions')
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -208,71 +208,6 @@ def get_events():
     if not events:
         return jsonify({"msg": "No se han encontrado eventos."}), 404
     return jsonify([event.serialize() for event in events]), 200
-
-# MISSIONS BY USER
-@app.route('/usermissions/<int:user_id>', methods=['GET'])
-def get_missions_by_id(user_id):
-    statement = (
-        select(UserMission)
-        .options(
-            selectinload(UserMission.missions_base),
-            selectinload(UserMission.missions_event)
-        ).where(UserMission.user_id == user_id)
-    )
-    missions = db.session.execute(statement).scalars().all()
-    if not missions:
-        return jsonify({"msg": "El usuario no tiene misiones guardadas."}), 404
-    return jsonify([mission.serialize() for mission in missions]), 200
-
-#ADD USER MISSION
-@app.route('/add-user-mission', methods=['POST'])
-def add_user_mission():
-    data = request.get_json()
-    if not data:
-        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
-    
-    user_id = data.get("user_id")
-    event_id = data.get("event_id")
-    state = data.get("state")
-    if not user_id or not event_id or not state:
-        return jsonify({"msg": "Faltan datos obligatorios"}), 400
-    
-    new_user_mission = UserMission(user_id=user_id, base_id="", event_id=event_id, state=state, image="")
-    db.session.add(new_user_mission)
-    db.session.commit()
-    return jsonify({"user_id": user_id, "event_id": event_id, "state": state}), 200
-
-# ACTUALIZAR CAMPO STATE DE USERMISSION
-@app.route('/update_mission_state/<int:mission_id>', methods=['PUT'])
-def update_mission_state(mission_id):
-    data = request.get_json()
-    if not data:
-        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
-    
-    new_state = data.get('state')
-    
-    mission = UserMission.query.get(mission_id)
-    if not mission:
-        return jsonify({"error": "Mission not found!"}), 404
-    
-    mission.state = new_state
-    db.session.commit()
-    
-    return jsonify(mission.serialize()), 200
-
-# BORRAR USER MISSION
-@app.route('/delete-mission/<int:mission_id>', methods=['DELETE'])
-def delete_mission(mission_id):
-    mission = UserMission.query.get(mission_id)
-    
-    if not mission:
-        return jsonify({"error": "Misión no encontrada"}), 404
-    
-    db.session.delete(mission)
-    db.session.commit()
-    
-    return jsonify({"message": f'Misión {mission_id} eliminada correctamente.'}), 200
-    
 
 # ENDPOINT TEMPORAL PARA GUARDAR EVENTOS
 @app.route('/saveevents', methods=['POST'])
