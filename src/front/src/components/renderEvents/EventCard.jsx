@@ -1,18 +1,17 @@
 import { CalendarDays, CalendarClock, CalendarOff, Telescope, Moon, Hourglass } from "lucide-react";
 import CountdownComponent from "./CountdownComponent";
+import { addUserMission } from "../../servicios/events-missions-service";
 
 function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, eventId, userId}){
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if(!userId || !eventId){
       return console.log('userId o eventId vacíos.')
     }
-    const data = {
-      user_id: userId,
-      event_id: eventId,
-      state: 'scheduled'
-    }
-    return console.log(data)
+    const missionState = "scheduled"
+    const response = await addUserMission(userId, eventId, missionState)
+    
+    return console.log(response)
   }
 
   return(
