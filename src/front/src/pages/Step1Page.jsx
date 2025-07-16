@@ -64,7 +64,7 @@ function Step1Page() {
   const handleClick = async () => {
     const response = await updateStellarBase(location.id, missionId)
     console.log(response)
-    //_confirmLocation()
+    _confirmLocation()
     return
   }
 
