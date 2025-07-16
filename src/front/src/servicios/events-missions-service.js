@@ -93,6 +93,7 @@ const updateMissionState = async (missionId, missionState) => {
 
 }
 
+// Borrar misión
 const deleteMission = async (missionId) => {
   const response = await fetch(`${mainURL}/umissions/delete-mission/${missionId}`, {
     method: 'DELETE'
@@ -100,6 +101,23 @@ const deleteMission = async (missionId) => {
   if (!response.ok) {
     throw new Error(`Error al borrar misión: ${response.statusText}`);
   }
+  const data = await response.json();
+  return data;
+}
+
+// Actualizar base estelar
+const updateStellarBase = async (baseId, missionId) => {
+  const response = fetch(`${mainURL}/umissions/update-base/${missionId}`, {
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ base_id: baseId })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw Error(errorData.msg || "Error al actualizar base estelar.");
+  }
+
   const data = await response.json();
   return data;
 }
@@ -127,4 +145,14 @@ const getAboveSatellites = async (latitude, longitude) => {
   return data.info
 }
 
-export { getEventsFromAPI, getCategories, getISSPasses, getAboveSatellites, addUserMission, getUserMissions, updateMissionState, deleteMission }
+export {
+  getEventsFromAPI,
+  getCategories,
+  getISSPasses,
+  getAboveSatellites,
+  addUserMission,
+  getUserMissions,
+  updateMissionState,
+  deleteMission,
+  updateStellarBase
+}
