@@ -43,7 +43,7 @@ const getCategories = (list) => {
 
 //Añadir evento a UserMissions================================
 const addUserMission = async (user_id, event_id, state) => {
-  const response = await fetch(`${mainURL}/add-user-mission`, {
+  const response = await fetch(`${mainURL}/umissions/add-user-mission`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user_id, event_id, state })
@@ -61,7 +61,7 @@ const addUserMission = async (user_id, event_id, state) => {
 // Obtener userMissions
 const getUserMissions = async (userId) => {
   try {
-    const response = await fetch(`${mainURL}/usermissions/${userId}`);
+    const response = await fetch(`${mainURL}/umissions/usermissions/${userId}`);
     if (!response.ok) {
       if (response.status === 404) {
         return [];
@@ -78,7 +78,7 @@ const getUserMissions = async (userId) => {
 
 // Actualizar state de una misión por id
 const updateMissionState = async (missionId, missionState) => {
-  const response = await fetch(`${mainURL}/update_mission_state/${missionId}`, {
+  const response = await fetch(`${mainURL}/umissions/update_mission_state/${missionId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ state: missionState })
@@ -94,7 +94,7 @@ const updateMissionState = async (missionId, missionState) => {
 }
 
 const deleteMission = async (missionId) => {
-  const response = await fetch(`${mainURL}/delete-mission/${missionId}`, {
+  const response = await fetch(`${mainURL}/umissions/delete-mission/${missionId}`, {
     method: 'DELETE'
   });
   if (!response.ok) {
