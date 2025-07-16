@@ -10,12 +10,12 @@ const Card = ({ title, image, base, rewards }) => {
   const rawY = useMotionValue(0.5);
 
   // Valores suavizados
-  const x = useSpring(rawX, { stiffness: 100, damping: 20 });
-  const y = useSpring(rawY, { stiffness: 100, damping: 20 });
+  const x = useSpring(rawX, { stiffness: 80, damping: 60 });
+  const y = useSpring(rawY, { stiffness: 80, damping: 60 });
 
   // Aca se hace la ROTACION!
-  const rotateX = useTransform(y, [0, 1], [45, -45]);
-  const rotateY = useTransform(x, [0, 1], [-45, 45]);
+  const rotateX = useTransform(y, [0, 1], [20, -20]);
+  const rotateY = useTransform(x, [0, 1], [-20, 20]);
 
   const handleMouseMove = (e) => {
     const rect = cardRef.current.getBoundingClientRect();
