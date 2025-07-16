@@ -1,5 +1,5 @@
 import React, { act, useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import StepsComponent from "../components/missionsSteps/StepsComponent";
 import { Outlet } from "react-router";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
@@ -10,6 +10,7 @@ function MissionsPage() {
   const [activeStep, setActiveStep] = useState(0);
   const [activeMission, setActiveMission] = useState(null)
 
+  const navigate = useNavigate()
   const { store } = useGlobalReducer()
 
   const routeToStepIndex = {
@@ -26,6 +27,9 @@ function MissionsPage() {
   useEffect(() => {
     if(store.userActiveMission){
       setActiveMission(store.userActiveMission)
+      if(store.userActiveMission.base.id){
+        navigate('/dashboard/missions/step2')
+      }
     }
   }, [])
 
