@@ -42,7 +42,11 @@ function Step1Page() {
   };
 
   useEffect(() => {
-    setMissionId(store.userActiveMission.id)
+    if(store.userActiveMission?.id){
+      setMissionId(store.userActiveMission.id)
+    }else{
+      console.log("Sin datos de usuario en el store")
+    }
   }, [location])
 
   // Obtener ubicación del dispositivo para el marcador morado
