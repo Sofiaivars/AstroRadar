@@ -1,35 +1,36 @@
-import { useNavigate } from "react-router"
-import { List } from "lucide-react";
+import { useNavigate } from "react-router";
+import { ChevronRight } from "lucide-react";
 
 const EventoSugerido = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <>
-      <div className="rounded-xl w-[350px] h-71">
-        <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
-  
-          <div className="w-[50%] h-full">
+      <div className="relative rounded-xl w-[350px] h-[286px] overflow-hidden borde-con-degradado border-4 font-poppins">
+        <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl ">
+          <div className="w-full h-full z-0">
             <img
-              src="https://media.istockphoto.com/id/452969547/es/foto/superluna-creciente.jpg?s=612x612&w=0&k=20&c=MVgqQ_NR8qC9tevdhq14AF7FkWtLim51Z7kcC-CJOLg=" 
+              src="https://media.istockphoto.com/id/452969547/es/foto/superluna-creciente.jpg?s=612x612&w=0&k=20&c=MVgqQ_NR8qC9tevdhq14AF7FkWtLim51Z7kcC-CJOLg="
               alt="Evento Sugerido"
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
             />
+            <div className="absolute inset-0 bg-black/40 transition-opacity duration-500 ease-in-out group-hover:bg-black/10" />
           </div>
 
-          {/* Contenido central */}
-          <div className="flex flex-col justify-start ps-1 pe-1 h-full w-[50%]">
-            <p className="text-lg mb-3 mt-3">SUGERIDAS</p>
-            <p className="text-sm mb-2">"SUPERLUNA"</p>
-            <p className="text-xs mt-1">
-              La superluna ocurre cuando la luna llena está en su punto más cercano a la Tierra, luciendo más grande y brillante visualmente.
+          <div className="w-full flex flex-col justify-left z-10 -ml-60 mt-4 p-4">
+            <p className="text-md font-bold mb-4 ">Proximos eventos</p>
+
+            <p className="text-sm">
+              Busca los proximos eventos en tu zona y se parte de la comunidad
+              astronomica local.
             </p>
+          </div>
+
+          <div className="w-[20%] flex justify-between mt-40">
             <button
-              className="
-                btn-sug  
-                group
-                rounded-[12px]
-                p-[1.5px]
+              className="               
+                rounded-[12px]       
+                z-10         
                 text-white
                 text-sm
                 h-10
@@ -40,6 +41,7 @@ const EventoSugerido = () => {
                 flex
                 items-center
                 justify-center
+                mt-16
                 hover:shadow-2xl
                 hover:shadow-purple-600/30"
               style={{
@@ -48,9 +50,9 @@ const EventoSugerido = () => {
                   "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)", //bordeeeeeeeee
                 backgroundOrigin: "border-box",
                 backgroundClip: "padding-box, border-box",
-                border: "2px solid transparent",  
+                border: "2px solid transparent",
               }}
-              onClick={() => navigate('/dashboard/events')}
+              onClick={() => navigate("/dashboard/events")}
             >
               <div
                 className="
@@ -70,14 +72,15 @@ const EventoSugerido = () => {
                   backgroundColor: "var(--components-background)",
                 }}
               >
-                <span><List size={17}/></span>
+                <span>
+                  <ChevronRight size={20} />
+                </span>
               </div>
             </button>
           </div>
-
         </div>
       </div>
     </>
-  )
-}
-export default EventoSugerido
+  );
+};
+export default EventoSugerido;
