@@ -1,30 +1,50 @@
 import { useNavigate } from "react-router";
-import { Home, Globe, MapPin, Rocket, Settings, PowerOff  } from "lucide-react";
+import {
+  Home,
+  CalendarSearch,
+  MapPin,
+  Rocket,
+  Settings,
+  PowerOff,
+} from "lucide-react";
 
 function SideBar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleClick = () => {
     localStorage.removeItem("jwt-token");
     navigate("/");
   };
-  
+
   return (
-    <div
-      className="flex flex-col justify-between items-center h-full p-2 rounded-2xl borde-con-degradado"
-    >
+    <div className="flex flex-col justify-between items-center h-full p-2 rounded-2xl borde-con-degradado">
       <div className="flex flex-col h-full gap-4 items-start">
-        <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Home" onClick={() => navigate('/dashboard')}>
-            <Home size={20} />
+        <button
+          className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer"
+          title="Home"
+          onClick={() => navigate("/dashboard")}
+        >
+          <Home size={20} />
         </button>
-        <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Mapa">
-            <MapPin size={20} />
+        <button
+          className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer"
+          title="Mapa"
+        >
+          <MapPin size={20} />
         </button>
-        <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Misiones" onClick={() => navigate('/dashboard/missions')}>
-            <Rocket size={20} />
+        <button
+          className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer"
+          title="Misiones"
+          onClick={() => navigate("/dashboard/missions")}
+        >
+          <Rocket size={20} />
         </button>
-        <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Globe">
-            <Globe size={20} />
+        <button
+          className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer"
+          title="Globe"
+          onClick={() => navigate("/dashboard/events")}
+        >
+          <CalendarSearch size={20} />
         </button>
       </div>
       <div className="flex flex-col justify-center">
