@@ -76,3 +76,20 @@ def delete_mission(mission_id):
     db.session.commit()
     
     return jsonify({"message": f'Misión {mission_id} eliminada correctamente.'}), 200
+
+# ACTUALIZAR BASE ESTELAR DE LA MISIÓN 
+@umissions.route('/update-base/<int:mission_id>', methods=['PUT'])
+def update_base(mission_id):
+    data = request.get_json()
+    if not data:
+        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+    
+    new_base_id = data.get('base_id')
+    mission = UserMission.query.get(mission_id)
+    
+    if not mission:
+        return jsonify({"error": "Misión no encontrada"}), 404
+    
+    mission.base_id = new_base_id
+    db.session.commit()
+    return jsonify(mission.serialize()), 200
