@@ -26,7 +26,7 @@ const EventoSugerido = () => {
             </p>
           </div>
 
-          <div className="w-[20%] flex justify-between mt-40">
+          <div className="w-[20%] flex justify-between mt-40 pr-4">
             <button
               className="               
                 rounded-[12px]       
