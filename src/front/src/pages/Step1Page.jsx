@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { updateMissionData } from "../servicios/mission-service.js";
+import { updateStellarBase } from "../servicios/events-missions-service.js";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
 import { getUserLocation } from "../servicios/geolocation-service";
 import { getJSONCoords } from "../servicios/cosmo-service.js";
@@ -13,6 +14,7 @@ function Step1Page() {
   const [location, setLocation] = useState(null);         // base seleccionada
   const [showSuccess, setShowSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [missionId, setMissionId] = useState(null)
 
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer(); // acceso al store global
@@ -39,6 +41,10 @@ function Step1Page() {
     }
   };
 
+  useEffect(() => {
+    setMissionId(store.userActiveMission.id)
+  }, [location])
+
   // Obtener ubicación del dispositivo para el marcador morado
   useEffect(() => {
     getUserLocation(
@@ -56,9 +62,10 @@ function Step1Page() {
   };
 
   const handleClick = async () => {
-    // GUARDAR ID DE LA BASE
-    console.log(location)
+    const response = await updateStellarBase(location.id, missionId)
+    console.log(response)
     //_confirmLocation()
+    return
   }
 
   // Al seleccionar base desde el mapa

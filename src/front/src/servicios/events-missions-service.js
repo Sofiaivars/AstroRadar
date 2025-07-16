@@ -107,15 +107,14 @@ const deleteMission = async (missionId) => {
 
 // Actualizar base estelar
 const updateStellarBase = async (baseId, missionId) => {
-  const response = fetch(`${mainURL}/umissions/update-base/${missionId}`, {
+  const response = await fetch(`${mainURL}/umissions/update-base/${missionId}`, {
     method: 'PUT',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ base_id: baseId })
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw Error(errorData.msg || "Error al actualizar base estelar.");
+    throw Error("Error al actualizar base estelar.");
   }
 
   const data = await response.json();
