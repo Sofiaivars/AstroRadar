@@ -137,7 +137,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
 
       if (response.ok) {
         dispatch({ type: "SET_SELECTED_BASE", payload });
-        if (onSelectBase) onSelectBase(payload);
 
         // Evitar duplicados por nombre
         setUserBases((prev) => {
@@ -204,6 +203,7 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                   e.originalEvent.stopPropagation();
                   setSelectedSpot(loc);
                   setNewSpot(null);
+                  onSelectBase(loc)
                 }}
               />
             ))}

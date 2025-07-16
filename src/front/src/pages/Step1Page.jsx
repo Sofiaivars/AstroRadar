@@ -55,6 +55,12 @@ function Step1Page() {
     navigate("/dashboard/missions/step2");
   };
 
+  const handleClick = async () => {
+    // GUARDAR ID DE LA BASE
+    console.log(location)
+    //_confirmLocation()
+  }
+
   // Al seleccionar base desde el mapa
   const handleSelectBase = (base) => {
     dispatch({ type: "SET_SELECTED_BASE", payload: base });
@@ -63,6 +69,7 @@ function Step1Page() {
       name: base.name,
       lat: base.coordinates.latitude,
       lng: base.coordinates.longitude,
+      id: base.id
     });
 
     setShowSuccess(true);
@@ -100,7 +107,7 @@ function Step1Page() {
             {/* Botón de confirmación */}
             {location && (
               <button
-                onClick={_confirmLocation}
+                onClick={handleClick}
                 className="rounded-[12px] text-white text-sm h-10 w-auto font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
                 style={{
                   backgroundImage:
