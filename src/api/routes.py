@@ -41,7 +41,7 @@ def add_user_mission():
     if not user_id or not event_id or not state:
         return jsonify({"msg": "Faltan datos obligatorios"}), 400
     
-    new_user_mission = UserMission(user_id=user_id, base_id="", event_id=event_id, state=state, image="")
+    new_user_mission = UserMission(user_id=user_id, base_id=None, event_id=event_id, state=state, image="")
     db.session.add(new_user_mission)
     db.session.commit()
     return jsonify({"user_id": user_id, "event_id": event_id, "state": state}), 200
