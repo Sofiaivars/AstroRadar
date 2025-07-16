@@ -4,8 +4,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import LoaderMini from '../../loaders/LoaderMini.jsx';
 import useGlobalReducer from '../../../hooks/useGlobalReducer.jsx';
 
-
-
 const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
   const { dispatch } = useGlobalReducer();
 
@@ -20,7 +18,6 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
   const [newSpot, setNewSpot] = useState(null);
   const [newSpotName, setNewSpotName] = useState('');
   const [showSavedMessage, setShowSavedMessage] = useState(false);
-  const [userBases, setUserBases] = useState([]);
 
   useEffect(() => {
     if (Array.isArray(locations) && locations.length > 0) {
@@ -32,57 +29,9 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
     }
   }, [locations]);
 
-  /*useEffect(() => {
-    const fetchUserBases = async () => {
-      const token = localStorage.getItem('jwt-token');
-      if (!token) return;
-
-      try {
-        const response = await fetch(`${import.meta.env.VITE_SERVICES_URL}/getbases`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const data = await response.json();
-
-        if (response.ok && Array.isArray(data.bases)) {
-          const rawBases = data.bases.map((b) => ({
-            name: b.base,
-            coordinates: {
-              latitude: parseFloat(b.latitude),
-              longitude: parseFloat(b.longitude),
-            },
-            id: b.id
-          }));
-
-          // Eliminar duplicados por nombre
-          const seenNames = new Set();
-          const filteredBases = rawBases.filter((base) => {
-            const name = base.name.toLowerCase();
-            if (seenNames.has(name)) return false;
-            seenNames.add(name);
-            return true;
-          });
-
-          setUserBases(filteredBases);
-        } else {
-          console.warn('No se pudieron cargar las bases del usuario:', data?.msg);
-        }
-      } catch (error) {
-        console.error('Error al obtener bases del usuario:', error);
-      }
-    };
-
-    fetchUserBases();
-  }, []);*/
-
   const isLoading = !Array.isArray(locations) || locations.length === 0;
 
   const handleMapClick = (event) => {
-    if (userLocations.length > 0 || newSpot) return;
-
     const features = event?.originalEvent?.target?.classList;
     if (features && [...features].some(cls => cls.includes('mapboxgl-marker'))) return;
 
@@ -92,13 +41,60 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
     setSelectedSpot(null);
   };
 
-  const handleAddNewSpot = () => {
+  const saveBaseToDB = async ({ name, coordinates }) => {
+    const token = localStorage.getItem("jwt-token");
+    if (!token) {
+      alert("No hay token");
+      return false;
+    }
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SERVICES_URL}/base`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          base: name,
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error("Error al guardar la base:", data);
+        alert(data.msg || "Error al guardar la base");
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      alert("Error al conectar con el servidor");
+      return false;
+    }
+  };
+
+  const handleAddNewSpot = async () => {
     if (newSpotName.trim() === '') return;
+
     const newLocation = {
       name: newSpotName.trim(),
       coordinates: newSpot,
     };
-    setUserLocations([newLocation]);
+
+    const saved = await saveBaseToDB(newLocation);
+    if (saved) {
+      setUserLocations([newLocation]);
+      dispatch({ type: "SET_SELECTED_BASE", payload: newLocation });
+      if (onSelectBase) onSelectBase(newLocation);
+      setShowSavedMessage(true);
+      setTimeout(() => setShowSavedMessage(false), 2000);
+    }
+
     setNewSpot(null);
     setNewSpotName('');
   };
@@ -110,59 +106,21 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
     setSelectedSpot(null);
   };
 
-  const handleSelectBase = async (spot) => {
-    const token = localStorage.getItem("jwt-token");
-    if (!token) return alert("No hay token");
-
-    const payload = {
+  const handleSelectIA_Base = async (spot) => {
+    const newLocation = {
       name: spot.name,
       coordinates: spot.coordinates,
     };
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_SERVICES_URL}/base`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          base: payload.name,
-          latitude: payload.coordinates.latitude,
-          longitude: payload.coordinates.longitude,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        dispatch({ type: "SET_SELECTED_BASE", payload });
-        if (onSelectBase) onSelectBase(payload);
-
-        // Evitar duplicados por nombre
-        setUserBases((prev) => {
-          const exists = prev.some(
-            (b) => b.name.toLowerCase() === payload.name.toLowerCase()
-          );
-          return exists ? prev : [...prev, payload];
-        });
-
-        setShowSavedMessage(true);
-        setTimeout(() => setShowSavedMessage(false), 2000);
-        setSelectedSpot(null);
-      } else {
-        console.error("Error al guardar la base:", data);
-        alert(data.msg || "Error al guardar la base");
-      }
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-      alert("Error al conectar con el servidor");
+    const saved = await saveBaseToDB(newLocation);
+    if (saved) {
+      dispatch({ type: "SET_SELECTED_BASE", payload: newLocation });
+      if (onSelectBase) onSelectBase(newLocation);
+      setShowSavedMessage(true);
+      setTimeout(() => setShowSavedMessage(false), 2000);
+      setSelectedSpot(null);
     }
   };
-
-  useEffect(() => {
-    console.log(selectedSpot)
-  }, [selectedSpot])
 
   return (
     <div className="w-full h-[320px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado bg-[#0e0e0e]">
@@ -180,6 +138,7 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
             mapStyle="mapbox://styles/mapbox/dark-v11"
             style={{ width: '100%', height: '100%' }}
           >
+            {/* Marcadores IA */}
             {locations.map((loc, idx) => (
               <Marker
                 key={`ia-${idx}`}
@@ -194,20 +153,7 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
               />
             ))}
 
-            {/* {userBases.map((loc, idx) => (
-              <Marker
-                key={`base-${idx}`}
-                longitude={loc.coordinates.longitude}
-                latitude={loc.coordinates.latitude}
-                color="#2929a1ff"
-                onClick={(e) => {
-                  e.originalEvent.stopPropagation();
-                  setSelectedSpot(loc);
-                  setNewSpot(null);
-                }}
-              />
-            ))} */}
-
+            {/* Marcador usuario */}
             {userLocations.map((loc, idx) => (
               <Marker
                 key={`user-${idx}`}
@@ -216,12 +162,13 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
                 color="#34d399"
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
-                  setSelectedSpot({ ...loc, isUser: true, index: idx });
+                  setSelectedSpot({ ...loc, isUser: true });
                   setNewSpot(null);
                 }}
               />
             ))}
 
+            {/* Marcador posición actual */}
             {userPosition && (
               <Marker
                 longitude={userPosition.longitude}
@@ -230,6 +177,7 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
               />
             )}
 
+            {/* Popup para nuevo punto manual */}
             {newSpot && (
               <Popup
                 longitude={newSpot.longitude}
@@ -258,12 +206,13 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
                     onClick={handleAddNewSpot}
                     className="mt-1 px-2 py-1 bg-emerald-500 text-white rounded text-sm hover:bg-emerald-600"
                   >
-                    Añadir ubicación
+                    Añadir a mis bases
                   </button>
                 </div>
               </Popup>
             )}
 
+            {/* Popup para punto IA o usuario */}
             {selectedSpot && (
               <Popup
                 longitude={selectedSpot.coordinates.longitude}
@@ -280,12 +229,16 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
                     ✕
                   </button>
                   <strong>{selectedSpot.name}</strong>
-                  <button
-                    onClick={() => handleSelectBase(selectedSpot)}
-                    className="mt-1 px-3 py-1 bg-sky-500 text-white rounded text-sm hover:bg-sky-600 block"
-                  >
-                    Seleccionar esta base
-                  </button>
+
+                  {!selectedSpot.isUser && (
+                    <button
+                      onClick={() => handleSelectIA_Base(selectedSpot)}
+                      className="mt-1 px-3 py-1 bg-sky-500 text-white rounded text-sm hover:bg-sky-600 block"
+                    >
+                      Añadir a mis bases
+                    </button>
+                  )}
+
                   {selectedSpot.isUser && (
                     <button
                       onClick={handleDeleteUserSpot}
