@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router";
 import { Home, Globe, MapPin, Rocket, Settings, PowerOff  } from "lucide-react";
+import useGlobalReducer from "../../hooks/useGlobalReducer";
 
 function SideBar() {
   const navigate = useNavigate()
+
+  const { store } = useGlobalReducer()
 
   const handleClick = () => {
     localStorage.removeItem("jwt-token");
@@ -20,7 +23,10 @@ function SideBar() {
         <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Mapa">
             <MapPin size={20} />
         </button>
-        <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Misiones" onClick={() => navigate('/dashboard/missions')}>
+        <button 
+          className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Misiones" 
+          onClick={!store.userActiveMission.base.id ? () => navigate('/dashboard/missions') : () => navigate('/dashboard/missions/step2')}
+        >
             <Rocket size={20} />
         </button>
         <button className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Globe">
