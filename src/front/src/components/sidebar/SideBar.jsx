@@ -11,6 +11,22 @@ function SideBar() {
     localStorage.removeItem("jwt-token");
     navigate("/");
   };
+
+  const handleMissionNavigate = () => {
+    if(store.userActiveMission){
+      if(!store.userActiveMission.base.id){
+        console.log(store.userActiveMission)
+        console.log(store.userActiveMission.base.id)
+        return navigate('/dashboard/missions')
+      }else{
+        console.log(store.userActiveMission)
+        console.log(store.userActiveMission.base.id)
+        return navigate('/dashboard/missions/step2')
+      }
+    }else{
+      alert("No tienes activada una misión")
+    }
+  }
   
   return (
     <div
@@ -25,7 +41,7 @@ function SideBar() {
         </button>
         <button 
           className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer" title="Misiones" 
-          onClick={!store.userActiveMission.base.id ? () => navigate('/dashboard/missions') : () => navigate('/dashboard/missions/step2')}
+          onClick={handleMissionNavigate}
         >
             <Rocket size={20} />
         </button>
