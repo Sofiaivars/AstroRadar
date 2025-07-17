@@ -1,20 +1,46 @@
-import React from "react";
+import React, { act, useEffect, useState } from "react";
 import fondoPerseidas from "./Assets/perseidas.jpg";
+import useGlobalReducer from "../../../hooks/useGlobalReducer";
+import { TriangleAlert } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const MisionActual = () => {
-  const missionName = "Lluvia de Meteoros - Perseidas";
-  const missionStatus = "Mision en curso";
-  const location = "Observatorio Astronomico UPV";
+  const [activeMission, setActiveMission] = useState()
+  const missionName = activeMission ? activeMission.event.name : "Activa una misión";
+  const missionStatus = activeMission ? activeMission.state : <TriangleAlert/>;
+  const location = activeMission ? activeMission.base.base_name : "";
+
+  const { store } = useGlobalReducer()
+  const navigate = useNavigate()
+
   const handleClick = () => {
-    console.log("Botón clickeado");
+    if(activeMission){
+      if(activeMission.base.id){
+        navigate('/dashboard/missions/step2')
+      }else{
+        navigate('/dashboard/missions/')
+      }
+    }else{
+      navigate('/dashboard')
+    }
   };
+
+  useEffect(() => {
+    if(store.userActiveMission){
+      setActiveMission(store.userActiveMission)
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log(activeMission)
+  }, [activeMission])
 
   return (
     <div className="rounded-[16px] w-1/2 h-70 borde-con-degradado">
       <div
         className="relative w-full h-full rounded-[16px] overflow-hidden shadow-lg text-white font-poppins"
         style={{
-          backgroundImage: `url(${fondoPerseidas})`,
+          backgroundImage: `url(${activeMission ? activeMission.image : "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/releases/2016/10/STScI-01EVT19027NB369FR81GYFQNX3.tif?w=6000&h=3664&fit=clip&crop=faces%2Cfocalpoint"})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundColor: "rgba(0,0,0,0.7)",

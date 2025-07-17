@@ -40,7 +40,7 @@ const EventoDestacado = () => {
         <div className="w-[30%] h-full">
           <img
             src={firstEvent ? firstEvent.image : "https://linda-hoang.com/wp-content/uploads/2014/10/img-placeholder-dark.jpg"} 
-            alt={`imagen del evento destacado ${firstEvent.category}`}
+            alt={`imagen del evento destacado ${firstEvent ? firstEvent.category : ""}`}
             className="w-full h-full object-cover"
           />
         </div>

@@ -32,7 +32,7 @@ function MissionsPage() {
       }
     }
 
-    if(!activeMission){
+    if(!store.userActiveMission){
       navigate('/dashboard')
     }
   }, [])
