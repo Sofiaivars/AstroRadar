@@ -18,7 +18,7 @@ const EventoSugerido = () => {
           </div>
 
           <div className="w-full flex flex-col justify-left z-10 -ml-60 mt-4 p-4">
-            <p className="text-md font-bold mb-4 ">Proximos eventos</p>
+            <p className="text-xl font-bold mb-4 ">Proximos eventos</p>
 
             <p className="text-sm">
               Busca los proximos eventos en tu zona y se parte de la comunidad
