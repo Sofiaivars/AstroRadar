@@ -5,13 +5,20 @@ import { addUserMission } from "../../servicios/events-missions-service";
 function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, eventId, userId}){
 
   const handleClick = async () => {
-    if(!userId || !eventId){
-      return console.log('userId o eventId vacíos.')
+    try{
+      if(!userId || !eventId){
+        return console.log('userId o eventId vacíos.')
+      }
+      const missionState = "scheduled"
+      const response = await addUserMission(userId, eventId, missionState)
+      alert("Misión programada correctamente.")
+      return console.log(response)
+    }catch(error){
+      alert("La misión ya existe.")
+      console.log(error)
+      return
     }
-    const missionState = "scheduled"
-    const response = await addUserMission(userId, eventId, missionState)
     
-    return console.log(response)
   }
 
   return(
