@@ -31,8 +31,8 @@ const Step2Page = () => {
   }, [dispatch]);
 
   const _startMission = () => {
-    if (!store.selectedBase) {
-      alert("No hay base seleccionada.");
+    if (!store.userActiveMission) {
+      alert("No hay misión activada.");
       return;
     }
 
