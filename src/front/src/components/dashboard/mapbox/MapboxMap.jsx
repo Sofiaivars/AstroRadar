@@ -280,12 +280,12 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
                     ✕
                   </button>
                   <strong>{selectedSpot.name}</strong>
-                  <button
+                  {/* <button
                     onClick={() => handleSelectBase(selectedSpot)}
                     className="mt-1 px-3 py-1 bg-sky-500 text-white rounded text-sm hover:bg-sky-600 block"
                   >
                     Seleccionar esta base
-                  </button>
+                  </button> */}
                   {/* {selectedSpot.isUser && (
                     <button
                       onClick={handleDeleteUserSpot}
