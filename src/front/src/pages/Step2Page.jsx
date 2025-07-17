@@ -36,7 +36,7 @@ const Step2Page = () => {
       return;
     }
 
-    const { latitude, longitude } = store.selectedBase.coordinates;
+    const { latitude, longitude } = store.userActiveMission.base;
 
     // URL para navegar con indicaciones desde la ubicación del usuario
     const { userLocation } = store;

@@ -104,7 +104,9 @@ class UserMission(db.Model):
             "user_id": self.user_id,
             "base": {
                 "id": self.base_id,
-                "base_name": self.missions_base.base if self.missions_base else None    
+                "base_name": self.missions_base.base if self.missions_base else None,  
+                "latitude": self.missions_base.latitude if self.missions_base else None,
+                "longitude": self.missions_base.longitude if self.missions_base else None
             },
             "event": {
                 "id": self.event_id,
