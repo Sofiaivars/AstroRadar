@@ -1,16 +1,27 @@
 import './RenderEventList.css'
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import EventCard from "./EventCard"
 import PageLoader from "../loaders/PageLoader"
 import UserMissionCard from './UserMissionCard'
 import { deleteMission, getUserMissions, updateMissionState } from "../../servicios/events-missions-service";
 import useGlobalReducer from '../../hooks/useGlobalReducer'
+import { Toast } from 'primereact/toast';
 
 function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
   const [userMissionsList, setUserMissionsList] = useState([])
 
   const {dispatch} = useGlobalReducer()
+  
+  //Toast
+  const toast = useRef(null)
+  const alreadyActiveMission = () => {
+    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Ya hay una misión activada!' });
+  }
+  const deletedMissionShow = (missionId) => {
+    toast.current.show({ severity: 'success', summary: 'Success', detail: `Misión ${missionId} borrada con éxito!` });
+  }
+  // Toast end
 
   const getUserMissionsFromDB = async () => {
     const response = await getUserMissions(userId)
@@ -19,7 +30,6 @@ function RenderEventList({eventList, renderCategory, userId}){
     dispatch({ type: "ADD_USER_ACTIVE_MISSION", payload: active[0] })
     return
   }
-   
 
   const checkActiveMissions = async () => {
     const activeMissionsData = await getUserMissions(userId)
@@ -34,7 +44,8 @@ function RenderEventList({eventList, renderCategory, userId}){
     try{
       const isMoreThanOneActive = await checkActiveMissions()
       if(isMoreThanOneActive){
-        return alert("Ya tienes una misión en curso.")
+        alreadyActiveMission()
+        return 
       }
       const response = await updateMissionState(missionId, "active")
       await getUserMissionsFromDB()
@@ -48,7 +59,8 @@ function RenderEventList({eventList, renderCategory, userId}){
     try{
       await deleteMission(missionId)
       await getUserMissionsFromDB()
-      return alert(`Misión ${missionId} borrada correctamente.`);
+      deletedMissionShow(missionId)
+      return 
     }catch(error){
       console.error(`Error al borrar misión: ${error}`);
     }
@@ -76,6 +88,7 @@ function RenderEventList({eventList, renderCategory, userId}){
 
   return(
     <div className="flex flex-col gap-3 w-full h-full overflow-y-auto p-3 render-events-list">
+      <Toast ref={toast} />
       {renderCategory !== "scheduled"
         ? Array.isArray(eventList) && Array.isArray(renderList) && renderList.length > 0
           ? (renderList.map((astroEvent) => {

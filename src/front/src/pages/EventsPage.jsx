@@ -16,7 +16,7 @@ function EventsPage(){
 
   const { store } = useGlobalReducer()
   const navigate = useNavigate()
-  
+       
   useEffect(() => {
     if (store?.eventList) setEventList(store.eventList);
     if (store?.userData?.id) setUserId(store.userData.id);
