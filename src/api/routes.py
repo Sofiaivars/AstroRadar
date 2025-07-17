@@ -82,7 +82,7 @@ def delete_mission(mission_id):
 def update_base(mission_id):
     data = request.get_json()
     if not data:
-        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+        return jsonify({"msg": "Error al obtener datos de la petición."}), 400
     
     new_base_id = data.get('base_id')
     mission = UserMission.query.get(mission_id)
@@ -91,5 +91,22 @@ def update_base(mission_id):
         return jsonify({"error": "Misión no encontrada"}), 404
     
     mission.base_id = new_base_id
+    db.session.commit()
+    return jsonify(mission.serialize()), 200
+
+# ACTUALIZAR IMAGEN DE MISIÓN
+@umissions.route('/update-mission-image/<int:mission_id>', methods=['PUT'])
+def update_image(mission_id):
+    data = request.get_json()
+    if not data:
+        return jsonify({"msg": "Sin datos en la petición."})
+    
+    new_image = data.get('image_src')
+    mission = UserMission.query.get(mission_id)
+    
+    if not mission:
+        return jsonify({"error": "Misión no encontrada."})
+    
+    mission.image = new_image
     db.session.commit()
     return jsonify(mission.serialize()), 200
