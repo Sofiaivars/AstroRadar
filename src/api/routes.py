@@ -108,5 +108,6 @@ def update_image(mission_id):
         return jsonify({"error": "Misión no encontrada."})
     
     mission.image = new_image
+    mission.state = "done"
     db.session.commit()
     return jsonify(mission.serialize()), 200
