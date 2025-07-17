@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import useGlobalReducer from '../../hooks/useGlobalReducer.jsx'
+import { updateMissionImage } from '../../servicios/events-missions-service.js'
+
 const CloudinaryUploadWidget = ({ uwConfig, setPublicId, setShowCongrats }) => {
   const uploadWidgetRef = useRef(null);
   const uploadButtonRef = useRef(null);
@@ -51,7 +53,15 @@ const CloudinaryUploadWidget = ({ uwConfig, setPublicId, setShowCongrats }) => {
 
   useEffect(() => {
     console.log(missionImageSrc)
-    // Carga a bd con mission_id
+    const updateImage = async () => {
+      try{
+        const response = await updateMissionImage(missionId, missionImageSrc)
+        console.log(response)
+      }catch(error){
+        console.log(`Error al enviar imagen a base de datos: ${error}`)
+      }
+    }
+    updateImage()
   }, [missionImageSrc])
 
   return (
