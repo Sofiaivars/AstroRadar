@@ -16,13 +16,13 @@ function RenderEventList({eventList, renderCategory, userId}){
   //Toast
   const toast = useRef(null)
   const alreadyActiveMission = () => {
-    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Ya ha una misión activada!' });
+    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Ya hay una misión activada!' });
   }
   const deletedMissionShow = (missionId) => {
     toast.current.show({ severity: 'success', summary: 'Success', detail: `Misión ${missionId} borrada con éxito!` });
   }
   // Toast end
-  
+
   const getUserMissionsFromDB = async () => {
     const response = await getUserMissions(userId)
     setUserMissionsList(response)
