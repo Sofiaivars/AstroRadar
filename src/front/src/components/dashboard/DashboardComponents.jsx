@@ -15,7 +15,7 @@ import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
-import { getEventsFromAPI, getISSPasses } from "../../servicios/events-missions-service.js";
+import { getEventsFromAPI, getISSPasses, getUserMissions } from "../../servicios/events-missions-service.js";
 
 function DashboardComponents(){
   const [userData, setUserData] = useState(null);
@@ -69,12 +69,7 @@ function DashboardComponents(){
       }catch(error){
         console.error(error)
       }
-      
     }
-  }, [])
-
-  useEffect(() => {
-    
   }, [])
 
   useEffect(() => {
@@ -106,6 +101,20 @@ function DashboardComponents(){
       getISSPassesFromAPI()
     }
   }, [userLocation])
+
+  useEffect(() => {
+    if(!store.userActiveMission && userData){
+      const getActiveMissionFromDb = async () => {
+        const response = await getUserMissions(userData.id)
+        const active = [...response].filter((mission) => mission.state === "active")
+        dispatch({ type: "ADD_USER_ACTIVE_MISSION", payload: active[0] })
+        return
+      }
+      getActiveMissionFromDb()
+    }else{
+      console.log("Sin id de usuario.")
+    }
+  }, [userData])
 
   if (!isLoaded) {
     return (

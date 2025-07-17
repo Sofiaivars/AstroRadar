@@ -40,14 +40,14 @@ const EventoDestacado = () => {
         <div className="w-[30%] h-full">
           <img
             src={firstEvent ? firstEvent.image : "https://linda-hoang.com/wp-content/uploads/2014/10/img-placeholder-dark.jpg"} 
-            alt="Lluvia de meteoros"
+            alt={`imagen del evento destacado ${firstEvent ? firstEvent.category : ""}`}
             className="w-full h-full object-cover"
           />
         </div>
 
         {/* Contenido central */}
-        <div className="flex flex-col justify-start gap-2 px-4 py-3 w-[50%]">
-          <h3 className="text-lg font-semibold">{firstEvent ? firstEvent.event : <LoaderMini/>}</h3>
+        <div className="flex flex-col justify-start gap-2 mt-3 px-4 py-3 w-[50%]">
+          <h3 className="text-md font-semibold">{firstEvent ? firstEvent.event : <LoaderMini/>}</h3>
           <p className="text-xs mt-2">
             Categoría: {firstEvent ? firstEvent.category : "Cargando..."}
           </p>
