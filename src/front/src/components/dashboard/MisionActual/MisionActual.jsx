@@ -40,7 +40,7 @@ const MisionActual = () => {
       <div
         className="relative w-full h-full rounded-[16px] overflow-hidden shadow-lg text-white font-poppins"
         style={{
-          backgroundImage: `url(${activeMission ? activeMission.image : "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/releases/2016/10/STScI-01EVT19027NB369FR81GYFQNX3.tif?w=6000&h=3664&fit=clip&crop=faces%2Cfocalpoint"})`,
+          backgroundImage: `url(${activeMission && activeMission.image ? activeMission.image : "https://media.istockphoto.com/id/157639696/photo/purple-space-stars.jpg?s=612x612&w=0&k=20&c=fkLtGZxUS9UPlLJUTeGjvvURT0u-vtxvj5sAYbDNrH4="})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundColor: "rgba(0,0,0,0.7)",
