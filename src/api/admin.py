@@ -14,7 +14,7 @@ class EventAdmin(ModelView):
     column_list = ('id', 'event', 'category', 'start_date', 'end_date', 'moon', 'visibility', 'image')
     
 class UserMissionAdmin(ModelView):
-    column_list = ('id', 'user_id', 'base_id', 'state', 'image')
+    column_list = ('id', 'user_id', 'base_id', 'event_id', 'state', 'image')
 
 def setup_admin(app):
     app.secret_key = os.environ.get('FLASK_APP_KEY', 'sample key')

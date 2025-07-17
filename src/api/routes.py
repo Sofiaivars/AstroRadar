@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.models import db, UserMission
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from sqlalchemy.orm import selectinload
 
 umissions = Blueprint('umissions', __name__)
@@ -41,7 +41,12 @@ def add_user_mission():
     if not user_id or not event_id or not state:
         return jsonify({"msg": "Faltan datos obligatorios"}), 400
     
-    mission_exists = UserMission.query.filter_by(event_id=event_id).first()
+    mission_exists = UserMission.query.filter(
+        and_(
+            UserMission.user_id == user_id,
+            UserMission.event_id == event_id
+        )
+    ).first()
     if mission_exists is not None:
         return jsonify({"msg": f"La misión con id {event_id} ya existe."}), 400
     
