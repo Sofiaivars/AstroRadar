@@ -7,9 +7,24 @@ const Step2Page = () => {
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer();
   const [missionStarted, setMissionStarted] = useState(false);
+  const [selectedBase, setSelectedBase] = useState(null);
 
   useEffect(() => {
-    // Intentamos obtener la ubicación del usuario al montar el componente
+    // Cargar base seleccionada del store o localStorage
+    if (store.selectedBase) {
+      setSelectedBase(store.selectedBase);
+    } else {
+      const savedBase = localStorage.getItem("selectedBase");
+      if (savedBase) {
+        const baseFromStorage = JSON.parse(savedBase);
+        setSelectedBase(baseFromStorage);
+        dispatch({ type: "SET_SELECTED_BASE", payload: baseFromStorage });
+      }
+    }
+  }, [store.selectedBase, dispatch]);
+
+  useEffect(() => {
+    // Obtener ubicación del dispositivo y guardarla en el store
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -30,16 +45,22 @@ const Step2Page = () => {
     }
   }, [dispatch]);
 
+  // Guarda en localStorage cada vez que cambia la base seleccionada
+  useEffect(() => {
+    if (selectedBase) {
+      localStorage.setItem("selectedBase", JSON.stringify(selectedBase));
+    }
+  }, [selectedBase]);
+
   const _startMission = () => {
-    if (!store.userActiveMission) {
-      alert("No hay misión activada.");
+    if (!selectedBase || !selectedBase.coordinates || !selectedBase.coordinates.latitude || !selectedBase.coordinates.longitude) {
+      alert("La base no tiene coordenadas válidas.");
       return;
     }
 
-    const { latitude, longitude } = store.userActiveMission.base;
-
-    // URL para navegar con indicaciones desde la ubicación del usuario
+    const { latitude, longitude } = selectedBase.coordinates;
     const { userLocation } = store;
+
     const googleMapsUrl = userLocation
       ? `https://www.google.com/maps/dir/?api=1&origin=${userLocation.latitude},${userLocation.longitude}&destination=${latitude},${longitude}`
       : `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
