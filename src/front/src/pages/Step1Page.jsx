@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { updateMissionData } from "../servicios/mission-service.js";
+import { updateStellarBase } from "../servicios/events-missions-service.js";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
 import { getUserLocation } from "../servicios/geolocation-service";
 import { getJSONCoords } from "../servicios/cosmo-service.js";
@@ -13,6 +14,7 @@ function Step1Page() {
   const [location, setLocation] = useState(null);         // base seleccionada
   const [showSuccess, setShowSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [missionId, setMissionId] = useState(null)
 
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer(); // acceso al store global
@@ -39,6 +41,14 @@ function Step1Page() {
     }
   };
 
+  useEffect(() => {
+    if(store.userActiveMission?.id){
+      setMissionId(store.userActiveMission.id)
+    }else{
+      console.log("Sin datos de usuario en el store")
+    }
+  }, [location])
+
   // Obtener ubicación del dispositivo para el marcador morado
   useEffect(() => {
     getUserLocation(
@@ -55,6 +65,13 @@ function Step1Page() {
     navigate("/dashboard/missions/step2");
   };
 
+  const handleClick = async () => {
+    const response = await updateStellarBase(location.id, missionId)
+    console.log(response)
+    _confirmLocation()
+    return
+  }
+
   // Al seleccionar base desde el mapa
   const handleSelectBase = (base) => {
     dispatch({ type: "SET_SELECTED_BASE", payload: base });
@@ -63,6 +80,7 @@ function Step1Page() {
       name: base.name,
       lat: base.coordinates.latitude,
       lng: base.coordinates.longitude,
+      id: base.id
     });
 
     setShowSuccess(true);
@@ -100,7 +118,7 @@ function Step1Page() {
             {/* Botón de confirmación */}
             {location && (
               <button
-                onClick={_confirmLocation}
+                onClick={handleClick}
                 className="rounded-[12px] text-white text-sm h-10 w-auto font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
                 style={{
                   backgroundImage:

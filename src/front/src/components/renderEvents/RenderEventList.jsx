@@ -4,15 +4,22 @@ import EventCard from "./EventCard"
 import PageLoader from "../loaders/PageLoader"
 import UserMissionCard from './UserMissionCard'
 import { deleteMission, getUserMissions, updateMissionState } from "../../servicios/events-missions-service";
+import useGlobalReducer from '../../hooks/useGlobalReducer'
 
 function RenderEventList({eventList, renderCategory, userId}){
   const [renderList, setRenderList] = useState(eventList)
   const [userMissionsList, setUserMissionsList] = useState([])
 
+  const {dispatch} = useGlobalReducer()
+
   const getUserMissionsFromDB = async () => {
     const response = await getUserMissions(userId)
     setUserMissionsList(response)
-  } 
+    const active = [...response].filter((mission) => mission.state === "active")
+    dispatch({ type: "ADD_USER_ACTIVE_MISSION", payload: active[0] })
+    return
+  }
+   
 
   const checkActiveMissions = async () => {
     const activeMissionsData = await getUserMissions(userId)

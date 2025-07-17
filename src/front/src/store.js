@@ -6,6 +6,7 @@ export const initialStore = () => {
     eventList: [],
     userData: null,
     issPassesList: null,
+    userActiveMission: null,
   }
 };
 
@@ -37,6 +38,9 @@ export default function storeReducer(store, action = {}) {
 
     case "ADD_USER_DATA":
       return { ...store, userData: action.payload }
+
+    case "ADD_USER_ACTIVE_MISSION":
+      return { ...store, userActiveMission: action.payload }
 
     default:
       return store;
