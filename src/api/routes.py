@@ -33,13 +33,17 @@ def get_missions_by_id(user_id):
 def add_user_mission():
     data = request.get_json()
     if not data:
-        return jsonify({"msg": "Sin error al obtener datos de la petición."}), 400
+        return jsonify({"msg": "Error al obtener datos de la petición."}), 400
     
     user_id = data.get("user_id")
     event_id = data.get("event_id")
     state = data.get("state")
     if not user_id or not event_id or not state:
         return jsonify({"msg": "Faltan datos obligatorios"}), 400
+    
+    mission_exists = UserMission.query.filter_by(event_id=event_id).first()
+    if mission_exists is not None:
+        return jsonify({"msg": f"La misión con id {event_id} ya existe."}), 400
     
     new_user_mission = UserMission(user_id=user_id, base_id=None, event_id=event_id, state=state, image="")
     db.session.add(new_user_mission)
