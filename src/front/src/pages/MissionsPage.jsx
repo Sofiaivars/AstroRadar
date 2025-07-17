@@ -31,6 +31,10 @@ function MissionsPage() {
         navigate('/dashboard/missions/step2')
       }
     }
+
+    if(!activeMission){
+      navigate('/dashboard')
+    }
   }, [])
 
   useEffect(() => {
