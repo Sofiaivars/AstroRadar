@@ -1,8 +1,20 @@
-import { CalendarDays, CalendarClock, CalendarOff, Telescope, Moon, Hourglass } from "lucide-react";
+import { CalendarDays, CalendarClock, CalendarOff, Telescope, Moon, Hourglass, Tornado } from "lucide-react";
 import CountdownComponent from "./CountdownComponent";
 import { addUserMission } from "../../servicios/events-missions-service";
+import { Toast } from 'primereact/toast';
+import { useRef } from "react";
 
 function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, eventId, userId}){
+
+  //Toast
+    const toast = useRef(null)
+    const missionProgrammedShow = () => {
+      toast.current.show({ severity: 'success', summary: 'Success', detail: 'Misión programada correctamente!' });
+    }
+    const missionExistsShow = () => {
+      toast.current.show({ severity: 'warn', summary: 'Warning', detail: `La misión ya existe!` });
+    }
+    // Toast end
 
   const handleClick = async () => {
     try{
@@ -11,10 +23,10 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
       }
       const missionState = "scheduled"
       const response = await addUserMission(userId, eventId, missionState)
-      alert("Misión programada correctamente.")
+      missionProgrammedShow()
       return console.log(response)
     }catch(error){
-      alert("La misión ya existe.")
+      missionExistsShow()
       console.log(error)
       return
     }
@@ -23,6 +35,7 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
 
   return(
     <div className="flex rounded-2xl w-full items-center gap-3 text-sm border-b-2 border-purple-800">
+      <Toast ref={toast}/>
       <div className="flex w-50 max-h-33 rounded-l-2xl overflow-hidden">
         <img src={eventImg} alt={eventCategory} className="w-full h-full object-cover" />
       </div>
