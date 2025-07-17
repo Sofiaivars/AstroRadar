@@ -120,6 +120,22 @@ const updateStellarBase = async (baseId, missionId) => {
   const data = await response.json();
   return data;
 }
+
+// Actualizar imagen de misión
+const updateMissionImage = async (missionID, imageSrc) => {
+  const response = await fetch(`${mainURL}/umissions/update-mission-image/${missionID}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ image_src: imageSrc })
+  });
+
+  if (!response.ok) {
+    throw Error("Error al actualizar imagen")
+  }
+
+  const data = await response.json();
+  return data;
+}
 //==========================================================
 
 const getISSPasses = async (latitude, longitude) => {
@@ -153,5 +169,6 @@ export {
   getUserMissions,
   updateMissionState,
   deleteMission,
-  updateStellarBase
+  updateStellarBase,
+  updateMissionImage
 }
