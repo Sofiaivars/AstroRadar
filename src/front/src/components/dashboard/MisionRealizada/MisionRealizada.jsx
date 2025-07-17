@@ -16,11 +16,12 @@ const MisionRealizada = () => {
     if(userId){
       const fetchMissions = async () => {
         const misiones = await getUserMissions(userId);
-        const completadas = misiones.filter((m) => m.state === "done");
+        const completadas = [...misiones].filter((m) => m.state === "done");
 
         if (completadas.length > 0) {
-          // Ordenamos por ID descendente para tomar la más reciente
-          const ultima = completadas.sort((a, b) => b.id - a.id)[0];
+          // HABRÁ QUE FILTRAR POR FECHA DE MISIÓN TERMINADA
+          console.log(completadas)
+          const ultima = completadas[0];
           setUltimaMision(ultima);
         }
       };
