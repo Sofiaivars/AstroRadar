@@ -67,12 +67,16 @@ function UserMissionCard({eventImg, eventName, eventCategory, eventStart, eventE
           <p>{missionState}</p>
         </div>
         <div className="flex gap-2">
-          <button className={`bg-red-700 hover:bg-red-300 p-2 rounded-2xl cursor-pointer borde-con-degradado`} onClick={() => deleteUserMission(missionId)}>
-            <Trash size={20}/>
-          </button>
-          <button className={`bg-purple-700 ${missionState !== "active" ? "hover:bg-purple-300" : ""} p-2 rounded-2xl w-30 cursor-pointer borde-con-degradado`} onClick={() => handleClick(missionId)} disabled={missionState === "active"}>
-            {missionState !== "active" ? "Empezar!" : "En curso..."}
-          </button>
+          {missionState !== "done" 
+            ? (<>
+                  <button className={`bg-red-700 hover:bg-red-300 p-2 rounded-2xl cursor-pointer borde-con-degradado`} onClick={() => deleteUserMission(missionId)}>
+                    <Trash size={20}/>
+                  </button>
+                  <button className={`bg-purple-700 ${missionState !== "active" ? "hover:bg-purple-300" : ""} p-2 rounded-2xl w-30 cursor-pointer borde-con-degradado`} onClick={() => handleClick(missionId)} disabled={missionState === "active"}>
+                    {missionState !== "active" ? "Empezar!" : "En curso..."}
+                  </button>
+              </>) 
+            : ""}
         </div>
       </div>
     </div>
