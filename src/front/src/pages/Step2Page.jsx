@@ -31,12 +31,12 @@ const Step2Page = () => {
   }, [dispatch]);
 
   const _startMission = () => {
-    if (!store.selectedBase) {
-      alert("No hay base seleccionada.");
+    if (!store.userActiveMission) {
+      alert("No hay misión activada.");
       return;
     }
 
-    const { latitude, longitude } = store.selectedBase.coordinates;
+    const { latitude, longitude } = store.userActiveMission.base;
 
     // URL para navegar con indicaciones desde la ubicación del usuario
     const { userLocation } = store;
