@@ -166,7 +166,7 @@ def get_response_from_ai():
     else:
         return jsonify({"message": "Sin respuesta..."})
     
-@app.route('/cosmostep1', methods=['GET'])
+@app.route('/cosmostep1', methods=['POST'])
 def get_first_step_tip():
     data = request.get_json()
     if not data:

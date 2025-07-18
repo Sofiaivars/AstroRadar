@@ -2,24 +2,23 @@ import { useEffect, useState } from 'react'
 import './CosmoDashboard.css'
 import cosmo from './assets/cosmo-dashboard.png'
 import cosmoStep1 from './assets/cosmo-step1.png'
-import { cosmoTipCall } from '../../../servicios/cosmo-service'
+import { cosmoStep1TipCall, cosmoTipCall } from '../../../servicios/cosmo-service'
 import LoaderMini from '../../loaders/LoaderMini.jsx'
 
-function CosmoDashboard({scene}){
+function CosmoDashboard({scene, eventoAstronomico}){
   const [cosmoTip, setCosmoTip] = useState(null)
 
   useEffect(() => {
     const selectCosmoPrompt = () => {
       const getDataFromAPI = async () => {
-        const tip = await cosmoTipCall()
+
+        const tip = scene === "dashboard" 
+          ? await cosmoTipCall()
+          : await cosmoStep1TipCall(eventoAstronomico)
+
         setCosmoTip(tip)
       }
-      if(scene === "dashboard"){
-        return getDataFromAPI()
-      }
-      if(scene === "step1"){
-        return console.log("promp distinto")
-      }
+      return getDataFromAPI()
     }
     selectCosmoPrompt()
   }, [])
