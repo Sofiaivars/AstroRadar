@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { updateMissionData } from "../servicios/mission-service.js";
 import { updateStellarBase } from "../servicios/events-missions-service.js";
-import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
+import cosmoTip1 from "../components/dashboard/cosmo-dashboard/assets/cosmo-step1.png";
 import { getUserLocation } from "../servicios/geolocation-service";
 import { getJSONCoords } from "../servicios/cosmo-service.js";
 import Map from "../components/dashboard/Map.jsx";

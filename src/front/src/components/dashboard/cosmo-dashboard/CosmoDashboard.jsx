@@ -4,7 +4,7 @@ import cosmo from './assets/cosmo-dashboard.png'
 import { cosmoTipCall } from '../../../servicios/cosmo-service'
 import LoaderMini from '../../loaders/LoaderMini.jsx'
 
-function CosmoDashboard(){
+function CosmoDashboard({scene}){
   const [cosmoTip, setCosmoTip] = useState(null)
 
   useEffect(() => {
