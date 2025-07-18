@@ -9,6 +9,23 @@ const cosmoTipCall = async () => {
   return data;
 }
 
+const cosmoStep1TipCall = async (eventoAstronomico) => {
+  const response = await fetch(`${mainURL}/cosmostep1`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ eventName: eventoAstronomico })
+  });
+  const data = await response.json();
+  return data;
+}
+
+const cosmoStep2TipCall = async () => {
+  const response = await fetch(`${mainURL}/cosmostep2`);
+
+  const data = await response.json();
+  return data;
+}
+
 const getJSONCoords = async (latitude, longitude) => {
   const response = await fetch(`${mainURL}/getjson`, {
     method: 'POST',
@@ -22,4 +39,4 @@ const getJSONCoords = async (latitude, longitude) => {
   return data;
 }
 
-export { cosmoTipCall, getJSONCoords }
+export { cosmoTipCall, getJSONCoords, cosmoStep1TipCall, cosmoStep2TipCall }
