@@ -7,6 +7,7 @@ import { getUserLocation } from "../servicios/geolocation-service";
 import { getJSONCoords } from "../servicios/cosmo-service.js";
 import Map from "../components/dashboard/Map.jsx";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard.jsx";
 
 function Step1Page() {
   const [spots, setSpots] = useState(null);               // puntos IA
@@ -141,15 +142,7 @@ function Step1Page() {
         </div>
 
         {/* COSMOTIP--falta implementar ia */}
-        <div className="fixed bottom-60 right-20 z-50 bg-gray-900 rounded-xl p-4 shadow-lg max-w-[400px]">
-          <h4 className="text-purple-300 font-bold mb-4">✨ Cosmotip</h4>
-          <p>Para una lluvia de meteoros, elegí un lugar alejado de luces</p>
-        </div>
-        <img
-          src={cosmoTip1}
-          alt="Cosmotip"
-          className="fixed bottom-10 right-10 w-[12%] rounded-md z-50"
-        />
+        <CosmoDashboard scene={"step1"} eventoAstronomico={store.userActiveMission && store.userActiveMission.event.name}/>
       </div>
     </>
   );
