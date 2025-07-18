@@ -161,7 +161,6 @@ def get_users_from_db():
 def get_response_from_ai():
     response = cosmo_tip()
     if response:
-        print(response)
         return jsonify(response), 200
     else:
         return jsonify({"message": "Sin respuesta..."})
@@ -174,7 +173,6 @@ def get_first_step_tip():
     eventoAstronomico = data.get('eventName')
     response = cosmo_first_step_tip(eventoAstronomico)
     if response:
-        print(response)
         return jsonify(response), 200
     else:
         return jsonify({"message": "Sin respuesta..."})
@@ -183,7 +181,6 @@ def get_first_step_tip():
 def get_second_step_tip():
     response = cosmo_second_step()
     if response:
-        print(response)
         return jsonify(response), 200
     else:
         return jsonify({"message": "Sin respuesta..."})
@@ -327,7 +324,7 @@ def get_iss_passes():
         data = response.json()
         return jsonify(data)
     else:
-        print(f'Sin respuesta: {response.status_code}') 
+        return print(f'Sin respuesta: {response.status_code}') 
         
 # SATELITES ENCIMA SEGÚN UBICACIÓN
 @app.route('/satsabove', methods=['POST'])
@@ -342,12 +339,12 @@ def get_sats_above():
     if latitude is None or longitude is None:
         return jsonify({"msg": "Faltan latitud o longitud"}), 400
     
-    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/above/${latitude}/${longitude}/700/70/18/&apiKey=GP8GZ9-6PRTJJ-RKJE6A-5J1L')
+    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/above/{latitude}/{longitude}/700/70/0/&apiKey=GP8GZ9-6PRTJJ-RKJE6A-5J1L')
     if response.status_code == 200:
         data = response.json()
         return jsonify(data)
     else:
-        print(f'Sin respuesta: {response.status_code}')
+        return print(f'Sin respuesta: {response.status_code}')
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

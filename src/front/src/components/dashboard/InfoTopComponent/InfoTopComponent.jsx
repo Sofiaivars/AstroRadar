@@ -4,8 +4,9 @@ import { getWeather } from '../../../servicios/weather-service.js'
 import WeatherComponent from './WeatherComponent.jsx'
 import LoaderMini from '../../loaders/LoaderMini.jsx'
 import { reverseGeocodingAPICall } from '../../../servicios/geolocation-service.js'
-import { LocateFixed, TriangleAlert } from 'lucide-react'
+import { LocateFixed } from 'lucide-react'
 import { getAboveSatellites } from '../../../servicios/events-missions-service.js'
+import NumberFlow from "@number-flow/react"
 
 function InfoTopComponent({errorMsg, userLocation}){
   const [weatherInfo, setWeatherInfo] = useState(null)
@@ -46,7 +47,7 @@ function InfoTopComponent({errorMsg, userLocation}){
       </div>
       <div className='flex gap-1 items-center'>
         <p>Satélites encima de mí:</p>
-        <p>{satCounter ? satCounter : <LoaderMini/>}</p>
+        {satCounter ? <NumberFlow value={satCounter} format={{ minimumIntegerDigits: 4 }}/> : <LoaderMini/>}
       </div>
     </div>
   )
