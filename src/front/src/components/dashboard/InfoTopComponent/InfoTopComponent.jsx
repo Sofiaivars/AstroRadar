@@ -4,11 +4,13 @@ import { getWeather } from '../../../servicios/weather-service.js'
 import WeatherComponent from './WeatherComponent.jsx'
 import LoaderMini from '../../loaders/LoaderMini.jsx'
 import { reverseGeocodingAPICall } from '../../../servicios/geolocation-service.js'
-import { LocateFixed } from 'lucide-react'
+import { LocateFixed, TriangleAlert } from 'lucide-react'
+import { getAboveSatellites } from '../../../servicios/events-missions-service.js'
 
 function InfoTopComponent({errorMsg, userLocation}){
   const [weatherInfo, setWeatherInfo] = useState(null)
   const [locateString, setLocateString] = useState(null)
+  const [satCounter, setSatCounter] = useState(null)
 
   useEffect(() => {
     const getLocateInfo = async () => {
@@ -21,6 +23,14 @@ function InfoTopComponent({errorMsg, userLocation}){
       const getWeatherDataFromAPI = async () => {
       const weatherData = await getWeather(userLocation.latitude, userLocation.longitude)
       setWeatherInfo(weatherData)
+
+      if(!satCounter){
+        const getSatsAbove = async () => {
+          const response = await getAboveSatellites(userLocation.latitude, userLocation.longitude)
+          setSatCounter(response)
+        }
+        getSatsAbove()
+      }
     }
     getWeatherDataFromAPI()
     }
@@ -34,7 +44,10 @@ function InfoTopComponent({errorMsg, userLocation}){
         ? <WeatherComponent weatherInfo={weatherInfo}/>
         : <LoaderMini />}
       </div>
-      <p>Astrofrikis activos: 50</p>
+      <div className='flex gap-1 items-center'>
+        <p>Satélites encima de mí:</p>
+        <p>{satCounter ? satCounter : <LoaderMini/>}</p>
+      </div>
     </div>
   )
 }

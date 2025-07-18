@@ -328,6 +328,26 @@ def get_iss_passes():
         return jsonify(data)
     else:
         print(f'Sin respuesta: {response.status_code}') 
+        
+# SATELITES ENCIMA SEGÚN UBICACIÓN
+@app.route('/satsabove', methods=['POST'])
+def get_sats_above():
+    data = request.get_json()
+    if not data :
+        return jsonify({"msg": "Sin datos"}), 400
+    
+    latitude = data.get("latitude")
+    longitude = data.get("longitude")
+    
+    if latitude is None or longitude is None:
+        return jsonify({"msg": "Faltan latitud o longitud"}), 400
+    
+    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/above/${latitude}/${longitude}/700/70/18/&apiKey=GP8GZ9-6PRTJJ-RKJE6A-5J1L')
+    if response.status_code == 200:
+        data = response.json()
+        return jsonify(data)
+    else:
+        print(f'Sin respuesta: {response.status_code}')
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
