@@ -14,7 +14,7 @@ from api.routes import umissions
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
-from ai_service.cosmo_functions import cosmo_tip, cosmo_first_step_tip
+from ai_service.cosmo_functions import cosmo_tip, cosmo_first_step_tip, cosmo_second_step
 from ai_service.coodenadas_ai import ask_ai
 from datetime import datetime
 import requests
@@ -173,6 +173,15 @@ def get_first_step_tip():
         return jsonify({"msg": "Petición vacía!"})
     eventoAstronomico = data.get('eventName')
     response = cosmo_first_step_tip(eventoAstronomico)
+    if response:
+        print(response)
+        return jsonify(response), 200
+    else:
+        return jsonify({"message": "Sin respuesta..."})
+
+@app.route('/cosmostep2', methods=['GET'])
+def get_second_step_tip():
+    response = cosmo_second_step()
     if response:
         print(response)
         return jsonify(response), 200

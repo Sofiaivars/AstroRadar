@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard";
 
 const Step2Page = () => {
   const navigate = useNavigate();
@@ -131,15 +132,7 @@ const Step2Page = () => {
         )}
       </div>
 
-      <div className="bg-gray-900 rounded-xl p-4 mt-2 w-[30%] ml-auto relative mr-10 -top-30 z-40">
-        <h4 className="text-purple-300 font-bold mb-2">✨ Cosmotip</h4>
-        <p>Recuerda mirar el clima antes de iniciar tu recorrido</p>
-      </div>
-      <img
-        src={cosmoTip1}
-        alt="Cosmotip"
-        className="w-[20%] ml-auto -mt-40 z-50 relative -mr-4"
-      />
+      <CosmoDashboard scene={"step2"}/>
     </div>
   );
 };

@@ -18,7 +18,22 @@ def cosmo_tip():
     return response.output_text
 
 def cosmo_first_step_tip(eventoAstronomico):
-    prompt = f"Dame un tip para la visualización del evento astronómico {eventoAstronomico}, aconséjame sobre las localizaciones, climatología y más elementos útiles en astronomía. La respuesta no debe tener más de 15 palabras y siempre debes mencionar el evento al que hacer referencia."
+    prompt = f"Dame un dato sobre el evento astronómico: {eventoAstronomico}, como experto en eventos astronómicos. La respuesta no debe tener más de 15 palabras y siempre debes mencionar el evento al que hacer referencia."
+    
+    load_dotenv()
+    openai_key = os.getenv("OPENAI_API_KEY")
+    
+    client = OpenAI(api_key=openai_key)
+    
+    response = client.responses.create(
+        model="gpt-3.5-turbo",
+        input=prompt
+    )
+    
+    return response.output_text
+
+def cosmo_second_step():
+    prompt = "Eres un experto en visualización de eventos astronómicos. Dame un tip para observar este tipo de eventos de noche. La respuesta no debe tener más de 15 palabras."
     
     load_dotenv()
     openai_key = os.getenv("OPENAI_API_KEY")
