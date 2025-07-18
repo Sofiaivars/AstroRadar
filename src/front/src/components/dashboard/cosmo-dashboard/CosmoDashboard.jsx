@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './CosmoDashboard.css'
 import cosmo from './assets/cosmo-dashboard.png'
+import cosmoStep1 from './assets/cosmo-step1.png'
 import { cosmoTipCall } from '../../../servicios/cosmo-service'
 import LoaderMini from '../../loaders/LoaderMini.jsx'
 
@@ -8,11 +9,19 @@ function CosmoDashboard({scene}){
   const [cosmoTip, setCosmoTip] = useState(null)
 
   useEffect(() => {
-    const getDataFromAPI = async () => {
-      const tip = await cosmoTipCall()
-      setCosmoTip(tip)
+    const selectCosmoPrompt = () => {
+      const getDataFromAPI = async () => {
+        const tip = await cosmoTipCall()
+        setCosmoTip(tip)
+      }
+      if(scene === "dashboard"){
+        return getDataFromAPI()
+      }
+      if(scene === "step1"){
+        return console.log("promp distinto")
+      }
     }
-    getDataFromAPI()
+    selectCosmoPrompt()
   }, [])
 
   return(
@@ -22,7 +31,16 @@ function CosmoDashboard({scene}){
         <p className='text-xs absolute opacity-20 ai-alert'>AI generated</p>
       </div>
       <div className='flex items-end justify-end w-full'>
-        <img src={cosmo} width={150} alt="cosmo-bot" />
+        <img 
+          src={
+            scene === "dashboard" 
+              ? cosmo 
+              : scene === "step1" 
+                ? cosmoStep1
+                : cosmo} 
+          width={150} 
+          alt="cosmo-bot" 
+        />
       </div>
     </div>
   )
