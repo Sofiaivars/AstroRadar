@@ -9,8 +9,12 @@ const cosmoTipCall = async () => {
   return data;
 }
 
-const cosmoStep1TipCall = async () => {
-  const response = await fetch(`${mainURL}/cosmostep1`);
+const cosmoStep1TipCall = async (eventoAstronomico) => {
+  const response = await fetch(`${mainURL}/cosmostep1`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ eventName: eventoAstronomico })
+  });
   const data = await response.json();
   return data;
 }
