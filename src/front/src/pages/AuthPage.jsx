@@ -1,3 +1,4 @@
+import { Outlet } from "react-router"
 import LoginForm from "../components/login/login.jsx"
 import logo from '/logo-esquina.png'
 import { Telescope, Sparkles } from "lucide-react"
@@ -36,7 +37,7 @@ function AuthPage(){
           </div>
         </div>
       
-        <LoginForm />
+        <Outlet />
         
       </div>
     </>
