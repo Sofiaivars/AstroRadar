@@ -1,43 +1,39 @@
 import React, { useEffect, useState } from "react";
 import fondoMisionRealizada from "./Assets/ultima-mision.jpg";
 import { useNavigate } from "react-router";
-import { getUserMissions } from "../../../servicios/events-missions-service"; 
+import { getUserMissions } from "../../../servicios/events-missions-service";
 import useGlobalReducer from "../../../hooks/useGlobalReducer";
 
 const MisionRealizada = () => {
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
-  const { store } = useGlobalReducer(); 
-  
+  const { store } = useGlobalReducer();
 
   const [ultimaMision, setUltimaMision] = useState(null);
 
   useEffect(() => {
-    if(userId){
+    if (userId) {
       const fetchMissions = async () => {
         const misiones = await getUserMissions(userId);
-        const completadas = [...misiones].filter((m) => m.state === "done");
+        const completadas = [...misiones]
+          .filter((m) => m.state === "done")
+          .sort((a, b) => new Date(b.done_date) - new Date(a.done_date)); // Ordenar por fecha descendente
 
         if (completadas.length > 0) {
-          // HABRÁ QUE FILTRAR POR FECHA DE MISIÓN TERMINADA
-          console.log(completadas)
-          const ultima = completadas[0];
-          setUltimaMision(ultima);
+          setUltimaMision(completadas[0]);
         }
       };
       fetchMissions();
     } else {
-      console.log("No existe id de usuario en la misión completada")
+      console.log("No existe id de usuario en la misión completada");
     }
-
   }, [userId]);
 
-
-  useEffect(() =>{
-    if(store.userData){
-      setUserId(store.userData.id)
+  useEffect(() => {
+    if (store.userData?.id) {
+      setUserId(store.userData.id);
     }
-  }, [])
+  }, [store.userData]);
 
   const handleClick = () => {
     navigate("/dashboard/completed-missions");
@@ -65,15 +61,12 @@ const MisionRealizada = () => {
               </h2>
               <div className="text-base ">
                 {ultimaMision ? (
-                  <>
-                    <div>
-                      <strong>🎖️ Base estelar</strong>:{" "}
-                      <span className="text-sm">
-                        {ultimaMision.base?.base_name || "No asignada"}
-                      </span>
-                    </div>
-                    
-                  </>
+                  <div>
+                    <strong>🎖️ Base estelar</strong>:{" "}
+                    <span className="text-sm">
+                      {ultimaMision.base?.base_name || "No asignada"}
+                    </span>
+                  </div>
                 ) : (
                   <p className="text-sm text-gray-300">No tienes misiones completadas aún.</p>
                 )}

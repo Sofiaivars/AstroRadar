@@ -1,23 +1,39 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useGlobalReducer from '../../hooks/useGlobalReducer.jsx'
 import LoaderMini from '../loaders/LoaderMini.jsx'
 import { Telescope, Moon } from 'lucide-react'
 import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
 import { addUserMission } from '../../servicios/events-missions-service.js'
+import { Toast } from 'primereact/toast';
 
 const EventoDestacado = () => {
   const [eventList, setEventList] = useState(null)
   const [firstEvent, setFirstEvent] = useState(null)
   const { store } = useGlobalReducer()
 
+  //Toast
+    const toast = useRef(null)
+    const successOnCreateMissionShow = () => {
+      toast.current.show({ severity: 'success', summary: 'Success', detail: 'Misión programada correctamente!' });
+    }
+    const missionAlreadyCreatedShow = () => {
+      toast.current.show({ severity: 'warn', summary: 'Warning', detail: `La misión ya existe!` });
+    }
+    // Toast end
+
   const handleClick = async () => {
     if(!store.userData.id || !firstEvent.id){
       return console.log('userId o eventId vacíos.')
     }
-    const missionState = "scheduled"
-    const response = await addUserMission(store.userData.id, firstEvent.id, missionState)
-    console.log(response)
-    return alert("Misión guardarda correctamente.")
+    try{
+      const missionState = "scheduled"
+      await addUserMission(store.userData.id, firstEvent.id, missionState)
+      return successOnCreateMissionShow()
+    }catch(error){
+      console.error(error)
+      missionAlreadyCreatedShow()
+    }
+    
   }
 
   useEffect(() => {
@@ -35,6 +51,7 @@ const EventoDestacado = () => {
 
   return (<>
     <div className="rounded-xl w-full h-[140px]">
+      <Toast ref={toast}/>
       <div className="flex w-full h-full bg-[var(--components-background)] rounded-xl overflow-hidden text-[var(--astroradar-white)] borde-con-degradado">
         
         <div className="w-[30%] h-full">
