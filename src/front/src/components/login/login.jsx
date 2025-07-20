@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import LoginButton from "./LoginButton"
 import { useNavigate } from "react-router"
+import { login } from "../../servicios/login-service"
 
-function LoginForm({handleClick}){
+function LoginForm(){
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [errorAtLogin, setErrorAtLogin] = useState(false)
   const navigate = useNavigate()
 
   const handleInputChange = (event) => {
@@ -14,21 +16,34 @@ function LoginForm({handleClick}){
     if(id === "login-password") { return setPassword(value) }
   }
 
-  useEffect(() => {
-    console.log({username, password});
-  }, [username, password])
+  const handleClick = async (username, password) => {
+    if( !username || !password) {
+      setErrorAtLogin(true)
+      return
+    }
+  
+    try{
+      const dataFromLogin = await login(username, password)
+      console.log(dataFromLogin)
+      navigate('/dashboard')
+    }catch(error){
+      setErrorAtLogin(true)
+      console.log(`Error en el login => ${error}`)
+    }
+  }
 
   return (
     <>
       <div className="flex flex-col p-3 rounded-2xl borde-con-degradado justify-between shadow-lg shadow-purple-300 login-card">
         <h1 className="text-center text-xl mb-5 subtitle">¡Nos alegra volverte a ver!</h1>
         <div className="flex flex-col gap-3">
-          <input type="text" className="p-2 rounded-2xl login-inputs" id="login-username" placeholder="Nombre de usuario" value={username} onChange={handleInputChange} />
-          <input type="password" className="p-2 rounded-2xl login-inputs" id="login-password" placeholder="Password" value={password} onChange={handleInputChange}/>
+          <input type="text" className={`p-2 rounded-2xl ${errorAtLogin ? "border-2 border-red-400" : ""} login-inputs`} id="login-username" placeholder="Nombre de usuario" value={username} onChange={handleInputChange} />
+          <input type="password" className={`p-2 rounded-2xl ${errorAtLogin ? "border-2 border-red-400" : ""} login-inputs`} id="login-password" placeholder="Password" value={password} onChange={handleInputChange}/>
           <div className='flex gap-1 options'>
             <input type="checkbox" id="recordar-pass"/>
             <label className="" for="recordar-pass">Recordar</label>
           </div>
+          <p className={`text-xs text-center text-red-400 ${errorAtLogin ? "" : "hidden"}`}>nombre de usuario y/o contraseña incorrectos</p>
           <LoginButton handleClick={() => handleClick(username, password)}/>
           <div className="flex justify-between">
             <a href="#" className='hover:text-purple-500 text-sm forgot'>Olvidaste la contraseña?</a>
