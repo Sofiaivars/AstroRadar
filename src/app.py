@@ -16,7 +16,7 @@ from api.commands import setup_commands
 from flask_cors import CORS
 from ai_service.cosmo_functions import cosmo_tip, cosmo_first_step_tip, cosmo_second_step
 from ai_service.coodenadas_ai import ask_ai
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -47,6 +47,7 @@ setup_commands(app)
 
 #JWT
 app.config["JWT_SECRET_KEY"] = "contraseñamegaultrahipersecretaindescifrable12345"
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix
