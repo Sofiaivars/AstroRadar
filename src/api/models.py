@@ -129,5 +129,6 @@ class UserMission(db.Model):
                 "visibility": self.missions_event.visibility if self.missions_event else None,
             },
             "state": self.state,
-            "image": self.image
+            "image": self.image,
+            "done_date": self.done_date
         }
