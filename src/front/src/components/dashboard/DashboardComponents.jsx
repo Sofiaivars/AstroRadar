@@ -145,7 +145,7 @@ function DashboardComponents(){
           <EventoProgramado />
           <div className="flex flex-row items-center w-full h-full gap-1 relative rounded-2xl borde-con-degradado">
             <RankingMain />
-            <CosmoDashboard />
+            <CosmoDashboard scene={"dashboard"}/>
           </div>
         </div>
       </div>
