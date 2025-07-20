@@ -7,6 +7,7 @@ from flask_cors import CORS
 from api.models import db, UserMission
 from sqlalchemy import select, and_
 from sqlalchemy.orm import selectinload
+from datetime import datetime, timezone
 
 umissions = Blueprint('umissions', __name__)
 
@@ -50,7 +51,7 @@ def add_user_mission():
     if mission_exists is not None:
         return jsonify({"msg": f"La misión con id {event_id} ya existe."}), 400
     
-    new_user_mission = UserMission(user_id=user_id, base_id=None, event_id=event_id, state=state, image="")
+    new_user_mission = UserMission(user_id=user_id, base_id=None, event_id=event_id, state=state, image="", done_date=None)
     db.session.add(new_user_mission)
     db.session.commit()
     return jsonify({"user_id": user_id, "event_id": event_id, "state": state}), 200
@@ -117,6 +118,7 @@ def update_image(mission_id):
         return jsonify({"error": "Misión no encontrada."})
     
     mission.image = new_image
+    mission.done_date = datetime.now(timezone.utc)
     mission.state = "done"
     db.session.commit()
     return jsonify(mission.serialize()), 200

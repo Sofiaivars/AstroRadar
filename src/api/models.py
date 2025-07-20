@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Text, Boolean, String, ForeignKey, Date
+from sqlalchemy import Text, Boolean, String, ForeignKey, Date, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import date
+from datetime import date, datetime
 
 db = SQLAlchemy()
 
@@ -93,6 +93,7 @@ class UserMission(db.Model):
     event_id: Mapped[int] = mapped_column(ForeignKey("event.id", ondelete="CASCADE"))
     state: Mapped[str] = mapped_column(String(15), nullable=False)
     image: Mapped[str] = mapped_column(Text, nullable=True)
+    done_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     
     missions_user: Mapped["User"] = relationship("User", back_populates="user_missions")
     missions_base: Mapped["Base"] = relationship("Base", back_populates="base_missions")
@@ -101,7 +102,17 @@ class UserMission(db.Model):
     def serialize(self):
         return{
             "id": self.id,
-            "user_id": self.user_id,
+            "user": {
+                "id": self.user_id,
+                "name": self.missions_user.name if self.missions_user else None,
+                "lastname": self.missions_user.lastname if self.missions_user else None,
+                "username": self.missions_user.username if self.missions_user else None,
+                "image": self.missions_user.image if self.missions_user else None,
+                "email": self.missions_user.email if self.missions_user else None,
+                "city": self.missions_user.city if self.missions_user else None,
+                "country": self.missions_user.country if self.missions_user else None,
+                "is_active": self.missions_user.is_active if self.missions_user else None,
+            },
             "base": {
                 "id": self.base_id,
                 "base_name": self.missions_base.base if self.missions_base else None,  
@@ -118,5 +129,6 @@ class UserMission(db.Model):
                 "visibility": self.missions_event.visibility if self.missions_event else None,
             },
             "state": self.state,
-            "image": self.image
+            "image": self.image,
+            "done_date": self.done_date
         }
