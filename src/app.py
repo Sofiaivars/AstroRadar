@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os, hashlib
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -45,8 +46,10 @@ setup_admin(app)
 # add the admin
 setup_commands(app)
 
+load_dotenv()
+
 #JWT
-app.config["JWT_SECRET_KEY"] = "contraseñamegaultrahipersecretaindescifrable12345"
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_TOKEN_SECRET_KEY")
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 jwt = JWTManager(app)
 
@@ -309,6 +312,7 @@ def get_user_bases():
 
 @app.route('/isspasses', methods=['POST'])
 def get_iss_passes():
+    api_key = os.getenv("SAT_API_KEY")
     data = request.get_json()
     
     if not data :
@@ -320,7 +324,7 @@ def get_iss_passes():
     if latitude is None or longitude is None:
         return jsonify({"msg": "Faltan latitud o longitud"}), 400
     
-    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/visualpasses/25544/{latitude}/{longitude}/700/2/300/&apiKey=GP8GZ9-6PRTJJ-RKJE6A-5J1L')
+    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/visualpasses/25544/{latitude}/{longitude}/700/2/300/&apiKey={api_key}')
     if response.status_code == 200:
         data = response.json()
         return jsonify(data)
@@ -330,6 +334,7 @@ def get_iss_passes():
 # SATELITES ENCIMA SEGÚN UBICACIÓN
 @app.route('/satsabove', methods=['POST'])
 def get_sats_above():
+    api_key = os.getenv("SAT_API_KEY")
     data = request.get_json()
     if not data :
         return jsonify({"msg": "Sin datos"}), 400
@@ -340,7 +345,7 @@ def get_sats_above():
     if latitude is None or longitude is None:
         return jsonify({"msg": "Faltan latitud o longitud"}), 400
     
-    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/above/{latitude}/{longitude}/700/70/0/&apiKey=GP8GZ9-6PRTJJ-RKJE6A-5J1L')
+    response = requests.get(f'https://api.n2yo.com/rest/v1/satellite/above/{latitude}/{longitude}/700/70/0/&apiKey={api_key}')
     if response.status_code == 200:
         data = response.json()
         return jsonify(data)
