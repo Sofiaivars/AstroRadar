@@ -13,14 +13,21 @@ import Step3Page from "./src/pages/Step3Page.jsx";
 import EventsPage from "./src/pages/EventsPage.jsx";
 import CompletedMissionsPage from "./src/pages/CompletedMissionsPage.jsx";
 import SatellitePage from "./src/pages/SatellitePage.jsx";
+import LoginForm from "./src/components/login/login.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: App,
     children: [
-      { index: true, Component: AuthPage },
-      { path: "/signup", Component: SignUpPage },
+      {
+        path: "/",
+        Component: AuthPage,
+        children: [
+          { index: true, Component: LoginForm },
+          { path: "signup", Component: SignUpPage}
+        ]
+      },
       {
         path: "/dashboard",
         Component: DashboardMain,
