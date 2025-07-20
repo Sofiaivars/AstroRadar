@@ -1,26 +1,9 @@
-import { useEffect } from "react"
+import { Outlet } from "react-router"
 import LoginForm from "../components/login/login.jsx"
-import { login } from '../servicios/login-service.js'
-import { useNavigate } from "react-router"
 import logo from '/logo-esquina.png'
 import { Telescope, Sparkles } from "lucide-react"
 
 function AuthPage(){
-  const navigate = useNavigate()
-
-  const handleClick = async (username, password) => {
-    if( !username || !password) {
-      return alert("Rellena todos los campos") 
-    }
-
-    try{
-      const dataFromLogin = await login(username, password)
-      console.log(dataFromLogin)
-      navigate('/dashboard')
-    }catch(error){
-      console.log(`Error en el login => ${error}`)
-    }
-  }
   
   return (
     <>
@@ -54,9 +37,7 @@ function AuthPage(){
           </div>
         </div>
       
-        <LoginForm 
-          handleClick={handleClick}
-        />
+        <Outlet />
         
       </div>
     </>
