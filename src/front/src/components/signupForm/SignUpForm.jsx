@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import { signUp } from "../../servicios/login-service"
 import CloudinarySignUpUploadWidget from "../cloudinary-components/CloudinarySignUpUploadWidget"
 import SignUpButton from "./SignUpButton"
+import { Eye, EyeClosed } from "lucide-react";
 
 function SignUpForm(){
   const [username, setUsername] = useState("")
@@ -14,6 +15,7 @@ function SignUpForm(){
   const [country, setCountry] = useState("")
   const [userImage, setUserImage] = useState("")
   const [errorAtSignUp, setErrorAtSignUp] = useState("")
+  const [inputPassType, setInputPassType] = useState("password")
 
   const navigate = useNavigate()
 
@@ -47,6 +49,11 @@ function SignUpForm(){
       console.log(`Error de registro: ${error}`)
       setErrorAtSignUp(true)
     }
+  }
+
+  const handlePasswordInput = () => {
+    if(inputPassType === "password"){ return setInputPassType("text") }
+    return setInputPassType("password")
   }
 
   // Configuration
@@ -95,7 +102,12 @@ function SignUpForm(){
     <div className="flex flex-col gap-3 p-3 rounded-2xl min-w-85 borde-con-degradado justify-between shadow-lg shadow-purple-300">
       <div className="flex flex-col w-full gap-1">
         <input type="text" name="username" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-username" placeholder="Nombre de usuario" value={username} onChange={handleInputChange}/>
-        <input type="password" name="pass" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-password" placeholder="Contraseña" value={password} onChange={handleInputChange}/>
+        <div className="flex items-center w-full relative">
+          <input type={inputPassType} name="pass" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} w-full signup-inputs`} id="signup-password" placeholder="Contraseña" value={password} onChange={handleInputChange}/>
+          <button className="absolute right-0 me-3 cursor-pointer" onClick={handlePasswordInput}>
+            {inputPassType === "password" ? <Eye /> : <EyeClosed />}
+          </button>
+        </div>
         <input type="email" name="email" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-email" placeholder="hola@test.com" value={email} onChange={handleInputChange}/>
         <input type="text" name="name" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-name" placeholder="Nombre" value={name} onChange={handleInputChange}/>
         <input type="text" name="lastname" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-lastname" placeholder="Apellidos" value={lastname} onChange={handleInputChange}/>
