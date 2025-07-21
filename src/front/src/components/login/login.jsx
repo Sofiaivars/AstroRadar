@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import LoginButton from "./LoginButton"
 import { useNavigate } from "react-router"
 import { login } from "../../servicios/login-service"
+import { Eye, EyeClosed } from "lucide-react";
 
 function LoginForm(){
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [errorAtLogin, setErrorAtLogin] = useState(false)
+  const [inputPassType, setInputPassType] = useState("password")
   const navigate = useNavigate()
 
   const handleInputChange = (event) => {
@@ -32,13 +34,23 @@ function LoginForm(){
     }
   }
 
+  const handlePasswordInput = () => {
+    if(inputPassType === "password"){ return setInputPassType("text") }
+    return setInputPassType("password")
+  }
+
   return (
     <>
       <div className="flex flex-col p-3 rounded-2xl borde-con-degradado justify-between shadow-lg shadow-purple-300 login-card">
         <h1 className="text-center text-xl mb-5 subtitle">¡Nos alegra volverte a ver!</h1>
         <div className="flex flex-col gap-3">
           <input type="text" className={`p-2 rounded-2xl ${errorAtLogin ? "border-1 border-red-400" : ""} login-inputs`} id="login-username" placeholder="Nombre de usuario" value={username} onChange={handleInputChange} />
-          <input type="password" className={`p-2 rounded-2xl ${errorAtLogin ? "border-1 border-red-400" : ""} login-inputs`} id="login-password" placeholder="Password" value={password} onChange={handleInputChange}/>
+          <div className="flex w-full items-center relative">
+            <input type={inputPassType} className={`p-2 rounded-2xl ${errorAtLogin ? "border-1 border-red-400" : ""} w-full login-inputs`} id="login-password" placeholder="Password" value={password} onChange={handleInputChange}/>
+            <button className="absolute right-0 me-3 cursor-pointer" onClick={handlePasswordInput}>
+              {inputPassType === "password" ? <Eye /> : <EyeClosed />}
+            </button>
+          </div>
           <div className='flex gap-1 options'>
             <input type="checkbox" id="recordar-pass"/>
             <label className="" for="recordar-pass">Recordar</label>
