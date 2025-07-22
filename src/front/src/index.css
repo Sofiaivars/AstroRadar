@@ -8,8 +8,10 @@
 }
 
 body{
-  background-image: url("../public/astroradar-fondo.png");
+  background-image: url('/astroradar-fondo.png');
   background-size: cover;
+  background-repeat: no-repeat;
+        
 }
 
 .borde-con-degradado{
