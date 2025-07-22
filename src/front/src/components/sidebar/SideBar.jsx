@@ -91,6 +91,7 @@ function SideBar() {
         <button
           className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer"
           title="Settings"
+          onClick={() => navigate("/dashboard/profile")}
         >
           <Settings size={20} />
         </button>
