@@ -122,6 +122,7 @@ def protected():
                     "username": user.username, 
                     "name": user.name, 
                     "lastname": user.lastname,
+                    "image": user.image,
                     "email": user.email,
                     "city": user.city,
                     "country": user.country,
