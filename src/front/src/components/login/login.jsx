@@ -65,7 +65,7 @@ function LoginForm(){
           
         <div className="flex flex-col justify-center items-center gap-3">
           <div className='divider'>
-            <span>Or</span>
+            <span>O</span>
           </div>
           <div className='flex gap-3 social-login'>
             <button className="hover:scale-120 transition-transform duration-300 cursor-pointer social google">
@@ -78,8 +78,6 @@ function LoginForm(){
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThdZlszhihSfJBfoXkpJtOvDk9p_sskS4rSQ&s" alt="Github" style={{ borderRadius: "50%" }} className="w-15 h-15" />
             </button>
           </div>
-        
-          <p style={{ textAlign: 'center' }}>No tienes una cuenta? <a href='#'></a></p>
         
           <div className='flex gap-3 text-sm footer-links'>
             <a href="#" className="hover:text-purple-500">Terms & Conditions</a>
