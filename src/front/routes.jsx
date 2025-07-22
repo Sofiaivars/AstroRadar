@@ -14,6 +14,7 @@ import EventsPage from "./src/pages/EventsPage.jsx";
 import CompletedMissionsPage from "./src/pages/CompletedMissionsPage.jsx";
 import SatellitePage from "./src/pages/SatellitePage.jsx";
 import LoginForm from "./src/components/login/login.jsx";
+import ProfilePage from "./src/pages/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
           { path: "completed-missions", Component: CompletedMissionsPage },
           { path: "events", Component: EventsPage },
           { path: "iss", Component: SatellitePage },
+          { path: "profile", Component: ProfilePage },
         ],
       },
       { path: "/about-us", Component: AboutUs },

@@ -14,7 +14,7 @@ const login = async (username, password) => {
   if (response.status === 401) {
     throw ("Credenciales inválidas");
   } else if (response.status === 400) {
-    throw ("Error al escribir nombre de usuaro o contraseña")
+    throw ("Error al escribir nombre de usuaro o contraseña");
   }
 
   const data = await response.json();
@@ -71,4 +71,23 @@ const getUsersFromDatabase = async () => {
   return data;
 }
 
-export { login, getUserInfo, signUp, getUsersFromDatabase };
+const changePassword = async (oldPassword, newPassword) => {
+  const token = localStorage.getItem('jwt-token');
+  const response = await fetch(`${mainURL}/new-password`, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ oldPassword, newPassword })
+  });
+
+  if (!response.ok) {
+    throw Error("Error al cambiar la contraseña.");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export { login, getUserInfo, signUp, getUsersFromDatabase, changePassword };
