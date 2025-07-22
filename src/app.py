@@ -154,6 +154,34 @@ def signup():
     db.session.commit()
     return jsonify({"usename": username, "email": email}), 200
 
+# cambiar contraseña
+@app.route('/new-password', methods=['PUT'])
+@jwt_required()
+def change_password():
+    current_user_id = get_jwt_identity()
+    data = request.get_json()
+    if not data:
+        return jsonify({"msg": "Sin datos en la petición"}), 400
+    
+    old_password = data.get('oldPassword')
+    new_password = data.get('newPassword')
+    if not old_password or not new_password:
+        return jsonify({ "msg": "Faltan datos obligatorios." }), 400
+    
+    user = User.query.get(current_user_id)
+    if not user:
+        return jsonify({"msg": "usuario no encontrado"}), 404
+    
+    old_hashed_password = user.password
+    
+    if hashlib.sha256(old_password.encode('utf-8')).hexdigest() == old_hashed_password:
+        new_hashed_password = hashlib.sha256(new_password.encode('utf-8')).hexdigest()
+        user.password = new_hashed_password
+        db.session.commit()  
+        return jsonify({"msg": "contraseña cambiada con éxito"}), 200
+    else:
+        return jsonify({"msg": "Contraseña incorrecta"}), 401
+
 @app.route('/users', methods=['GET'])
 def get_users_from_db():
     users = User.query.all()
