@@ -10,12 +10,12 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard.jsx";
 
 function Step1Page() {
-  const [spots, setSpots] = useState(null);               // puntos IA
+  const [spots, setSpots] = useState(null); // puntos IA
   const [userPosition, setUserPosition] = useState(null); // coordenadas del dispositivo
-  const [location, setLocation] = useState(null);         // base seleccionada
+  const [location, setLocation] = useState(null); // base seleccionada
   const [showSuccess, setShowSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [missionId, setMissionId] = useState(null)
+  const [missionId, setMissionId] = useState(null);
 
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer(); // acceso al store global
@@ -43,12 +43,12 @@ function Step1Page() {
   };
 
   useEffect(() => {
-    if(store.userActiveMission?.id){
-      setMissionId(store.userActiveMission.id)
-    }else{
-      console.log("Sin datos de usuario en el store")
+    if (store.userActiveMission?.id) {
+      setMissionId(store.userActiveMission.id);
+    } else {
+      console.log("Sin datos de usuario en el store");
     }
-  }, [location])
+  }, [location]);
 
   // Obtener ubicación del dispositivo para el marcador morado
   useEffect(() => {
@@ -67,11 +67,11 @@ function Step1Page() {
   };
 
   const handleClick = async () => {
-    const response = await updateStellarBase(location.id, missionId)
-    console.log(response)
-    _confirmLocation()
-    return
-  }
+    const response = await updateStellarBase(location.id, missionId);
+    console.log(response);
+    _confirmLocation();
+    return;
+  };
 
   // Al seleccionar base desde el mapa
   const handleSelectBase = (base) => {
@@ -81,7 +81,7 @@ function Step1Page() {
       name: base.name,
       lat: base.coordinates.latitude,
       lng: base.coordinates.longitude,
-      id: base.id
+      id: base.id,
     });
 
     setShowSuccess(true);
@@ -89,12 +89,14 @@ function Step1Page() {
   };
 
   return (
-    <>    
+    <>
       <div className="flex flex-col gap-4 text-white pr-4 relative">
-        <h3 className="text-lg font-bold">🌍 Seleccioná la ubicación del evento</h3>
+        <h3 className="text-md font-medium">
+          🌍 Seleccioná la ubicación del evento
+        </h3>
 
         {/* Mapa con puntos */}
-        <div className="flex flex-col bg-gray-800 rounded-xl p-4 w-full h-[500px] relative gap-3">
+        <div className="flex flex-col bg-gray-800 rounded-xl p-4 w-full h-[540px] relative gap-2">
           <Map
             locations={spots}
             userPosition={userPosition}
@@ -108,11 +110,13 @@ function Step1Page() {
             </div>
           )}
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-11/12">
             {location && (
               <div className="bg-gray-900 rounded-xl text-center p-4 text-sm text-gray-300">
                 ✅ Ubicación seleccionada:{" "}
-                <span className="text-white font-semibold">{location.name}</span>
+                <span className="text-white font-semibold">
+                  {location.name}
+                </span>
               </div>
             )}
 
@@ -120,7 +124,7 @@ function Step1Page() {
             {location && (
               <button
                 onClick={handleClick}
-                className="rounded-[12px] text-white text-sm h-10 w-auto font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
+                className="rounded-[12px] text-white text-sm h-10 w-12/12 font-medium transition duration-300 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-600/30"
                 style={{
                   backgroundImage:
                     "linear-gradient(var(--components-background), var(--components-background)), " +
@@ -142,7 +146,12 @@ function Step1Page() {
         </div>
 
         {/* COSMOTIP--falta implementar ia */}
-        <CosmoDashboard scene={"step1"} eventoAstronomico={store.userActiveMission && store.userActiveMission.event.name}/>
+        <CosmoDashboard
+          scene={"step1"}
+          eventoAstronomico={
+            store.userActiveMission && store.userActiveMission.event.name
+          }
+        />
       </div>
     </>
   );
