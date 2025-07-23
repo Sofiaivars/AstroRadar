@@ -2,9 +2,11 @@
 # exit on error
 set -o errexit
 
-npm install
-npm run build
-
 pipenv install
 
+cd src/
 pipenv run upgrade
+
+cd src/front/
+npm install
+npm run build
