@@ -7,6 +7,6 @@ pipenv install
 cd src/
 pipenv run upgrade
 
-cd src/front/
+cd front/
 npm install
 npm run build
