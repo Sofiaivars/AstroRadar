@@ -3,6 +3,7 @@
 set -o errexit
 
 pipenv install
+cd src/
 pipenv run upgrade
 
 cd src/front/
