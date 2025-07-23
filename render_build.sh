@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
-# exit on error
 set -o errexit
 
-pipenv install
+cd "$(dirname "$0")"
 
-cd src/
-pipenv run upgrade
+pipenv install --deploy
 
-cd front/
+export FLASK_APP=src/app.py
+
+pipenv run flask db upgrade --directory src/migrations
+
+cd src/front/
 npm install
 npm run build

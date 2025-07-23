@@ -22,7 +22,7 @@ import requests
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), '../dist/')
+    os.path.realpath(__file__)), './front/dist/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
@@ -79,8 +79,8 @@ def expired_token_callback(jwt_header, jwt_payload):
 # generate sitemap with all your endpoints
 @app.route('/')
 def sitemap():
-    if ENV == "development":
-        return generate_sitemap(app)
+    # if ENV == "development":
+    #     return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
 
 # any other endpoint will try to serve it like a static file
