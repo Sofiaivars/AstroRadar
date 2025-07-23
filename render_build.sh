@@ -3,10 +3,8 @@
 set -o errexit
 
 pipenv install
-
-cd src/
 pipenv run upgrade
 
-cd front/
+cd src/front/
 npm install
 npm run build
