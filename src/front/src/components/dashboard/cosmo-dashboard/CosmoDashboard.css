@@ -4,13 +4,15 @@
 }
 
 .cosmo-step1{
-  bottom: -7px;
-  right: 0px;
+  bottom: -24px;
+  right: -16px;
+  z-index: 10;
 }
 
 .cosmo-step2{
-  top: 230px;
+  bottom: -40px;
   right: 10px;
+  
 }
 
 .ai-alert{
