@@ -15,106 +15,116 @@ import { getUserLocation } from "../../servicios/geolocation-service";
 import { getUserInfo } from "../../servicios/login-service.js";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
-import { getEventsFromAPI, getISSPasses, getUserMissions } from "../../servicios/events-missions-service.js";
+import {
+  getEventsFromAPI,
+  getISSPasses,
+  getUserMissions,
+} from "../../servicios/events-missions-service.js";
 
-function DashboardComponents(){
+function DashboardComponents() {
   const [userData, setUserData] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [spots, setSpots] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [spots, setSpots] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const { store, dispatch } = useGlobalReducer()
+  const { store, dispatch } = useGlobalReducer();
 
   const fetchAI = async (lat, lon) => {
     try {
-      const data = await getJSONCoords(lat, lon)
-      setSpots(data.spots)
+      const data = await getJSONCoords(lat, lon);
+      setSpots(data.spots);
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error:", error);
     }
-  }
+  };
 
   useEffect(() => {
-    if(!store.userData){
-      console.log('Obteniendo datos de usuario...')
+    if (!store.userData) {
+      console.log("Obteniendo datos de usuario...");
       const getUserDataFromDatabase = async () => {
         const data = await getUserInfo();
-        dispatch({ type: 'ADD_USER_DATA', payload: data })
-        return
+        dispatch({ type: "ADD_USER_DATA", payload: data });
+        return;
       };
       getUserDataFromDatabase();
     }
 
-    if(!store.userLocation){
-      console.log('Obteniendo ubicación...')
+    if (!store.userLocation) {
+      console.log("Obteniendo ubicación...");
       getUserLocation(
         (coords) => {
-          dispatch({ type: 'ADD_USER_LOCATION', payload: coords });
+          dispatch({ type: "ADD_USER_LOCATION", payload: coords });
           setErrorMsg(null);
         },
         (mensajeError) => {
           setErrorMsg(mensajeError);
         }
-      )
+      );
     }
 
-    if(!Array.isArray(store.eventList) || store.eventList.length === 0){
-      try{
+    if (!Array.isArray(store.eventList) || store.eventList.length === 0) {
+      try {
         const getEvents = async () => {
-          const eventsFromAPI = await getEventsFromAPI()
-          dispatch({ type: "SET_EVENT_LIST", payload: eventsFromAPI })
-        }
-        getEvents()
-      }catch(error){
-        console.error(error)
+          const eventsFromAPI = await getEventsFromAPI();
+          dispatch({ type: "SET_EVENT_LIST", payload: eventsFromAPI });
+        };
+        getEvents();
+      } catch (error) {
+        console.error(error);
       }
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if(store.userData){
-      console.log(store.userData)
-      setUserData(store.userData)
-      setIsLoaded(true)
+    if (store.userData) {
+      console.log(store.userData);
+      setUserData(store.userData);
+      setIsLoaded(true);
     }
-  }, [store.userData])
+  }, [store.userData]);
 
   useEffect(() => {
-    if(store.userLocation){
-      setUserLocation(store.userLocation)
+    if (store.userLocation) {
+      setUserLocation(store.userLocation);
     }
-  }, [store.userLocation])
+  }, [store.userLocation]);
 
   useEffect(() => {
     const getISSPassesFromAPI = async () => {
       try {
-        const issData = await getISSPasses(userLocation.latitude, userLocation.longitude)
-        dispatch({ type: "SET_ISS_PASSES", payload: issData })
-        console.log('Cargados pasos ISS...')
+        const issData = await getISSPasses(
+          userLocation.latitude,
+          userLocation.longitude
+        );
+        dispatch({ type: "SET_ISS_PASSES", payload: issData });
+        console.log("Cargados pasos ISS...");
       } catch (error) {
-        console.error("Error obteniendo datos de ISS:", error)
+        console.error("Error obteniendo datos de ISS:", error);
       }
+    };
+    if (userLocation) {
+      fetchAI(userLocation.latitude, userLocation.longitude);
+      getISSPassesFromAPI();
     }
-    if(userLocation){
-      fetchAI(userLocation.latitude, userLocation.longitude)
-      getISSPassesFromAPI()
-    }
-  }, [userLocation])
+  }, [userLocation]);
 
   useEffect(() => {
-    if(!store.userActiveMission && userData){
+    if (!userData) return;
+    if (!store.userActiveMission && userData) {
       const getActiveMissionFromDb = async () => {
-        const response = await getUserMissions(userData.id)
-        const active = [...response].filter((mission) => mission.state === "active")
-        dispatch({ type: "ADD_USER_ACTIVE_MISSION", payload: active[0] })
-        return
-      }
-      getActiveMissionFromDb()
-    }else{
-      console.log("Sin id de usuario.")
+        const response = await getUserMissions(userData.id);
+        const active = [...response].filter(
+          (mission) => mission.state === "active"
+        );
+        dispatch({ type: "ADD_USER_ACTIVE_MISSION", payload: active[0] });
+        return;
+      };
+      getActiveMissionFromDb();
+    } else {
+      console.log("Sin id de usuario.");
     }
-  }, [userData])
+  }, [userData]);
 
   if (!isLoaded) {
     return (
@@ -124,13 +134,13 @@ function DashboardComponents(){
     );
   }
 
-  return(
+  return (
     <>
       <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
       <div className="flex flex-row gap-3 w-full h-full">
         <div className="flex flex-col w-1/2 gap-1">
           <EventoDestacado />
-          <MapDashboard locations={spots} userPosition={userLocation}/>
+          <MapDashboard locations={spots} userPosition={userLocation} />
           <div className="flex flex-row w-full gap-1">
             <Calendar />
             <EventoSugerido />
@@ -145,12 +155,12 @@ function DashboardComponents(){
           <EventoProgramado />
           <div className="flex flex-row items-center w-full h-full gap-1 relative rounded-2xl borde-con-degradado">
             <RankingMain />
-            <CosmoDashboard scene={"dashboard"}/>
+            <CosmoDashboard scene={"dashboard"} />
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default DashboardComponents
+export default DashboardComponents;

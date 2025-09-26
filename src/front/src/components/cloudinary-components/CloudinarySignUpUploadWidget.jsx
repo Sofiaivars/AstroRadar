@@ -1,50 +1,51 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from "react";
 
-const CloudinarySignUpUploadWidget = ({ uwConfig, setPublicId, setUserImage }) => {
+const CloudinarySignUpUploadWidget = ({
+  uwConfig,
+  setPublicId,
+  setUserImage,
+}) => {
   const uploadWidgetRef = useRef(null);
-  const uploadButtonRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [isReady, setIsReady] = useState(false);
+
+  const handleUpload = useCallback(() => {
+    if (uploadWidgetRef.current) {
+      uploadWidgetRef.current.open();
+    }
+  }, []);
 
   useEffect(() => {
-    const initializeUploadWidget = () => {
-      if (window.cloudinary && uploadButtonRef.current) {
-        // Create upload widget
-        uploadWidgetRef.current = window.cloudinary.createUploadWidget(
-          uwConfig,
-          (error, result) => {
-            if (!error && result && result.event === 'success') {
-              setPublicId(result.info.public_id);
-              setUserImage(result.info.secure_url)
-            }
+    if (!window.cloudinary || !buttonRef.current) return;
+
+    // Crear widget solo una vez y asegurando que el botón existe
+    if (!uploadWidgetRef.current) {
+      uploadWidgetRef.current = window.cloudinary.createUploadWidget(
+        uwConfig,
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            setPublicId(result.info.public_id);
+            setUserImage(result.info.secure_url);
           }
-        );
-
-        // Add click event to open widget
-        const handleUploadClick = () => {
-          if (uploadWidgetRef.current) {
-            uploadWidgetRef.current.open();
-          }
-        };
-
-        const buttonElement = uploadButtonRef.current;
-        buttonElement.addEventListener('click', handleUploadClick);
-
-        // Cleanup
-        return () => {
-          buttonElement.removeEventListener('click', handleUploadClick);
-        };
-      }
-    };
-
-    initializeUploadWidget();
-  }, [uwConfig, setPublicId]);
+        }
+      );
+      setIsReady(true);
+    }
+  }, [uwConfig, setPublicId, setUserImage]);
 
   return (
     <button
-      ref={uploadButtonRef}
-      id="upload_widget"
-      className="rounded-2xl p-1 hover:bg-purple-300 transition-colors cursor-pointer borde-con-degradado"
+      ref={buttonRef}
+      type="button"
+      onClick={handleUpload}
+      disabled={!isReady}
+      className={`rounded-2xl p-2 transition-colors borde-con-degradado ${
+        isReady
+          ? "hover:bg-purple-300 cursor-pointer"
+          : "opacity-50 cursor-not-allowed"
+      }`}
     >
-      Seleccionar imagen de perfil...
+      {isReady ? "Seleccionar imagen de perfil..." : "Cargando Cloudinary..."}
     </button>
   );
 };
