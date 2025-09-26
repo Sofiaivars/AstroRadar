@@ -12,6 +12,14 @@ const MisionRealizada = () => {
   const [ultimaMision, setUltimaMision] = useState(null);
 
   useEffect(() => {
+    if (store.userData?.id) {
+      setUserId(store.userData.id);
+      console.log("id usuario", userId);
+    }
+  }, [store.userData]);
+
+  useEffect(() => {
+    console.log("id usuario", userId);
     if (userId) {
       const fetchMissions = async () => {
         const misiones = await getUserMissions(userId);
@@ -29,12 +37,6 @@ const MisionRealizada = () => {
     }
   }, [userId]);
 
-  useEffect(() => {
-    if (store.userData?.id) {
-      setUserId(store.userData.id);
-    }
-  }, [store.userData]);
-
   const handleClick = () => {
     navigate("/dashboard/completed-missions");
   };
@@ -44,7 +46,9 @@ const MisionRealizada = () => {
       <div
         className="relative w-full h-full rounded-[16px] overflow-hidden shadow-lg text-white font-poppins"
         style={{
-          backgroundImage: `url(${ultimaMision ? ultimaMision.image : fondoMisionRealizada})`,
+          backgroundImage: `url(${
+            ultimaMision ? ultimaMision.image : fondoMisionRealizada
+          })`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundColor: "rgba(0,0,0,0.7)",
@@ -68,7 +72,9 @@ const MisionRealizada = () => {
                     </span>
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-300">No tienes misiones completadas aún.</p>
+                  <p className="text-sm text-gray-300">
+                    No tienes misiones completadas aún.
+                  </p>
                 )}
               </div>
             </div>

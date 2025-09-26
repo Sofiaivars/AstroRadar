@@ -385,3 +385,41 @@ def get_sats_above():
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+
+@app.route('/umissions/complete', methods=['POST'])
+@jwt_required()
+def complete_mission():
+    user_id = get_jwt_identity()
+    print("ID usuario en complete mission:", user_id) 
+    data = request.get_json()
+    event_id = data.get("event_id")
+
+    event = Event.query.get(event_id)
+    if not event:
+        return jsonify({"msg": "Evento no encontrado"}), 404
+
+    # Crear la misión directamente con la imagen del evento
+    new_mission = UserMission(
+        user_id=user_id,
+        event_id=event_id,
+        state="done",
+        image=event.image,  # 👈 mockea la imagen del evento
+        done_date=datetime.utcnow()
+    )
+    db.session.add(new_mission)
+    db.session.commit()
+
+    return jsonify(new_mission.serialize()), 201
+
+
+@app.route('/umissions', methods=['GET'])
+@jwt_required()
+def get_user_missions():
+    user_id = get_jwt_identity()
+    missions = UserMission.query.filter_by(user_id=user_id).all()
+
+    if not missions:
+        return jsonify([]), 200
+
+    return jsonify([mission.serialize() for mission in missions]), 200

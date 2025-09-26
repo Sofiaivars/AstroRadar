@@ -26,15 +26,11 @@ const CompletedMissionsPage = () => {
   }, [store.userData]);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? missions.length - 1 : prev - 1
-    );
+    setCurrentIndex((prev) => (prev === 0 ? missions.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev === missions.length - 1 ? 0 : prev + 1
-    );
+    setCurrentIndex((prev) => (prev === missions.length - 1 ? 0 : prev + 1));
   };
 
   const currentMission = missions[currentIndex];
@@ -46,7 +42,9 @@ const CompletedMissionsPage = () => {
       </h2>
 
       {missions.length === 0 ? (
-        <p className="text-white text-sm">No tienes misiones completadas aún.</p>
+        <p className="text-white text-sm">
+          No tienes misiones completadas aún.
+        </p>
       ) : (
         <div className="relative w-full max-w-4xl flex justify-center items-center">
           <button
@@ -58,7 +56,11 @@ const CompletedMissionsPage = () => {
 
           <Card
             title={currentMission?.event?.name || "Sin título"}
-            image={currentMission?.image || "https://via.placeholder.com/400x200"}
+            image={
+              currentMission?.image ||
+              currentMission?.event?.image ||
+              "https://via.placeholder.com/400x200"
+            }
             base={currentMission?.base?.base_name || "Base desconocida"}
             rewards={[
               "+50 XP",
