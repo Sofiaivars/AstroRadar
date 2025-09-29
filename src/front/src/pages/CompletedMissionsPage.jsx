@@ -15,7 +15,7 @@ const CompletedMissionsPage = () => {
 
         const completed = allMissions
           .filter((m) => m.state === "done")
-          .sort((a, b) => new Date(b.done_date) - new Date(a.done_date)); // 👈 ORDENAR POR FECHA CON HORA
+          .sort((a, b) => new Date(b.done_date) - new Date(a.done_date)); // ORDENA x FECHA CON HORA
 
         setMissions(completed);
         setCurrentIndex(0);

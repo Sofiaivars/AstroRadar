@@ -14,6 +14,7 @@ function InfoTopComponent({ errorMsg, userLocation }) {
   const [satCounter, setSatCounter] = useState(null);
 
   useEffect(() => {
+    //Reverse Geocoding
     if (userLocation) {
       const getLocateInfo = async () => {
         const reverseGeocodingData = await reverseGeocodingAPICall(
@@ -25,7 +26,7 @@ function InfoTopComponent({ errorMsg, userLocation }) {
         );
       };
       getLocateInfo();
-
+      //Weather
       if (userLocation) {
         // PENDIENTE AÑADIR PROBABILIDAD DE LLUVIA
         const getWeatherDataFromAPI = async () => {
@@ -36,6 +37,7 @@ function InfoTopComponent({ errorMsg, userLocation }) {
           setWeatherInfo(weatherData);
 
           if (!satCounter) {
+            //Satélites encima
             const getSatsAbove = async () => {
               const response = await getAboveSatellites(
                 userLocation.latitude,
