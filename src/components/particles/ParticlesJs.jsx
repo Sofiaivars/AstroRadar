@@ -5,10 +5,8 @@ import { loadFull } from "tsparticles";
 export const ParticlesBackground = () => {
   const particlesInit = useCallback(async (engine) => {
     await loadFull(engine);
-    console.log("Particles engine init", engine);
   }, []);
   const particlesLoaded = useCallback(async (container) => {
-    console.log("Particles loaded", container);
   }, []);
 
   const particlesConfig = {
@@ -73,7 +71,6 @@ export const ParticlesBackground = () => {
     retina_detect: true,
   };
 
-  console.log("Particles config loaded", particlesConfig);
   return (
     <div
       style={{

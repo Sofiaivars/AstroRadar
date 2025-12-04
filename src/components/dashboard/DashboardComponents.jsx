@@ -26,15 +26,6 @@ function DashboardComponents(){
 
   const { store, dispatch } = useGlobalReducer()
 
-  const fetchAI = async (lat, lon) => {
-    try {
-      const data = await getJSONCoords(lat, lon)
-      setSpots(data.spots)
-    } catch (error) {
-      console.error("Error:", error)
-    }
-  }
-
   useEffect(() => {
     if(!store.userData){
       console.log('Obteniendo datos de usuario...')
@@ -70,51 +61,10 @@ function DashboardComponents(){
         console.error(error)
       }
     }
-  }, [])
-
-  useEffect(() => {
-    if(store.userData){
-      console.log(store.userData)
-      setUserData(store.userData)
+    setTimeout(() => {
       setIsLoaded(true)
-    }
-  }, [store.userData])
-
-  useEffect(() => {
-    if(store.userLocation){
-      setUserLocation(store.userLocation)
-    }
-  }, [store.userLocation])
-
-  useEffect(() => {
-    const getISSPassesFromAPI = async () => {
-      try {
-        const issData = await getISSPasses(userLocation.latitude, userLocation.longitude)
-        dispatch({ type: "SET_ISS_PASSES", payload: issData })
-        console.log('Cargados pasos ISS...')
-      } catch (error) {
-        console.error("Error obteniendo datos de ISS:", error)
-      }
-    }
-    if(userLocation){
-      fetchAI(userLocation.latitude, userLocation.longitude)
-      getISSPassesFromAPI()
-    }
-  }, [userLocation])
-
-  useEffect(() => {
-    if(!store.userActiveMission && userData){
-      const getActiveMissionFromDb = async () => {
-        const response = await getUserMissions(userData.id)
-        const active = [...response].filter((mission) => mission.state === "active")
-        dispatch({ type: "ADD_USER_ACTIVE_MISSION", payload: active[0] })
-        return
-      }
-      getActiveMissionFromDb()
-    }else{
-      console.log("Sin id de usuario.")
-    }
-  }, [userData])
+    }, 1000)
+  }, [])
 
   if (!isLoaded) {
     return (
