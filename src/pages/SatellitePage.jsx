@@ -1,21 +1,11 @@
 import { useEffect, useState } from "react"
 import ISSCard from "../components/renderISSPasses/ISSCard"
-import useGlobalReducer from '../hooks/useGlobalReducer.jsx'
 import PageLoader from '../components/loaders/PageLoader.jsx'
 
 function SatellitePage(){
   const [issPasses, setIssPasses] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const { store } = useGlobalReducer()
-
-  useEffect(() => {
-    if(!issPasses){
-      console.log(store.issPassesList)
-      setIssPasses(store.issPassesList)
-      setIsLoaded(true)
-    }
-  }, [issPasses, store.issPassesList])
   return(
     <div className="flex flex-col items-center justify-center w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
       <div className="flex flex-col items-center justify-center gap-3 w-6/7 h-6/7 overflow-y-auto render-iss-passes">

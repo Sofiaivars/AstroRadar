@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import './ProfilePage.css'
-import useGlobalReducer from '../hooks/useGlobalReducer'
 import { useNavigate } from 'react-router'
 import { Eye, EyeClosed } from 'lucide-react'
 import { changePassword } from '../servicios/login-service'
