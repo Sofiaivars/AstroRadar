@@ -1,6 +1,5 @@
 import React, { act, useEffect, useState } from "react";
 import fondoPerseidas from "./Assets/perseidas.jpg";
-import useGlobalReducer from "../../../hooks/useGlobalReducer";
 import { TriangleAlert } from "lucide-react";
 import { useNavigate } from "react-router";
 
@@ -10,7 +9,6 @@ const MisionActual = () => {
   const missionStatus = activeMission ? activeMission.state : <TriangleAlert/>;
   const location = activeMission ? activeMission.base.base_name : "";
 
-  const { store } = useGlobalReducer()
   const navigate = useNavigate()
 
   const handleClick = () => {
@@ -24,12 +22,6 @@ const MisionActual = () => {
       navigate('/dashboard')
     }
   };
-
-  useEffect(() => {
-    if(store.userActiveMission){
-      setActiveMission(store.userActiveMission)
-    }
-  }, [])
 
   useEffect(() => {
     console.log(activeMission)

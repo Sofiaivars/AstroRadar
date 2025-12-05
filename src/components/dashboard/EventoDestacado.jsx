@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import useGlobalReducer from '../../hooks/useGlobalReducer.jsx'
 import LoaderMini from '../loaders/LoaderMini.jsx'
 import { Telescope, Moon } from 'lucide-react'
 import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
@@ -9,7 +8,6 @@ import { Toast } from 'primereact/toast';
 const EventoDestacado = () => {
   const [eventList, setEventList] = useState(null)
   const [firstEvent, setFirstEvent] = useState(null)
-  const { store } = useGlobalReducer()
 
   //Toast
     const toast = useRef(null)
@@ -22,23 +20,8 @@ const EventoDestacado = () => {
     // Toast end
 
   const handleClick = async () => {
-    if(!store.userData.id || !firstEvent.id){
-      return console.log('userId o eventId vacíos.')
-    }
-    try{
-      const missionState = "scheduled"
-      await addUserMission(store.userData.id, firstEvent.id, missionState)
-      return successOnCreateMissionShow()
-    }catch(error){
-      console.error(error)
-      missionAlreadyCreatedShow()
-    }
     
   }
-
-  useEffect(() => {
-    setEventList(store.eventList)
-  }, [])
 
   useEffect(() => {
     if(eventList){

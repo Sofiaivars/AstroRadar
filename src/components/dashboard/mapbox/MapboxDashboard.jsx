@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import LoaderMini from '../../loaders/LoaderMini.jsx';
-import useGlobalReducer from '../../../hooks/useGlobalReducer.jsx';
 
 const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
-  const { dispatch } = useGlobalReducer();
 
   const [viewState, setViewState] = useState({
     longitude: 0,
@@ -72,7 +70,6 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
       const data = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_SELECTED_BASE", payload: newLocation });
         if (onSelectBase) onSelectBase(newLocation);
 
         setUserLocations([newLocation]);
@@ -123,7 +120,6 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
       const data = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_SELECTED_BASE", payload });
         if (onSelectBase) onSelectBase(payload);
 
         setShowSavedMessage(true);

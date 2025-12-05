@@ -1,6 +1,5 @@
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
-import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 import CountdownComponent from "../renderEvents/CountdownComponent.jsx";
 import LoaderMini from "../loaders/LoaderMini.jsx";
 import { useEffect, useState } from "react";
@@ -8,13 +7,6 @@ import { useEffect, useState } from "react";
 const EventoProgramado = () => {
   const [firstIssPass, setFirstIssPass] = useState();
   const navigate = useNavigate();
-  const { store } = useGlobalReducer();
-
-  useEffect(() => {
-    if (store.issPassesList) {
-      setFirstIssPass(store.issPassesList.passes[0]);
-    }
-  }, [store.issPassesList]);
 
   return (
     <>

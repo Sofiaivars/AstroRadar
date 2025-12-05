@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { signUp } from "../../servicios/login-service"
-import CloudinarySignUpUploadWidget from "../cloudinary-components/CloudinarySignUpUploadWidget"
 import SignUpButton from "./SignUpButton"
 import { Eye, EyeClosed } from "lucide-react";
 
@@ -56,48 +55,6 @@ function SignUpForm(){
     return setInputPassType("password")
   }
 
-  // Configuration
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUDNAME;
-  const uploadPreset = import.meta.env.VITE_CLOUDINARY_SIGNUP_PRESET;
-
-  // State
-  const [publicId, setPublicId] = useState('');
-
-  // Upload Widget Configuration
-  const uwConfig = {
-    cloudName,
-    uploadPreset,
-    sources: ['local', 'camera'],
-    styles:{
-      palette: {
-          window: "#8e4990",
-          windowBorder: "#b8b8b8",
-          tabIcon: "#1e2939",
-          menuIcons: "#5A616A",
-          textDark: "#f7f7f7",
-          textLight: "#FFFFFF",
-          link: "#66798f",
-          action: "#FF620C",
-          inactiveTabIcon: "#2c486d",
-          error: "#F44235",
-          inProgress: "#d970ff",
-          complete: "#3cceec",
-          sourceBg: "#1e2939"
-      },
-      fonts: {
-        default: {
-          active: true
-        }
-      }
-    },
-    multiple: false,
-    clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif', 'bmp', 'tiff'],
-  };
-
-  useEffect(() => {
-    console.log(userImage)
-  }, [userImage])
-
   return(
     <div className="flex flex-col gap-3 p-3 rounded-2xl min-w-85 borde-con-degradado justify-between shadow-lg shadow-purple-300">
       <div className="flex flex-col w-full gap-1">
@@ -113,9 +70,6 @@ function SignUpForm(){
         <input type="text" name="lastname" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-lastname" placeholder="Apellidos" value={lastname} onChange={handleInputChange}/>
         <input type="text" name="city" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-city" placeholder="Ciudad" value={city} onChange={handleInputChange}/>
         <input type="text" name="country" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-country" placeholder="País" value={country} onChange={handleInputChange}/>
-        {!userImage 
-          ? <CloudinarySignUpUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} setUserImage={setUserImage}/> 
-          : <button className="text-sm text-center text-purple-300">Imagen seleccionada!</button>}
       </div>
       <p className={`text-sm text-red-400 ${errorAtSignUp ? "" : "hidden"}`}>Rellena todos los campos e incluye un email válido</p>
       <button className="text-sm cursor-pointer hover:text-purple-500 self-end" onClick={() => navigate('/')}>Ya tengo una cuenta</button>

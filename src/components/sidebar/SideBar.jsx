@@ -7,12 +7,10 @@ import {
   Settings,
   PowerOff,
 } from "lucide-react";
-import useGlobalReducer from "../../hooks/useGlobalReducer";
 
 function SideBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { store } = useGlobalReducer();
 
   const handleClick = () => {
     localStorage.removeItem("jwt-token");
@@ -20,19 +18,19 @@ function SideBar() {
   };
 
   const handleMissionNavigate = () => {
-    if (store.userActiveMission) {
-      if (!store.userActiveMission.base.id) {
-        console.log(store.userActiveMission);
-        console.log(store.userActiveMission.base.id);
-        return navigate("/dashboard/missions");
-      } else {
-        console.log(store.userActiveMission);
-        console.log(store.userActiveMission.base.id);
-        return navigate("/dashboard/missions/step2");
-      }
-    } else {
-      alert("No tienes activada una misión");
-    }
+    // if (store.userActiveMission) {
+    //   if (!store.userActiveMission.base.id) {
+    //     console.log(store.userActiveMission);
+    //     console.log(store.userActiveMission.base.id);
+    //     return navigate("/dashboard/missions");
+    //   } else {
+    //     console.log(store.userActiveMission);
+    //     console.log(store.userActiveMission.base.id);
+    //     return navigate("/dashboard/missions/step2");
+    //   }
+    // } else {
+    //   alert("No tienes activada una misión");
+    // }
   };
   const isActive = (path) => location.pathname === path;
 

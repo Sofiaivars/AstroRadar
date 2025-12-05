@@ -19,14 +19,14 @@ function LoginForm(){
   }
 
   const handleClick = async (username, password) => {
-    if( !username || !password) {
-      setErrorAtLogin(true)
-      return
-    }
+    // if( !username || !password) {
+    //   setErrorAtLogin(true)
+    //   return
+    // }
   
     try{
-      const dataFromLogin = await login(username, password)
-      console.log(dataFromLogin)
+      // const dataFromLogin = await login(username, password)
+      // console.log(dataFromLogin)
       navigate('/dashboard')
     }catch(error){
       setErrorAtLogin(true)

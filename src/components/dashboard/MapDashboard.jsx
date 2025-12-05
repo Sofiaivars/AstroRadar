@@ -1,13 +1,10 @@
 import React from "react";
 import MapboxDashboard from "./mapbox/MapboxDashboard";
-import useGlobalReducer from "../../hooks/useGlobalReducer.jsx"; // ajusta la ruta si es necesario
 
 const MapDashboard = ({ locations, userPosition, onSelectBase }) => {
-  const { store, dispatch } = useGlobalReducer();
 
   // Función que se llama cuando el usuario selecciona una base
   const handleSelectBase = (base) => {
-    dispatch({ type: "SET_SELECTED_BASE", payload: base });
 
     // Notifica al componente padre si se le pasó onSelectBase como prop
     if (onSelectBase) {
@@ -28,9 +25,7 @@ const MapDashboard = ({ locations, userPosition, onSelectBase }) => {
         <div className="bg-white/1 backdrop-blur-xs rounded-md p-4 min-h-[100px] text-[var(--astroradar-white)] text-center">
           <h3 className="text-base font-semibold mb-1">Bases Estelares</h3>
           <p className="text-sm mt-3">
-            {store.selectedBase
-              ? `Base añadida: ${store.selectedBase.name}`
-              : "Añade tus bases estelares, podrás elegirlas al comenzar una misión"}
+            {/* INDICAR SI ESTÁ O NO SELECCIONADA LA BASE */}
           </p>
         </div>
       </div>

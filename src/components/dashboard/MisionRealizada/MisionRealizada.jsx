@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import fondoMisionRealizada from "./Assets/ultima-mision.jpg";
 import { useNavigate } from "react-router";
 import { getUserMissions } from "../../../servicios/events-missions-service";
-import useGlobalReducer from "../../../hooks/useGlobalReducer";
 
 const MisionRealizada = () => {
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
-  const { store } = useGlobalReducer();
 
   const [ultimaMision, setUltimaMision] = useState(null);
 
@@ -28,12 +26,6 @@ const MisionRealizada = () => {
       console.log("No existe id de usuario en la misión completada");
     }
   }, [userId]);
-
-  useEffect(() => {
-    if (store.userData?.id) {
-      setUserId(store.userData.id);
-    }
-  }, [store.userData]);
 
   const handleClick = () => {
     navigate("/dashboard/completed-missions");

@@ -1,8 +1,7 @@
-import React, { act, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import StepsComponent from "../components/missionsSteps/StepsComponent";
 import { Outlet } from "react-router";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { CalendarDays, MessageCircleWarning } from "lucide-react";
 
 function MissionsPage() {
