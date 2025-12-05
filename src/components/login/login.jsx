@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import LoginButton from "./LoginButton"
 import { useNavigate } from "react-router"
-import { userLogIn } from "../../servicios/authService"
+import { userLogIn } from "../../services/authService"
 import { Eye, EyeClosed } from "lucide-react";
 
 function LoginForm(){
