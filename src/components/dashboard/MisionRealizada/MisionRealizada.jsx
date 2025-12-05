@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import fondoMisionRealizada from "./Assets/ultima-mision.jpg";
+import fondoMisionRealizada from "@components/dashboard/MisionRealizada/assets/ultima-mision.jpg";
 import { useNavigate } from "react-router";
-import { getUserMissions } from "../../../servicios/events-missions-service";
+import { getUserMissions } from "@services/events-missions-service";
 
 const MisionRealizada = () => {
   const [userId, setUserId] = useState(null);

@@ -1,9 +1,9 @@
-import './RenderEventList.css'
 import { useEffect, useRef, useState } from "react"
-import EventCard from "./EventCard"
-import PageLoader from "../loaders/PageLoader"
-import UserMissionCard from './UserMissionCard'
-import { deleteMission, getUserMissions, updateMissionState } from "../../servicios/events-missions-service";
+import '@components/renderEvents/RenderEventList.css'
+import EventCard from "@components/renderEvents/EventCard"
+import PageLoader from "@components/loaders/PageLoader"
+import UserMissionCard from '@components/renderEvents/UserMissionCard'
+import { deleteMission, getUserMissions, updateMissionState } from "@services/events-missions-service";
 import { Toast } from 'primereact/toast';
 
 function RenderEventList({eventList, renderCategory, userId}){

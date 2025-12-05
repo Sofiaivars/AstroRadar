@@ -1,5 +1,5 @@
 import { CalendarDays, CalendarClock, CalendarOff, Telescope, Moon, Hourglass, Satellite, Trash, Sparkles, Eclipse, Orbit, Ban } from "lucide-react";
-import CountdownComponent from "./CountdownComponent";
+import CountdownComponent from "@components/renderEvents/CountdownComponent";
 
 function UserMissionCard({eventImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, missionState, missionId, userId, handleClick, deleteUserMission}){
 

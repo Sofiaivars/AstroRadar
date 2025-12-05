@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Calendar } from "primereact/calendar";
-import "./Calendar.css";
+import "@components/calendar/Calendar.css";
 import "primereact/resources/themes/lara-dark-purple/theme.css";
 
 export default function InlineDemo() {

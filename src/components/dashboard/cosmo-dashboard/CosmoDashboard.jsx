@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import './CosmoDashboard.css'
-import cosmo from './assets/cosmo-dashboard.png'
-import cosmoStep1 from './assets/cosmo-step1.png'
-import cosmoStep2 from './assets/cosmo-tip2.png'
-import cosmoError from './assets/cosmo-explota.gif'
-import { cosmoStep2TipCall, cosmoStep1TipCall, cosmoTipCall } from '../../../servicios/cosmo-service'
-import LoaderMini from '../../loaders/LoaderMini.jsx'
+import '@components/cosmo-dashboard/CosmoDashboard.css'
+import cosmo from '@components/cosmo-dashboard/assets/cosmo-dashboard.png'
+import cosmoStep1 from '@components/cosmo-dashboard/assets/cosmo-step1.png'
+import cosmoStep2 from '@components/cosmo-dashboard/assets/cosmo-tip2.png'
+import cosmoError from '@components/cosmo-dashboard/assets/cosmo-explota.gif'
+import { cosmoStep2TipCall, cosmoStep1TipCall, cosmoTipCall } from '@services/cosmo-service'
+import LoaderMini from '@components/loaders/LoaderMini.jsx'
 
 function CosmoDashboard({scene, eventoAstronomico}){
   const [cosmoTip, setCosmoTip] = useState(null)

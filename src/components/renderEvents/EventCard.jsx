@@ -1,6 +1,6 @@
 import { CalendarDays, CalendarClock, CalendarOff, Telescope, Moon, Hourglass, Tornado } from "lucide-react";
-import CountdownComponent from "./CountdownComponent";
-import { addUserMission } from "../../servicios/events-missions-service";
+import CountdownComponent from "@components/renderEvents/CountdownComponent";
+import { addUserMission } from "@services/events-missions-service";
 import { Toast } from 'primereact/toast';
 import { useRef } from "react";
 

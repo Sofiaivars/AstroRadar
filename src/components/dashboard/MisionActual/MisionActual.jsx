@@ -1,5 +1,5 @@
-import React, { act, useEffect, useState } from "react";
-import fondoPerseidas from "./Assets/perseidas.jpg";
+import React, { useEffect, useState } from "react";
+import fondoPerseidas from "@components/dashboard/MisionActual/assets/perseidas.jpg";
 import { TriangleAlert } from "lucide-react";
 import { useNavigate } from "react-router";
 

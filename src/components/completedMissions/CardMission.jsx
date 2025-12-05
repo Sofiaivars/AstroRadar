@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import "./CardMission.css";
+import "@components/completedMissions/CardMission.css";
 
 const Card = ({ title, image, base, rewards }) => {
   const cardRef = useRef(null);

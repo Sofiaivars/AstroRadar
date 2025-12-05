@@ -1,5 +1,5 @@
 import React from "react";
-import MapboxDashboard from "./mapbox/MapboxDashboard";
+import MapboxDashboard from "@components/mapbox/MapboxDashboard";
 
 const MapDashboard = ({ locations, userPosition, onSelectBase }) => {
 

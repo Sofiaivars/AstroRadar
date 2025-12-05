@@ -1,5 +1,5 @@
 import { CalendarDays, Hourglass } from "lucide-react";
-import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
+import CountdownComponent from '@components/renderEvents/CountdownComponent.jsx'
 
 function ISSCard({issImg, issDuration, issStart}){
 

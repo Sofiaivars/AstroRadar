@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import './InfoTopComponent.css'
-import { getWeather } from '../../../servicios/weather-service.js'
-import WeatherComponent from './WeatherComponent.jsx'
-import LoaderMini from '../../loaders/LoaderMini.jsx'
-import { reverseGeocodingAPICall } from '../../../servicios/geolocation-service.js'
+import '@components/dashboard/InfoTopComponent/InfoTopComponent.css'
+import WeatherComponent from '@components/dashboard/InfoTopComponent/WeatherComponent.jsx'
+import LoaderMini from '@components/loaders/LoaderMini.jsx'
+import { getWeather } from '@services/weather-service.js'
+import { reverseGeocodingAPICall } from '@services/servicios/geolocation-service.js'
+import { getAboveSatellites } from '@services/servicios/events-missions-service.js'
 import { LocateFixed } from 'lucide-react'
-import { getAboveSatellites } from '../../../servicios/events-missions-service.js'
 import NumberFlow from "@number-flow/react"
 
 function InfoTopComponent({errorMsg, userLocation}){

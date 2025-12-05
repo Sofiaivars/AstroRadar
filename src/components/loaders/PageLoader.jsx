@@ -1,4 +1,4 @@
-import './PageLoader.css'
+import '@components/loaders/PageLoader.css'
 
 function PageLoader(){
 

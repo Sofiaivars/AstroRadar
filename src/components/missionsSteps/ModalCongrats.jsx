@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import "./ModalCongrats.css";
-import cosmoDab from "../../pages/assest/cosmo-dab.png";
+import "@components/missionSteps/ModalCongrats.css";
+import cosmoDab from "@pages/assets/cosmo-dab.png";
 import confetti from "canvas-confetti";
 
 const ModalCongrats = () => {

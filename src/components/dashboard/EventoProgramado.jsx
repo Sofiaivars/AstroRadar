@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
-import CountdownComponent from "../renderEvents/CountdownComponent.jsx";
-import LoaderMini from "../loaders/LoaderMini.jsx";
+import CountdownComponent from "@components/renderEvents/CountdownComponent.jsx";
+import LoaderMini from "@components/loaders/LoaderMini.jsx";
 import { useEffect, useState } from "react";
 
 const EventoProgramado = () => {

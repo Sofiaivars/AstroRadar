@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import LoaderMini from '../loaders/LoaderMini.jsx'
+import LoaderMini from '@components/loaders/LoaderMini.jsx'
 import { Telescope, Moon } from 'lucide-react'
-import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
-import { addUserMission } from '../../servicios/events-missions-service.js'
+import CountdownComponent from '@components/renderEvents/CountdownComponent.jsx'
+import { addUserMission } from '@services/events-missions-service.js'
 import { Toast } from 'primereact/toast';
 
 const EventoDestacado = () => {

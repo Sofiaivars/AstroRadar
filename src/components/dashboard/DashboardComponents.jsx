@@ -1,20 +1,20 @@
-import EventoDestacado from "./EventoDestacado.jsx";
-import MapDashboard from "./MapDashboard.jsx";
-import RankingMain from "./ranking-component/RankingMain";
-import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard";
-import MisionActual from "./MisionActual/MisionActual";
-import MisionRealizada from "./MisionRealizada/MisionRealizada";
-import Calendar from "./calendar/Calendar";
-import EventoSugerido from "./EventoSugerido.jsx";
-import EventoProgramado from "./EventoProgramado.jsx";
-import InfoTopComponent from "./InfoTopComponent/InfoTopComponent.jsx";
-import PageLoader from "../loaders/PageLoader.jsx";
 import { useEffect, useState } from "react";
-import { getJSONCoords } from "../../servicios/cosmo-service.js";
-import { getUserLocation } from "../../servicios/geolocation-service";
-import { getUserInfo } from "../../servicios/authService.js";
-import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
-import { getEventsFromAPI, getISSPasses, getUserMissions } from "../../servicios/events-missions-service.js";
+import EventoDestacado from "@components/dashboard/EventoDestacado.jsx";
+import MapDashboard from "@components/dashboard/MapDashboard.jsx";
+import RankingMain from "@components/ranking-component/RankingMain";
+import CosmoDashboard from "@components/cosmo-dashboard/CosmoDashboard";
+import MisionActual from "@components/MisionActual/MisionActual";
+import MisionRealizada from "@components/MisionRealizada/MisionRealizada";
+import Calendar from "@components/calendar/Calendar";
+import EventoSugerido from "@components/dashboard/EventoSugerido.jsx";
+import EventoProgramado from "@components/dashboard/EventoProgramado.jsx";
+import InfoTopComponent from "@components/InfoTopComponent/InfoTopComponent.jsx";
+import PageLoader from "@components/loaders/PageLoader.jsx";
+import MapboxDashboard from "@components/mapbox/MapboxDashboard.jsx";
+import { getJSONCoords } from "@services/cosmo-service.js";
+import { getUserLocation } from "@services/geolocation-service";
+import { getUserInfo } from "@services/authService.js";
+import { getEventsFromAPI, getISSPasses, getUserMissions } from "@services/events-missions-service.js";
 
 function DashboardComponents(){
   const [userData, setUserData] = useState(null);

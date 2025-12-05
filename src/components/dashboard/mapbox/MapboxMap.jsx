@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import LoaderMini from '../../loaders/LoaderMini.jsx';
+import LoaderMini from '@components/loaders/LoaderMini.jsx';
 
 const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
 

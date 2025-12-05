@@ -1,5 +1,5 @@
 import React from 'react';
-import MapboxMap from './mapbox/MapboxMap';
+import MapboxMap from '@components/mapbox/MapboxMap';
 
 const Map = ({ locations, userPosition, onSelectBase }) => {
 
