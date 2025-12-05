@@ -1,20 +1,20 @@
 import { createBrowserRouter } from "react-router";
-import App from "./src/App.jsx";
-import AuthPage from "./src/pages/AuthPage.jsx";
-import DashboardMain from "./src/pages/DashboardMain.jsx";
-import SignUpPage from "./src/pages/SignUpPage.jsx";
-import MissionsPage from "./src/pages/MissionsPage.jsx";
-import AboutUs from "./src/pages/AboutUs.jsx";
-import ErrorPage from "./src/pages/ErrorPage.jsx";
-import DashboardComponents from "./src/components/dashboard/DashboardComponents.jsx";
-import Step1Page from "./src/pages/Step1Page.jsx";
-import Step2Page from "./src/pages/Step2Page.jsx";
-import Step3Page from "./src/pages/Step3Page.jsx";
-import EventsPage from "./src/pages/EventsPage.jsx";
-import CompletedMissionsPage from "./src/pages/CompletedMissionsPage.jsx";
-import SatellitePage from "./src/pages/SatellitePage.jsx";
-import LoginForm from "./src/components/login/login.jsx";
-import ProfilePage from "./src/pages/ProfilePage.jsx";
+import App from "@/App.jsx";
+import AuthPage from "@pages/AuthPage.jsx";
+import DashboardMain from "@pages/DashboardMain.jsx";
+import SignUpPage from "@pages/SignUpPage.jsx";
+import MissionsPage from "@pages/MissionsPage.jsx";
+import AboutUs from "@pages/AboutUs.jsx";
+import ErrorPage from "@pages/ErrorPage.jsx";
+import DashboardComponents from "@components/dashboard/DashboardComponents.jsx";
+import Step1Page from "@pages/Step1Page.jsx";
+import Step2Page from "@pages/Step2Page.jsx";
+import Step3Page from "@pages/Step3Page.jsx";
+import EventsPage from "@pages/EventsPage.jsx";
+import CompletedMissionsPage from "@pages/CompletedMissionsPage.jsx";
+import SatellitePage from "@pages/SatellitePage.jsx";
+import LoginForm from "@components/login/login.jsx";
+import ProfilePage from "@pages/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   {

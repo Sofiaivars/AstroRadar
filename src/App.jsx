@@ -1,8 +1,8 @@
-import "./App.css";
+import "@/App.css";
 import { Outlet } from "react-router";
-import Logotipo from "./components/dashboard/logotipo/Logotipo.jsx";
-import AstroRadarFooter from "./components/AstroRadarFooter.jsx";
-import { ParticlesBackground } from "./components/particles/ParticlesJs.jsx";
+import Logotipo from "@components/dashboard/logotipo/Logotipo.jsx";
+import AstroRadarFooter from "@components/AstroRadarFooter.jsx";
+import { ParticlesBackground } from "@components/particles/ParticlesJs.jsx";
 
 function App() {
   return (
