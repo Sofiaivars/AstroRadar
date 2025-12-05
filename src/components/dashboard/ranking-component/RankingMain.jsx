@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import RankingCard from '@components/dashboard/ranking-component/RankingCard'
 import '@components/dashboard/ranking-component/RankingMain.css'
 import LoaderMini from '@components/loaders/LoaderMini.jsx'
-import { getUsersFromDatabase } from '@services/servicios/authService.js'
+import { getUsersFromDatabase } from '@services/authService.js'
 
 function RankingMain(){
   const [usersData, setUsersData] = useState()

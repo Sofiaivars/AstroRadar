@@ -3,8 +3,8 @@ import '@components/dashboard/InfoTopComponent/InfoTopComponent.css'
 import WeatherComponent from '@components/dashboard/InfoTopComponent/WeatherComponent.jsx'
 import LoaderMini from '@components/loaders/LoaderMini.jsx'
 import { getWeather } from '@services/weather-service.js'
-import { reverseGeocodingAPICall } from '@services/servicios/geolocation-service.js'
-import { getAboveSatellites } from '@services/servicios/events-missions-service.js'
+import { reverseGeocodingAPICall } from '@services/geolocation-service.js'
+import { getAboveSatellites } from '@services/events-missions-service.js'
 import { LocateFixed } from 'lucide-react'
 import NumberFlow from "@number-flow/react"
 

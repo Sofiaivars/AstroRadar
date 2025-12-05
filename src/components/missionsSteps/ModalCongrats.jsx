@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import "@components/missionSteps/ModalCongrats.css";
+import "@components/missionsSteps/ModalCongrats.css";
 import cosmoDab from "@pages/assets/cosmo-dab.png";
 import confetti from "canvas-confetti";
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
-import { userSignUp } from "../../servicios/authService"
-import SignUpButton from "./SignUpButton"
+import { userSignUp } from "@services/authService"
+import SignUpButton from "@components/signupForm/SignUpButton"
 import { Eye, EyeClosed } from "lucide-react";
 
 function SignUpForm(){

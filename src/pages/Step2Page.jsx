@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import cosmoTip1 from "@pages/assest/cosmo-tip1.png";
+import cosmoTip1 from "@pages/assets/cosmo-tip1.png";
 import CosmoDashboard from "@components/dashboard/cosmo-dashboard/CosmoDashboard";
 
 const Step2Page = () => {
