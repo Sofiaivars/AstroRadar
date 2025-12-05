@@ -1,8 +1,23 @@
-// CREAR .env en la carpeta front. front/.env
-// CREAR variable VITE_SERVICES_URL y el valor es vuestro backend
 const mainURL = import.meta.env.VITE_SERVICES_URL;
 
-const userLogIn = async (username, password) => {
+const userLogIn = async (email, password) => {
+
+  const response = await fetch(`${mainURL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, password }),
+    credentials: 'include'
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) throw new Error("Email o contraseña incorrectos");
+    throw new Error("Error en el servidor");
+  };
+
+  const data = await response.json();
+  return data;
 
 }
 
