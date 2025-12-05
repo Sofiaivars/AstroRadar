@@ -27,12 +27,10 @@ function LoginForm(){
     }
   
     try{
-      const dataFromLogin = await userLogIn(email, password, dispatch)
-      console.log(dataFromLogin)
+      await userLogIn(email, password, dispatch)
       navigate('/dashboard')
     }catch(error){
       setErrorAtLogin(true)
-      console.log(`Error en el login => ${error}`)
     }
   }
 
