@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import './ProfilePage.css'
+import '@pages/ProfilePage.css'
 import { useNavigate } from 'react-router'
 import { Eye, EyeClosed } from 'lucide-react'
-import { changePassword } from '../servicios/authService'
+import { changePassword } from '@services/authService'
 
 function ProfilePage(){
   const [profileData, setProfileData] = useState(null)

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import ModalCongrats from "../components/missionsSteps/ModalCongrats";
+import ModalCongrats from "@components/missionsSteps/ModalCongrats";
 
 
 const Step3Page = () => {

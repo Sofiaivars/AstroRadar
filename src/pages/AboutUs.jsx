@@ -1,9 +1,9 @@
 import { Github, Linkedin } from "lucide-react";
-import "./AboutUs.css";
-import adri from "./assest/adri-cosmificado.png";
-import arroba from "./assest/arroba-cosmificado.png";
-import juan from "./assest/juan-cosmificado.png";
-import sofi from "./assest/sofi-cosmoficado.png";
+import "@pages/AboutUs.css";
+import adri from "@pages/assets/adri-cosmificado.png";
+import arroba from "@pages/assets/arroba-cosmificado.png";
+import juan from "@pages/assets/juan-cosmificado.png";
+import sofi from "@pages/assets/sofi-cosmoficado.png";
 import { useNavigate } from "react-router";
 
 function AboutUs() {

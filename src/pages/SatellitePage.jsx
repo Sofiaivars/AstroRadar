@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import ISSCard from "../components/renderISSPasses/ISSCard"
-import PageLoader from '../components/loaders/PageLoader.jsx'
+import ISSCard from "@components/renderISSPasses/ISSCard"
+import PageLoader from '@components/loaders/PageLoader.jsx'
 
 function SatellitePage(){
   const [issPasses, setIssPasses] = useState(null)

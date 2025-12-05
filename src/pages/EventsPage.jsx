@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../servicios/events-missions-service";
-import RenderEventList from "../components/renderEvents/RenderEventList";
-import LoaderMini from "../components/loaders/LoaderMini.jsx";
-import "./EventsPage.css";
-import PageLoader from "../components/loaders/PageLoader.jsx";
+import { getCategories } from "@services/events-missions-service";
+import RenderEventList from "@components/renderEvents/RenderEventList";
+import LoaderMini from "@components/loaders/LoaderMini.jsx";
+import "@pages/EventsPage.css";
+import PageLoader from "@components/loaders/PageLoader.jsx";
 import { useNavigate } from "react-router";
 
 function EventsPage() {

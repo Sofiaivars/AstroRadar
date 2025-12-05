@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getEventsFromAPI } from "../../servicios/events-missions-service";
+import { getEventsFromAPI } from "@services/events-missions-service";
 
 const initialState = {
   eventsList: [],

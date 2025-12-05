@@ -1,6 +1,6 @@
-import SignUpForm from "../components/signupForm/SignUpForm"
+import SignUpForm from "@components/signupForm/SignUpForm"
 import { useNavigate } from "react-router"
-import { userSignUp } from "../servicios/authService"
+import { userSignUp } from "@services/authService"
 
 function SignUpPage(){
   const navigate = useNavigate()

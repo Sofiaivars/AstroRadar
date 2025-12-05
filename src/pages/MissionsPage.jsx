@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import StepsComponent from "../components/missionsSteps/StepsComponent";
+import StepsComponent from "@components/missionsSteps/StepsComponent";
 import { Outlet } from "react-router";
 import { CalendarDays, MessageCircleWarning } from "lucide-react";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Card from "../components/completedMissions/CardMission.jsx";
-import { getUserMissions } from "../servicios/events-missions-service.js";
+import Card from "@components/completedMissions/CardMission.jsx";
+import { getUserMissions } from "@services/events-missions-service.js";
 
 const CompletedMissionsPage = () => {
   const [missions, setMissions] = useState([]);

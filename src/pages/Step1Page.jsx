@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { updateMissionData } from "../servicios/mission-service.js";
-import { updateStellarBase } from "../servicios/events-missions-service.js";
-import cosmoTip1 from "../components/dashboard/cosmo-dashboard/assets/cosmo-step1.png";
-import { getUserLocation } from "../servicios/geolocation-service";
-import { getJSONCoords } from "../servicios/cosmo-service.js";
-import Map from "../components/dashboard/Map.jsx";
-import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard.jsx";
+import { updateMissionData } from "@services/mission-service.js";
+import { updateStellarBase } from "@services/events-missions-service.js";
+import { getUserLocation } from "@services/geolocation-service";
+import { getJSONCoords } from "@services/cosmo-service.js";
+import cosmoTip1 from "@components/dashboard/cosmo-dashboard/assets/cosmo-step1.png";
+import Map from "@components/dashboard/Map.jsx";
+import CosmoDashboard from "@components/dashboard/cosmo-dashboard/CosmoDashboard.jsx";
 
 function Step1Page() {
   const [spots, setSpots] = useState(null); // puntos IA
