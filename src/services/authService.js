@@ -1,6 +1,8 @@
+import { setUserData } from "@features/userData/userDataSlice";
+
 const mainURL = import.meta.env.VITE_SERVICES_URL;
 
-const userLogIn = async (email, password) => {
+const userLogIn = async (email, password, dispatch) => {
 
   const response = await fetch(`${mainURL}/auth/login`, {
     method: 'POST',
@@ -17,6 +19,9 @@ const userLogIn = async (email, password) => {
   };
 
   const data = await response.json();
+
+  dispatch(setUserData(data));
+
   return data;
 
 }

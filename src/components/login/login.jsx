@@ -3,6 +3,7 @@ import LoginButton from "@components/login/LoginButton"
 import { useNavigate } from "react-router"
 import { userLogIn } from "@services/authService"
 import { Eye, EyeClosed } from "lucide-react";
+import { useDispatch } from "react-redux";
 
 function LoginForm(){
   const [email, setEmail] = useState("")
@@ -10,6 +11,7 @@ function LoginForm(){
   const [errorAtLogin, setErrorAtLogin] = useState(false)
   const [inputPassType, setInputPassType] = useState("password")
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleInputChange = (event) => {
     const { id, value } = event.target
@@ -25,7 +27,7 @@ function LoginForm(){
     }
   
     try{
-      const dataFromLogin = await userLogIn(email, password)
+      const dataFromLogin = await userLogIn(email, password, dispatch)
       console.log(dataFromLogin)
       navigate('/dashboard')
     }catch(error){
