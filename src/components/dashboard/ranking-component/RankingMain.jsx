@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import RankingCard from './RankingCard'
 import './RankingMain.css'
-import { getUsersFromDatabase } from '../../../servicios/login-service'
+import { getUsersFromDatabase } from '../../../servicios/authService.js'
 import LoaderMini from '../../loaders/LoaderMini.jsx'
 
 function RankingMain(){

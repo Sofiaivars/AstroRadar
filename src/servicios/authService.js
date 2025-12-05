@@ -2,43 +2,12 @@
 // CREAR variable VITE_SERVICES_URL y el valor es vuestro backend
 const mainURL = import.meta.env.VITE_SERVICES_URL;
 
-const login = async (username, password) => {
-  const response = await fetch(`${mainURL}/login`, {
-    method: 'POST',
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  });
+const userLogIn = async (username, password) => {
 
-  if (!response.ok) throw Error("Error relacion con la petición login.");
-
-  if (response.status === 401) {
-    throw ("Credenciales inválidas");
-  } else if (response.status === 400) {
-    throw ("Error al escribir nombre de usuaro o contraseña");
-  }
-
-  const data = await response.json();
-
-  localStorage.setItem("jwt-token", data.token);
-
-  return data;
 }
 
-// SignUp
-const signUp = async (username, password, name, lastname, email, city, country, image) => {
-  const response = await fetch(`${mainURL}/signup`, {
-    method: 'POST',
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password, name, lastname, email, city, country, image })
-  });
+const userSignUp = async (username, password, name, lastname, email, city, country, userImage) => {
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw Error(errorData.msg || "Error en el registro");
-  }
-
-  const data = await response.json();
-  return data;
 }
 
 // /protected es un endpoint privado.
@@ -90,4 +59,4 @@ const changePassword = async (oldPassword, newPassword) => {
   return data;
 }
 
-export { login, getUserInfo, signUp, getUsersFromDatabase, changePassword };
+export { userLogIn, getUserInfo, userSignUp, getUsersFromDatabase, changePassword };

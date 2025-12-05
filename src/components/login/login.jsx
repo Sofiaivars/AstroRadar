@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import LoginButton from "./LoginButton"
 import { useNavigate } from "react-router"
-import { login } from "../../servicios/login-service"
+import { userLogIn } from "../../servicios/authService"
 import { Eye, EyeClosed } from "lucide-react";
 
 function LoginForm(){
@@ -19,14 +19,14 @@ function LoginForm(){
   }
 
   const handleClick = async (username, password) => {
-    // if( !username || !password) {
-    //   setErrorAtLogin(true)
-    //   return
-    // }
+    if( !username || !password) {
+      setErrorAtLogin(true)
+      return
+    }
   
     try{
-      // const dataFromLogin = await login(username, password)
-      // console.log(dataFromLogin)
+      const dataFromLogin = await userLogIn(username, password)
+      console.log(dataFromLogin)
       navigate('/dashboard')
     }catch(error){
       setErrorAtLogin(true)

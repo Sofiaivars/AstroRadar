@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
-import { signUp } from "../../servicios/login-service"
+import { userSignUp } from "../../servicios/authService"
 import SignUpButton from "./SignUpButton"
 import { Eye, EyeClosed } from "lucide-react";
 
@@ -35,7 +35,7 @@ function SignUpForm(){
       if(username || password || email || name || lastname || city || country || userImage){
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(emailRegex.test(email)){
-          await signUp(username, password, name, lastname, email, city, country, userImage)
+          await userSignUp(username, password, name, lastname, email, city, country, userImage)
           return navigate('/')
         }else{
           console.log("Formato de email incorrecto")

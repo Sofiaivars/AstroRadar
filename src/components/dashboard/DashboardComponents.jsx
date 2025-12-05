@@ -12,7 +12,7 @@ import PageLoader from "../loaders/PageLoader.jsx";
 import { useEffect, useState } from "react";
 import { getJSONCoords } from "../../servicios/cosmo-service.js";
 import { getUserLocation } from "../../servicios/geolocation-service";
-import { getUserInfo } from "../../servicios/login-service.js";
+import { getUserInfo } from "../../servicios/authService.js";
 import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
 import { getEventsFromAPI, getISSPasses, getUserMissions } from "../../servicios/events-missions-service.js";
 

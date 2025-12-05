@@ -1,6 +1,6 @@
 import SignUpForm from "../components/signupForm/SignUpForm"
 import { useNavigate } from "react-router"
-import { signUp } from "../servicios/login-service.js"
+import { userSignUp } from "../servicios/authService"
 
 function SignUpPage(){
   const navigate = useNavigate()
@@ -10,7 +10,7 @@ function SignUpPage(){
       if(username || password || email || name || lastname || city || country || image){
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(emailRegex.test(email)){
-          await signUp(username, password, name, lastname, email, city, country, image)
+          // await userSignUp(username, password, name, lastname, email, city, country, image)
           return navigate('/')
         }else{
           alert("Formato de email incorrecto")
