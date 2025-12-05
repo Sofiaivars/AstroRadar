@@ -14,7 +14,6 @@ function ProfilePage(){
   const [passSuccess, setPassSuccess] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const { store } = useGlobalReducer()
   const navigate = useNavigate()
 
   const handleInputType = () => {
@@ -48,19 +47,6 @@ function ProfilePage(){
       setPassSuccess(false)
     }
   }
-
-  useEffect(() => {
-    if(!profileData && store.userData){
-      setProfileData(store.userData)
-      setIsLoaded(true)
-    }
-  }, [profileData, store.userData])
-
-  useEffect(() => {
-    if(store.userData === null){
-      navigate('/dashboard')
-    }
-  }, [store.userData, navigate])
 
   return(
     <div className='flex flex-col items-center justify-center gap-3 w-full h-full rounded-2xl p-5 overflow-hidden borde-con-degradado'>

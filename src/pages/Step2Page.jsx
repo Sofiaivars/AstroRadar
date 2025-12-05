@@ -1,57 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import cosmoTip1 from "../pages/assest/cosmo-tip1.png";
-import useGlobalReducer from "../hooks/useGlobalReducer";
 import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard";
 
 const Step2Page = () => {
   const navigate = useNavigate();
-  const { store, dispatch } = useGlobalReducer();
   const [missionStarted, setMissionStarted] = useState(false);
   const [selectedBase, setSelectedBase] = useState(null);
-
-  useEffect(() => {
-    // Cargar base seleccionada del store o localStorage
-    if (store.selectedBase) {
-      setSelectedBase(store.selectedBase);
-    } else {
-      const savedBase = localStorage.getItem("selectedBase");
-      if (savedBase) {
-        const baseFromStorage = JSON.parse(savedBase);
-        setSelectedBase(baseFromStorage);
-        dispatch({ type: "SET_SELECTED_BASE", payload: baseFromStorage });
-      }
-    }
-  }, [store.selectedBase, dispatch]);
-
-  useEffect(() => {
-    // Obtener ubicación del dispositivo y guardarla en el store
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          dispatch({
-            type: "ADD_USER_LOCATION",
-            payload: {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            },
-          });
-        },
-        (error) => {
-          console.error("Error obteniendo la ubicación del usuario:", error);
-        }
-      );
-    } else {
-      console.error("La geolocalización no está soportada por este navegador.");
-    }
-  }, [dispatch]);
-
-  // Guarda en localStorage cada vez que cambia la base seleccionada
-  useEffect(() => {
-    if (selectedBase) {
-      localStorage.setItem("selectedBase", JSON.stringify(selectedBase));
-    }
-  }, [selectedBase]);
 
   const _startMission = () => {
     if (!selectedBase || !selectedBase.coordinates || !selectedBase.coordinates.latitude || !selectedBase.coordinates.longitude) {
@@ -60,7 +15,6 @@ const Step2Page = () => {
     }
 
     const { latitude, longitude } = selectedBase.coordinates;
-    const { userLocation } = store;
 
     const googleMapsUrl = userLocation
       ? `https://www.google.com/maps/dir/?api=1&origin=${userLocation.latitude},${userLocation.longitude}&destination=${latitude},${longitude}`

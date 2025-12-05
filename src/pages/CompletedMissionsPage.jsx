@@ -1,29 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/completedMissions/CardMission.jsx";
 import { getUserMissions } from "../servicios/events-missions-service.js";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 const CompletedMissionsPage = () => {
-  const { store } = useGlobalReducer();
   const [missions, setMissions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const fetchMissions = async () => {
-      if (store.userData?.id) {
-        const allMissions = await getUserMissions(store.userData.id);
-
-        const completed = allMissions
-          .filter((m) => m.state === "done")
-          .sort((a, b) => new Date(b.done_date) - new Date(a.done_date)); // 👈 ORDENAR POR FECHA CON HORA
-
-        setMissions(completed);
-        setCurrentIndex(0);
-      }
-    };
-
-    fetchMissions();
-  }, [store.userData]);
+  
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>

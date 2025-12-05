@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCategories } from "../servicios/events-missions-service";
 import RenderEventList from "../components/renderEvents/RenderEventList";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import LoaderMini from "../components/loaders/LoaderMini.jsx";
 import "./EventsPage.css";
 import PageLoader from "../components/loaders/PageLoader.jsx";
@@ -14,13 +13,7 @@ function EventsPage() {
   const [renderCategory, setRenderCategory] = useState("all");
   const [userId, setUserId] = useState(null);
 
-  const { store } = useGlobalReducer();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (store?.eventList) setEventList(store.eventList);
-    if (store?.userData?.id) setUserId(store.userData.id);
-  }, [store]);
 
   useEffect(() => {
     if (eventList) {
@@ -28,17 +21,6 @@ function EventsPage() {
       setCategories(dataToCategories);
     }
   }, [eventList]);
-
-  useEffect(() => {
-    if (store?.userData === null) {
-      return navigate("/dashboard");
-    }
-  }, [store?.userData, navigate]);
-
-  if (store?.userData === null) {
-    // Bloquea renderizado mientras redirige
-    return null;
-  }
 
   return (
     <div className="flex flex-col w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
@@ -88,7 +70,7 @@ function EventsPage() {
           <LoaderMini />
         )}
       </div>
-      {eventList && store.userData ? (
+      {eventList ? (
         <RenderEventList
           eventList={eventList}
           renderCategory={renderCategory}

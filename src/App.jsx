@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Logotipo />
-      <div className="min-h-dvh flex flex-col justify-center items-center gap-1">
+      <div className="min-h-dvh min-w-dvw flex flex-col justify-center items-center gap-1">
         <Outlet />
         <AstroRadarFooter />
       </div>

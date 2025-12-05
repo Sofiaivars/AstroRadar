@@ -41,8 +41,8 @@ function SideBar() {
     "text-white h-10 w-10 flex items-center justify-center rounded-[16px] transition duration-300 cursor-pointer";
 
   return (
-    <div className="flex flex-col justify-between items-center h-full p-2 rounded-2xl borde-con-degradado">
-      <div className="flex flex-col h-full gap-4 items-start">
+    <div className="flex flex-row md:flex-col absolute md:relative bottom-0 md:bottom-none w-full md:w-15 justify-between items-center h-15 md:h-full p-2 rounded-2xl borde-con-degradado z-10">
+      <div className="flex flex-row md:flex-col h-full gap-4 items-start">
         <button
           className={`${baseStyle} ${
             isActive("/dashboard") ? activeStyle : "hover:bg-gray-800"
@@ -80,7 +80,7 @@ function SideBar() {
           <CalendarSearch size={20} />
         </button>
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-row md:flex-col justify-center">
         <button
           className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer"
           title="Settings"
