@@ -18,7 +18,7 @@ function InfoTopComponent({errorMsg}){
   useEffect(() => {
     const hasCoords = Object.values(userLocation).some(value => value !== null)
 
-    if(hasCoords){   // PENDIENTE AÑADIR PROBABILIDAD DE LLUVIA
+    if(hasCoords){
       const getLocateInfo = async () => {
         const reverseGeocodingData = await reverseGeocodingAPICall(userLocation)
         setLocateString(`${reverseGeocodingData.address.quarter}, ${reverseGeocodingData.address.city}, ${reverseGeocodingData.address.country}`)
@@ -26,7 +26,7 @@ function InfoTopComponent({errorMsg}){
       getLocateInfo()
 
       const getWeatherDataFromAPI = async () => {
-        const weatherData = await getWeather(userLocation.latitude, userLocation.longitude)
+        const weatherData = await getWeather(userLocation)
         setWeatherInfo(weatherData)
       }
       getWeatherDataFromAPI()
@@ -34,12 +34,17 @@ function InfoTopComponent({errorMsg}){
       if(!satCounter){
         const getSatsAbove = async () => {
           const response = await getAboveSatellites(userLocation)
+          console.log(response || "AAAAAAAAAAA")
           setSatCounter(response)
         }
         getSatsAbove()
       }
     }
   }, [userLocation, satCounter])
+
+  useEffect(() => {
+    console.log(satCounter || "Sin satélites")
+  }, [satCounter])
 
   return(
     <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-full self-start borde-con-degradado'>
