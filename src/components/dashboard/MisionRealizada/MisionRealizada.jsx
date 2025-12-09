@@ -32,7 +32,7 @@ const MisionRealizada = () => {
   };
 
   return (
-    <div className="rounded-[16px] w-1/2 h-70 borde-con-degradado">
+    <div className="rounded-[16px] w-full sm:w-1/2 h-70 borde-con-degradado">
       <div
         className="relative w-full h-full rounded-[16px] overflow-hidden shadow-lg text-white font-poppins"
         style={{
