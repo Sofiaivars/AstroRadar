@@ -7,8 +7,9 @@ const EventoSugerido = () => {
 
   return (
     <>
-      <Link to="/dashboard/events" className="relative rounded-xl w-full sm:w-1/2 sm:h-full overflow-hidden borde-con-degradado border-4 font-poppins p-5 eventList">
-          <div className="w-full flex flex-col justify-left z-10">
+      <Link to="/dashboard/events" className="group relative rounded-xl w-full sm:w-1/2 sm:h-full overflow-hidden borde-con-degradado border-4 font-poppins p-5">
+          <div className='absolute inset-0 bg-center group-hover:blur-xs transition-all duration-100 eventListBg'></div>
+          <div className="relative z-10 w-full flex flex-col">
             <p className="text-xl font-bold mb-4 ">Proximos eventos</p>
 
             <p className="text-sm">
