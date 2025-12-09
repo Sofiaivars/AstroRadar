@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react"
 import ISSCard from "@components/renderISSPasses/ISSCard"
 import PageLoader from '@components/loaders/PageLoader.jsx'
+import { useSelector } from "react-redux"
 
 function SatellitePage(){
-  const [issPasses, setIssPasses] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const { passes } = useSelector((state) => state.issPassesList)
 
   return(
     <div className="flex flex-col items-center justify-center w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
       <div className="flex flex-col items-center justify-center gap-3 w-6/7 h-6/7 overflow-y-auto render-iss-passes">
-        {issPasses && isLoaded
-          ? issPasses.passes.map((iss, index) => {
+        {passes.length !== 0
+          ? passes.map((iss, index) => {
               return (
                 <ISSCard 
                   key={index}

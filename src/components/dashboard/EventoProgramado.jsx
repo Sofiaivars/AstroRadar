@@ -2,10 +2,11 @@ import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import CountdownComponent from "@components/renderEvents/CountdownComponent.jsx";
 import LoaderMini from "@components/loaders/LoaderMini.jsx";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const EventoProgramado = () => {
-  const [firstIssPass, setFirstIssPass] = useState();
+  const { passes } = useSelector((state) => state.issPassesList)
+  const firstIssPass = passes[0]
   const navigate = useNavigate();
 
   return (
@@ -47,21 +48,21 @@ const EventoProgramado = () => {
             <div className="w-full flex justify-end mb-2 mr-2">
               <button
                 className="    
-    rounded-[12px]
-    p-[1.5px]
-    text-white
-    text-sm
-    h-10
-    w-10
-    font-medium
-    transition
-    duration-300
-    flex
-    items-center
-    justify-center
-    hover:shadow-2xl
-    hover:shadow-purple-600/30
-  "
+                  rounded-[12px]
+                  p-[1.5px]
+                  text-white
+                  text-sm
+                  h-10
+                  w-10
+                  font-medium
+                  transition
+                  duration-300
+                  flex
+                  items-center
+                  justify-center
+                  hover:shadow-2xl
+                  hover:shadow-purple-600/30
+                "
                 style={{
                   backgroundImage:
                     "linear-gradient(var(--components-background), var(--components-background)), " +
