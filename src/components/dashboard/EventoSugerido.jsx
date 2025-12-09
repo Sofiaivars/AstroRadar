@@ -6,7 +6,7 @@ const EventoSugerido = () => {
 
   return (
     <>
-      <div className="relative rounded-xl w-[350px] h-[286px] overflow-hidden borde-con-degradado border-4 font-poppins">
+      <div className="relative rounded-xl w-full sm:w-1/2 sm:h-full overflow-hidden borde-con-degradado border-4 font-poppins">
         <div className="flex w-full h-full  bg-[var(--components-background)] rounded-xl ">
           <div className="w-full h-full z-0">
             <img
