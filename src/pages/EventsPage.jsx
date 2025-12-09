@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 function EventsPage() {
   const { events, status } = useSelector((state) => state.eventList)
-  const { userData } = useSelector((state) => state)
+  const userData = useSelector((state) => state.userData)
   const [categories, setCategories] = useState(null);
   const categoryList = categories ? Object.keys(categories) : [];
   const [renderCategory, setRenderCategory] = useState("all");

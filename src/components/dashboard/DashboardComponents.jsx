@@ -18,7 +18,7 @@ import { getEventsFromAPI, getISSPasses, getUserMissions } from "@services/event
 import { useSelector } from "react-redux";
 
 function DashboardComponents(){
-  const { userData } = useSelector((state) => state)
+  const userData = useSelector((state) => state.userData)
   const [isLoaded, setIsLoaded] = useState(false)
   const [errorMsg, setErrorMsg] = useState(null)
 

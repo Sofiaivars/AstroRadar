@@ -10,7 +10,7 @@ import NumberFlow from "@number-flow/react"
 import { useSelector } from 'react-redux'
 
 function InfoTopComponent({errorMsg}){
-  const { userLocation } = useSelector((state) => state)
+  const userLocation = useSelector((state) => state.userLocation)
   const [weatherInfo, setWeatherInfo] = useState(null)
   const [locateString, setLocateString] = useState(null)
   const [satCounter, setSatCounter] = useState(null)
