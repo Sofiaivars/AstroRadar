@@ -1,13 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import LoaderMini from '@components/loaders/LoaderMini.jsx'
 import { Telescope, Moon } from 'lucide-react'
 import CountdownComponent from '@components/renderEvents/CountdownComponent.jsx'
 import { addUserMission } from '@services/events-missions-service.js'
 import { Toast } from 'primereact/toast';
+import { useSelector } from 'react-redux'
 
 const EventoDestacado = () => {
-  const [eventList, setEventList] = useState(null)
-  const [firstEvent, setFirstEvent] = useState(null)
+  const { events } = useSelector((state) => state.eventList)
+  const firstEvent = useMemo(() => {
+    if(events){
+      const now = new Date()
+      const sortedList = [...events].sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+      const upEvents = sortedList.filter((e) => new Date(e.start_date) >= now)
+      return upEvents[0]
+    }
+  }, [events])
 
   //Toast
     const toast = useRef(null)
@@ -17,20 +25,11 @@ const EventoDestacado = () => {
     const missionAlreadyCreatedShow = () => {
       toast.current.show({ severity: 'warn', summary: 'Warning', detail: `La misión ya existe!` });
     }
-    // Toast end
+  // Toast end
 
   const handleClick = async () => {
-    
+    missionAlreadyCreatedShow()
   }
-
-  useEffect(() => {
-    if(eventList){
-      const now = new Date()
-      const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
-      const upEvents = sortedList.filter((e) => new Date(e.start_date) >= now)
-      setFirstEvent(upEvents[0])
-    }
-  }, [eventList])
 
   return (<>
     <div className="rounded-xl w-full h-[140px]">
@@ -91,7 +90,7 @@ const EventoDestacado = () => {
             style={{
               backgroundImage:
                 "linear-gradient(var(--components-background), var(--components-background)), " +
-                "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)", //bordeeeeeeeee
+                "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)",
               backgroundOrigin: "border-box",
               backgroundClip: "padding-box, border-box",
               border: "2px solid transparent",
