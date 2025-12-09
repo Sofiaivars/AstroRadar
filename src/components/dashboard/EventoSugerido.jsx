@@ -1,9 +1,7 @@
 import '@components/dashboard/EventoSugerido.css'
-import { Link, useNavigate } from "react-router";
-import { ChevronRight } from "lucide-react";
+import { Link } from "react-router";
 
 const EventoSugerido = () => {
-  const navigate = useNavigate();
 
   return (
     <>
