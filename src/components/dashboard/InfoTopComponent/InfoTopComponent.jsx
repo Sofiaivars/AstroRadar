@@ -7,35 +7,39 @@ import { reverseGeocodingAPICall } from '@services/geolocation-service.js'
 import { getAboveSatellites } from '@services/events-missions-service.js'
 import { LocateFixed } from 'lucide-react'
 import NumberFlow from "@number-flow/react"
+import { useSelector } from 'react-redux'
 
-function InfoTopComponent({errorMsg, userLocation}){
+function InfoTopComponent({errorMsg}){
+  const { userLocation } = useSelector((state) => state)
   const [weatherInfo, setWeatherInfo] = useState(null)
   const [locateString, setLocateString] = useState(null)
   const [satCounter, setSatCounter] = useState(null)
 
   useEffect(() => {
-    const getLocateInfo = async () => {
-      const reverseGeocodingData = await reverseGeocodingAPICall(userLocation.latitude, userLocation.longitude)
-      setLocateString(`${reverseGeocodingData.address.quarter}, ${reverseGeocodingData.address.city}, ${reverseGeocodingData.address.country}`)
-    }
-    getLocateInfo()
+    const hasCoords = Object.values(userLocation).some(value => value !== null)
 
-    if(userLocation){   // PENDIENTE AÑADIR PROBABILIDAD DE LLUVIA
+    if(hasCoords){   // PENDIENTE AÑADIR PROBABILIDAD DE LLUVIA
+      const getLocateInfo = async () => {
+        const reverseGeocodingData = await reverseGeocodingAPICall(userLocation)
+        setLocateString(`${reverseGeocodingData.address.quarter}, ${reverseGeocodingData.address.city}, ${reverseGeocodingData.address.country}`)
+      }
+      getLocateInfo()
+
       const getWeatherDataFromAPI = async () => {
-      const weatherData = await getWeather(userLocation.latitude, userLocation.longitude)
-      setWeatherInfo(weatherData)
+        const weatherData = await getWeather(userLocation.latitude, userLocation.longitude)
+        setWeatherInfo(weatherData)
+      }
+      getWeatherDataFromAPI()
 
       if(!satCounter){
         const getSatsAbove = async () => {
-          const response = await getAboveSatellites(userLocation.latitude, userLocation.longitude)
+          const response = await getAboveSatellites(userLocation)
           setSatCounter(response)
         }
         getSatsAbove()
       }
     }
-    getWeatherDataFromAPI()
-    }
-  }, [userLocation])
+  }, [userLocation, satCounter])
 
   return(
     <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-full self-start borde-con-degradado'>

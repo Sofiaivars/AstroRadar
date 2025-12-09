@@ -153,8 +153,8 @@ const getISSPasses = async (latitude, longitude) => {
   return data
 }
 
-const getAboveSatellites = async (latitude, longitude) => {
-  const response = await fetch(`${mainURL}/satsabove`, {
+const getAboveSatellites = async ({ latitude, longitude }) => {
+  const response = await fetch(`${mainURL}/sats`, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ latitude, longitude })

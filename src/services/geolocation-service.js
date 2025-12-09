@@ -30,8 +30,8 @@ const getUserLocation = (onSuccess) => {
   );
 };
 
-const reverseGeocodingAPICall = async (latitud, longitud) => {
-  const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitud}&lon=${longitud}`);
+const reverseGeocodingAPICall = async ({ latitude, longitude }) => {
+  const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`);
   const data = await response.json();
   return data;
 }
