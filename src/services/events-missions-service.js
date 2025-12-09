@@ -150,7 +150,7 @@ const getISSPasses = async ({ latitude, longitude }) => {
   }
 
   const data = await response.json();
-  return data
+  return data.passes;
 }
 
 const getAboveSatellites = async ({ latitude, longitude }) => {
