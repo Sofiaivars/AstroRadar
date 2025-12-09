@@ -1,6 +1,6 @@
 const getUserLocation = (onSuccess) => {
   if (!navigator.geolocation) {
-    onError("Geolocalización incompatible con el navegador");
+    console.error("Geolocalización incompatible con el navegador");
     return;
   }
 
