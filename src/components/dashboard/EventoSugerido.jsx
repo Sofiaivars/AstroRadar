@@ -11,8 +11,8 @@ const EventoSugerido = () => {
             <p className="text-xl font-bold mb-4 ">Proximos eventos</p>
 
             <p className="text-sm">
-              Busca los proximos eventos en tu zona y se parte de la comunidad
-              astronomica local.
+              Busca los próximos eventos en tu zona y sé parte de la comunidad
+              astronómica local.
             </p>
           </div>
       </Link>
