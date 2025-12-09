@@ -137,8 +137,8 @@ const updateMissionImage = async (missionID, imageSrc) => {
 }
 //==========================================================
 
-const getISSPasses = async (latitude, longitude) => {
-  const response = await fetch(`${mainURL}/isspasses`, {
+const getISSPasses = async ({ latitude, longitude }) => {
+  const response = await fetch(`${mainURL}/sats/iss`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ latitude, longitude })
