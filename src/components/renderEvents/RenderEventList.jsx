@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useState, useMemo, useRef } from "react"
 import '@components/renderEvents/RenderEventList.css'
 import EventCard from "@components/renderEvents/EventCard"
 import PageLoader from "@components/loaders/PageLoader"
@@ -7,20 +7,29 @@ import { deleteMission, getUserMissions, updateMissionState } from "@services/ev
 import { Toast } from 'primereact/toast';
 
 function RenderEventList({eventList, renderCategory, userId}){
-  const [renderList, setRenderList] = useState(eventList)
   const [userMissionsList, setUserMissionsList] = useState([])
+  const renderList = useMemo(() => {
+    if(!eventList) return []
+    
+    const sortedList = [...eventList].sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+    if(renderCategory !== "all"){
+      return sortedList.filter((event) => event.category === renderCategory)
+    }
+
+    return sortedList
+  },[eventList, renderCategory])
   
   //Toast
-  const toast = useRef(null)
-  const alreadyActiveMission = () => {
-    toast.current.show({ severity: 'info', summary: 'Info', detail: 'Ya hay una misión activada!' });
-  }
-  const deletedMissionShow = (missionId) => {
-    toast.current.show({ severity: 'success', summary: 'Success', detail: `Misión ${missionId} borrada con éxito!` });
-  }
+  // const toast = useRef(null)
+  // const alreadyActiveMission = () => {
+  //   toast.current.show({ severity: 'info', summary: 'Info', detail: 'Ya hay una misión activada!' });
+  // }
+  // const deletedMissionShow = (missionId) => {
+  //   toast.current.show({ severity: 'success', summary: 'Success', detail: `Misión ${missionId} borrada con éxito!` });
+  // }
   // Toast end
 
-  const checkActiveMissions = async () => {
+  const _checkActiveMissions = async () => {
     const activeMissionsData = await getUserMissions(userId)
     const filteredList = [...activeMissionsData].filter((mission) => mission.state === "active")
     if(filteredList.length >= 1){
@@ -29,55 +38,17 @@ function RenderEventList({eventList, renderCategory, userId}){
     return false
   }
 
-  const handleUserMissionButton = async (missionId) => {
-    try{
-      const isMoreThanOneActive = await checkActiveMissions()
-      if(isMoreThanOneActive){
-        alreadyActiveMission()
-        return 
-      }
-      const response = await updateMissionState(missionId, "active")
-      await getUserMissionsFromDB()
-      return console.log(response)
-    }catch(error){
-      console.error(`Error al actualizar estado de misión: ${error}`)
-    }
-  }
+  // const handleUserMissionButton = async (missionId) => {
+  //   console.log("handleUserMissionButton")
+  // }
 
-  const deleteUserMission = async (missionId) => {
-    try{
-      await deleteMission(missionId)
-      await getUserMissionsFromDB()
-      deletedMissionShow(missionId)
-      return 
-    }catch(error){
-      console.error(`Error al borrar misión: ${error}`);
-    }
-  }
-
-  useEffect(() => {
-    getUserMissionsFromDB()
-  }, [renderCategory])
-
-  useEffect(() => {
-    console.log(userMissionsList)
-  }, [userMissionsList])
-
-  useEffect(() => {
-    if(eventList){
-      const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
-      if(renderCategory !== "all"){
-        const filteredList = sortedList.filter((event) => event.category === renderCategory)
-        setRenderList(filteredList)
-      } else {
-        return setRenderList(sortedList)
-      }
-    }
-  }, [renderCategory, eventList])
+  // const deleteUserMission = async (missionId) => {
+  //   console.log("deleteUserMission")
+  // }
 
   return(
     <div className="flex flex-col gap-3 w-full h-full overflow-y-auto p-3 render-events-list">
-      <Toast ref={toast} />
+      {/* <Toast ref={toast} /> */}
       {renderCategory !== "scheduled"
         ? Array.isArray(eventList) && Array.isArray(renderList) && renderList.length > 0
           ? (renderList.map((astroEvent) => {

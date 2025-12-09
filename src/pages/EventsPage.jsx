@@ -5,22 +5,23 @@ import LoaderMini from "@components/loaders/LoaderMini.jsx";
 import "@pages/EventsPage.css";
 import PageLoader from "@components/loaders/PageLoader.jsx";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 function EventsPage() {
-  const [eventList, setEventList] = useState(null);
+  const { events, status } = useSelector((state) => state.eventList)
+  const { userData } = useSelector((state) => state)
   const [categories, setCategories] = useState(null);
   const categoryList = categories ? Object.keys(categories) : [];
   const [renderCategory, setRenderCategory] = useState("all");
-  const [userId, setUserId] = useState(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (eventList) {
-      const dataToCategories = getCategories(eventList);
+    if (events) {
+      const dataToCategories = getCategories(events);
       setCategories(dataToCategories);
     }
-  }, [eventList]);
+  }, [events]);
 
   return (
     <div className="flex flex-col w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
@@ -70,16 +71,12 @@ function EventsPage() {
           <LoaderMini />
         )}
       </div>
-      {eventList ? (
+      {status === 'succeeded' ? (
         <RenderEventList
-          eventList={eventList}
+          eventList={events}
           renderCategory={renderCategory}
-          userId={userId}
+          userId={userData?.id}
         />
-      ) : store?.userData === null ? (
-        <div className="flex flex-col items-center justify-center h-full w-full text-center p-6">
-          <p>⚠️ Datos no disponibles, vuelve al DASHBOARD</p>
-        </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full w-full text-center p-6">
           <PageLoader />

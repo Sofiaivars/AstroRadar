@@ -19,7 +19,7 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
   const handleClick = async () => {
     try{
       if(!userId || !eventId){
-        return console.log('userId o eventId vacíos.')
+        return console.log({userId, eventId})
       }
       const missionState = "scheduled"
       const response = await addUserMission(userId, eventId, missionState)
