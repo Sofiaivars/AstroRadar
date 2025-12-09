@@ -1,14 +1,26 @@
 import { Outlet } from "react-router";
 import SideBar from "@components/sidebar/SideBar.jsx";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserLocation } from "@features/userLocation/userLocationSlice";
+import { getUserLocation } from "@services/geolocation-service";
 
 function DashboardMain() {
-  const userData = useSelector((state) => state.userData)
+  const dispatch = useDispatch()
+  const { userData, userLocation } = useSelector((state) => state)
+  const setLocationCoords = (coords) => dispatch(setUserLocation(coords))
+
+  useEffect(() => {
+    const hasCoords = Object.values(userLocation).some(value => value !== null)
+    if(!hasCoords){
+      getUserLocation(setLocationCoords)
+    }
+  }, [userLocation, setLocationCoords])
 
   useEffect(() => {
     console.log(userData)
-  }, [userData])
+    console.log(userLocation)
+  }, [userData, userLocation])
 
   return (
     <>

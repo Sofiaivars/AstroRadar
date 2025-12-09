@@ -1,4 +1,4 @@
-const getUserLocation = (onSuccess, onError) => {
+const getUserLocation = (onSuccess) => {
   if (!navigator.geolocation) {
     onError("Geolocalización incompatible con el navegador");
     return;
@@ -15,16 +15,16 @@ const getUserLocation = (onSuccess, onError) => {
     (error) => {
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          onError("Permiso denegado para obtener la ubicación.");
+          console.error("Permiso denegado para obtener la ubicación.");
           break;
         case error.POSITION_UNAVAILABLE:
-          onError("Ubicación no disponible.");
+          console.error("Ubicación no disponible.");
           break;
         case error.TIMEOUT:
-          onError("Tiempo de espera excedido.");
+          console.error("Tiempo de espera excedido.");
           break;
         default:
-          onError("Error desconocido.");
+          console.error("Error desconocido.");
       }
     }
   );

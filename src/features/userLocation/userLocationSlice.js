@@ -20,5 +20,5 @@ const options = {
 
 const userLocationSlice = createSlice(options);
 
-export const { addUserLocation, removeUserLocation } = userLocationSlice.actions;
+export const { setUserLocation, removeUserLocation } = userLocationSlice.actions;
 export default userLocationSlice.reducer;

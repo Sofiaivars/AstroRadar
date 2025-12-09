@@ -15,13 +15,19 @@ import { getJSONCoords } from "@services/cosmo-service.js";
 import { getUserLocation } from "@services/geolocation-service";
 import { getUserInfo } from "@services/authService.js";
 import { getEventsFromAPI, getISSPasses, getUserMissions } from "@services/events-missions-service.js";
+import { useSelector } from "react-redux";
 
 function DashboardComponents(){
-  const [userData, setUserData] = useState(null);
-  const [userLocation, setUserLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [spots, setSpots] = useState(null)
+  const { userData } = useSelector((state) => state)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [errorMsg, setErrorMsg] = useState(null)
+
+  useEffect(() => {
+    const userDataHasData = Object.values(userData).some(value => value !== null)
+    if(userDataHasData){
+      setIsLoaded(true)
+    }
+  }, [userData])
 
   if (!isLoaded) {
     return (
@@ -33,11 +39,11 @@ function DashboardComponents(){
 
   return(
     <>
-      <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
+      <InfoTopComponent errorMsg={errorMsg} userLocation={""} />
       <div className="flex flex-col md:flex-row gap-3 overflow-y-auto md:overflow-hidden w-full h-full">
         <div className="flex flex-col w-full md:w-1/2 gap-1">
           <EventoDestacado />
-          <MapDashboard locations={spots} userPosition={userLocation}/>
+          <MapDashboard locations={""} userPosition={""}/>
           <div className="flex flex-col sm:flex-row w-full gap-1">
             <Calendar />
             <EventoSugerido />
