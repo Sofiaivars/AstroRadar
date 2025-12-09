@@ -19,6 +19,8 @@ function DashboardMain() {
     if(eventList.status === "idle" || eventList.status === "rejected"){
       dispatch(fetchEventList())
     }
+
+    //TRAER DATOS POR SI SE RECARGA PÁGINA
   }, [userLocation, setLocationCoords, dispatch, eventList.status])
 
   useEffect(() => {
