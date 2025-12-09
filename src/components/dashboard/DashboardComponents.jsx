@@ -44,7 +44,7 @@ function DashboardComponents(){
         <div className="flex flex-col w-full md:w-1/2 gap-1">
           <EventoDestacado />
           <MapDashboard locations={""} userPosition={""}/>
-          <div className="flex flex-col sm:flex-row w-full gap-1">
+          <div className="flex flex-col sm:flex-row w-full max-h-80 h-full gap-1">
             <Calendar />
             <EventoSugerido />
           </div>

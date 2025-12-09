@@ -13,7 +13,7 @@ const MapDashboard = ({ locations, userPosition, onSelectBase }) => {
   };
 
   return (
-    <div className="relative rounded-xl overflow-hidden">
+    <div className="relative rounded-xl min-h-[320px] overflow-hidden">
       <MapboxDashboard
         locations={locations}
         userPosition={userPosition}
