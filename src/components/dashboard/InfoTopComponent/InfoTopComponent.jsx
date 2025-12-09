@@ -34,17 +34,12 @@ function InfoTopComponent({errorMsg}){
       if(!satCounter){
         const getSatsAbove = async () => {
           const response = await getAboveSatellites(userLocation)
-          console.log(response || "AAAAAAAAAAA")
           setSatCounter(response)
         }
         getSatsAbove()
       }
     }
   }, [userLocation, satCounter])
-
-  useEffect(() => {
-    console.log(satCounter || "Sin satélites")
-  }, [satCounter])
 
   return(
     <div className='flex items-center justify-between rounded-xl p-2 mb-1 w-full self-start borde-con-degradado'>
