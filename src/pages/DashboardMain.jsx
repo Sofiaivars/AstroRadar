@@ -3,11 +3,12 @@ import SideBar from "@components/sidebar/SideBar.jsx";
 import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserLocation } from "@features/userLocation/userLocationSlice";
+import { fetchEventList } from "@features/eventList/eventListSlice";
 import { getUserLocation } from "@services/geolocation-service";
 
 function DashboardMain() {
   const dispatch = useDispatch()
-  const { userData, userLocation } = useSelector((state) => state)
+  const { userData, userLocation, eventList } = useSelector((state) => state)
   const setLocationCoords = useCallback((coords) => dispatch(setUserLocation(coords)), [dispatch])
 
   useEffect(() => {
@@ -15,12 +16,16 @@ function DashboardMain() {
     if(!hasCoords){
       getUserLocation(setLocationCoords)
     }
-  }, [userLocation, setLocationCoords])
+    if(eventList.status === "idle" || eventList.status === "rejected"){
+      dispatch(fetchEventList())
+    }
+  }, [userLocation, setLocationCoords, dispatch, eventList.status])
 
   useEffect(() => {
     console.log(userData)
     console.log(userLocation)
-  }, [userData, userLocation])
+    console.log(eventList.events)
+  }, [userData, userLocation, eventList])
 
   return (
     <>

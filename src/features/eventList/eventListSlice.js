@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getEventsFromAPI } from "@services/events-missions-service";
 
 const initialState = {
-  eventsList: [],
+  events: [],
   status: 'idle'
 }
 
@@ -18,7 +18,10 @@ const options = {
   name: 'eventList',
   initialState,
   reducers: {
-    clearEventList: () => [],
+    clearEventList: (state) => {
+      state.events = [];
+      state.status = 'idle';
+    },
   },
   extraReducers: builder => {
     builder
@@ -27,7 +30,7 @@ const options = {
       })
       .addCase(fetchEventList.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.eventsList = [...action.payload];
+        state.events = [...action.payload];
       })
       .addCase(fetchEventList.rejected, (state) => {
         state.status = 'rejected';
