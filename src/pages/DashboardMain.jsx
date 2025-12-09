@@ -33,10 +33,10 @@ function DashboardMain() {
 
   return (
     <>
-      <div className="flex flex-col-reverse md:flex-row md:items-center md:justify-center w-full md:w-4/5 h-205 gap-3 z-10">
+      <div className="flex flex-col-reverse lg:flex-row lg:items-center lg:justify-center w-full lg:w-4/5 h-205 gap-3 z-10">
         <SideBar />
 
-        <div className="flex flex-col md:items-center md:justify-center w-full h-full overflow-hidden dashboard--main-container">
+        <div className="flex flex-col lg:items-center lg:justify-center w-full h-full overflow-hidden dashboard--main-container">
           <Outlet />
         </div>
       </div>

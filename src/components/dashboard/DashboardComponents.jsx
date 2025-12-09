@@ -40,8 +40,8 @@ function DashboardComponents(){
   return(
     <>
       <InfoTopComponent errorMsg={errorMsg} userLocation={""} />
-      <div className="flex flex-col md:flex-row gap-3 overflow-y-auto md:overflow-hidden w-full h-full">
-        <div className="flex flex-col w-full md:w-1/2 gap-1">
+      <div className="flex flex-col lg:flex-row gap-3 overflow-y-auto lg:overflow-hidden w-full h-full">
+        <div className="flex flex-col w-full lg:w-1/2 gap-1">
           <EventoDestacado />
           <MapDashboard locations={""} userPosition={""}/>
           <div className="flex flex-col sm:flex-row w-full max-h-80 h-full gap-1">
@@ -50,7 +50,7 @@ function DashboardComponents(){
           </div>
         </div>
 
-        <div className="flex flex-col w-full md:w-1/2 gap-1">
+        <div className="flex flex-col w-full lg:w-1/2 gap-1">
           <div className="flex flex-col sm:flex-row w-full gap-1">
             <MisionActual />
             <MisionRealizada />

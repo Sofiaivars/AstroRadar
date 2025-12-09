@@ -5,7 +5,7 @@ const Logotipo = () => {
     <img
       src="/logo-esquina.png"
       alt="Logotipo AstroRadar"
-      className="w-40 h-auto fixed top-6 right-8 z-50"
+      className="w-40 h-auto fixed top-6 right-8 z-50 hidden lg:block"
     />
   );
 };
