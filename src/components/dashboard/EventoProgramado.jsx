@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import CountdownComponent from "@components/renderEvents/CountdownComponent.jsx";
 import LoaderMini from "@components/loaders/LoaderMini.jsx";
 import { useSelector } from "react-redux";
+import AstroButton from "@components/shared/AstroButton";
 
 const EventoProgramado = () => {
   const { passes } = useSelector((state) => state.issPassesList)
@@ -46,56 +47,7 @@ const EventoProgramado = () => {
               )}
             </div>
             <div className="w-full flex justify-end mb-2 mr-2">
-              <button
-                className="    
-                  rounded-[12px]
-                  p-[1.5px]
-                  text-white
-                  text-sm
-                  h-10
-                  w-10
-                  font-medium
-                  transition
-                  duration-300
-                  flex
-                  items-center
-                  justify-center
-                  hover:shadow-2xl
-                  hover:shadow-purple-600/30
-                "
-                style={{
-                  backgroundImage:
-                    "linear-gradient(var(--components-background), var(--components-background)), " +
-                    "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)", //bordeeeeeeeee
-                  backgroundOrigin: "border-box",
-                  backgroundClip: "padding-box, border-box",
-                  border: "2px solid transparent",
-                }}
-                onClick={() => navigate("/dashboard/iss")}
-              >
-                <div
-                  className="
-                  rounded-[12px]
-                  w-full
-                  h-full
-                  flex
-                  items-center
-                  justify-center
-                  transition
-                  duration-300
-                  ease-in-out
-                  group-hover:bg-gradient-to-br
-                  group-hover:from-gray-700
-                  group-hover:to-gray-900"
-                  style={{
-                    backgroundColor: "var(--components-background)",
-                  }}
-                >
-                  <span>
-                    <ChevronRight size={20} />
-                  </span>
-                </div>
-              </button>
+              <AstroButton text={<ChevronRight size={20} />} handleClick={() => navigate('/dashboard/iss')}/>
             </div>
           </div>
         </div>
