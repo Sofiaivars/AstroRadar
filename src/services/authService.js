@@ -30,25 +30,12 @@ const userSignUp = async (username, password, name, lastname, email, city, count
 
 }
 
-// /protected es un endpoint privado.
-const getUserInfo = async () => {
-  const token = localStorage.getItem('jwt-token');
-
-  if (!token) {
-    throw new Error("No hay token");
-  }
-
-  const response = await fetch(`${mainURL}/protected`, {
+const getUserData = async () => {
+  const response = await fetch(`${mainURL}/auth/profile`, {
     method: 'GET',
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    }
+    credentials: 'include',
   });
-
-  if (!response.ok) {
-    throw Error("Problema con la petición login");
-  }
+  if (!response.ok) throw new Error("Sin autorización");
 
   const data = await response.json();
   return data;
@@ -79,4 +66,4 @@ const changePassword = async (oldPassword, newPassword) => {
   return data;
 }
 
-export { userLogIn, getUserInfo, userSignUp, getUsersFromDatabase, changePassword };
+export { userLogIn, getUserData, userSignUp, getUsersFromDatabase, changePassword };

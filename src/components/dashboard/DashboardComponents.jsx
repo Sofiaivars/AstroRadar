@@ -12,8 +12,6 @@ import InfoTopComponent from "@components/dashboard/InfoTopComponent/InfoTopComp
 import PageLoader from "@components/loaders/PageLoader.jsx";
 import MapboxDashboard from "@components/dashboard/mapbox/MapboxDashboard.jsx";
 import { getJSONCoords } from "@services/cosmo-service.js";
-import { getUserLocation } from "@services/geolocation-service";
-import { getUserInfo } from "@services/authService.js";
 import { getEventsFromAPI, getISSPasses, getUserMissions } from "@services/events-missions-service.js";
 import { useSelector } from "react-redux";
 

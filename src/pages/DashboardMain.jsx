@@ -6,6 +6,8 @@ import { setUserLocation } from "@features/userLocation/userLocationSlice";
 import { fetchEventList } from "@features/eventList/eventListSlice";
 import { getUserLocation } from "@services/geolocation-service";
 import { fetchIssPassesList } from "@/features/issPassesList/issPassesListSlice";
+import { getUserData } from "@services/authService";
+import { setUserData } from "@features/userData/userDataSlice";
 
 function DashboardMain() {
   const dispatch = useDispatch()
@@ -17,6 +19,7 @@ function DashboardMain() {
 
   useEffect(() => {
     const hasCoords = Object.values(userLocation).some(value => value !== null)
+    const hasData = Object.values(userData).some(value => value !== null)
     if(!hasCoords){
       getUserLocation(setLocationCoords)
     }
@@ -26,16 +29,18 @@ function DashboardMain() {
     if(issPassesList.status === "idle" || issPassesList.status === "rejected"){
       dispatch(fetchIssPassesList(userLocation))
     }
+    if(!hasData){
+      const getUserDataFromDB = async () => {
+        const response = await getUserData()
+        dispatch(setUserData(response))
+      }
+      getUserDataFromDB()
+    }
+  }, [userLocation, setLocationCoords, dispatch, eventList.status, issPassesList.status, userData])
 
-    //TRAER DATOS POR SI SE RECARGA PÁGINA
-  }, [userLocation, setLocationCoords, dispatch, eventList.status, issPassesList.status])
-
-  useEffect(() => {
-    // console.log(userData)
-    console.log(userLocation)
-    // console.log(eventList.events)
-    console.log(issPassesList || "No ISS")
-  }, [userLocation, issPassesList])
+  // useEffect(() => {
+  //   console.log(userData)
+  // }, [userData])
 
   return (
     <>
