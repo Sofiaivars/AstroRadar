@@ -18,15 +18,15 @@ function DashboardMain() {
   const setLocationCoords = useCallback((coords) => dispatch(setUserLocation(coords)), [dispatch])
 
   useEffect(() => {
-    const hasCoords = Object.values(userLocation).some(value => value !== null)
-    const hasData = Object.values(userData).some(value => value !== null)
+    const hasCoords = Object.values(userLocation).every(value => value !== null)
+    const hasData = Object.values(userData).every(value => value !== null)
     if(!hasCoords){
       getUserLocation(setLocationCoords)
     }
     if(eventList.status === "idle" || eventList.status === "rejected"){
       dispatch(fetchEventList())
     }
-    if(issPassesList.status === "idle" || issPassesList.status === "rejected"){
+    if((issPassesList.status === "idle" || issPassesList.status === "rejected") && hasCoords){
       dispatch(fetchIssPassesList(userLocation))
     }
     if(!hasData){
