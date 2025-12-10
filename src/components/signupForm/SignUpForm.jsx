@@ -29,7 +29,7 @@ function SignUpForm(){
           await userSignUp(signUpData)
           return navigate('/')
         }else{
-          console.log("Formato de email incorrecto")
+          // console.log("Formato de email incorrecto")
           setErrorAtSignUp(true)
         }
       }else{
