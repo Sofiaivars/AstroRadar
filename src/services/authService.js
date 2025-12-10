@@ -26,8 +26,21 @@ const userLogIn = async (email, password, dispatch) => {
 
 }
 
-const userSignUp = async (username, password, name, lastname, email, city, country, userImage) => {
+const userSignUp = async ({ name, lastname, username, password, image, email, city, country }) => {
+  const response = await fetch(`${mainURL}/auth/signup`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name, lastname, username, password, image, email, city, country })
+  });
+  if (!response.ok) {
+    if (response.status === 404) throw new Error("Nombre de usuario o email ya registrados");
+    throw new Error("Error en el servidor");
+  };
 
+  const data = await response.json();
+  return data;
 }
 
 const getUserData = async () => {

@@ -1,41 +1,32 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router"
 import { userSignUp } from "@services/authService"
 import SignUpButton from "@components/signupForm/SignUpButton"
 import { Eye, EyeClosed } from "lucide-react";
 
 function SignUpForm(){
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
-  const [name, setName] = useState("")
-  const [lastname, setLastname] = useState("")
-  const [city, setCity] = useState("")
-  const [country, setCountry] = useState("")
-  const [userImage, setUserImage] = useState("")
+  const [signUpData, setSignUpData] = useState({
+    name: "",
+    lastname: "",
+    username: "",
+    password: "",
+    image: "",
+    email: "",
+    city: "",
+    country: "",
+  })
   const [errorAtSignUp, setErrorAtSignUp] = useState("")
   const [inputPassType, setInputPassType] = useState("password")
 
   const navigate = useNavigate()
 
-  const handleInputChange = (event) => {
-    const {id, value} = event.target
-
-    if(id === "signup-username"){ return setUsername(value)}
-    if(id === "signup-password"){ return setPassword(value)}
-    if(id === "signup-email"){ return setEmail(value)}
-    if(id === "signup-name"){ return setName(value)}
-    if(id === "signup-lastname"){ return setLastname(value)}
-    if(id === "signup-city"){ return setCity(value)}
-    if(id === "signup-country"){ return setCountry(value)}
-  }
-
   const handleClick = async () => {
     try{
-      if(username || password || email || name || lastname || city || country || userImage){
+      const hasData = Object.values(signUpData).every(value => value.trim() !== "")
+      if(hasData){
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(emailRegex.test(email)){
-          await userSignUp(username, password, name, lastname, email, city, country, userImage)
+        if(emailRegex.test(signUpData.email)){
+          await userSignUp(signUpData)
           return navigate('/')
         }else{
           console.log("Formato de email incorrecto")
@@ -58,23 +49,23 @@ function SignUpForm(){
   return(
     <div className="flex flex-col gap-3 p-3 rounded-2xl min-w-85 borde-con-degradado justify-between shadow-lg shadow-purple-300">
       <div className="flex flex-col w-full gap-1">
-        <input type="text" name="username" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-username" placeholder="Nombre de usuario" value={username} onChange={handleInputChange}/>
+        <input type="text" name="username" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} placeholder="Nombre de usuario" value={signUpData.username} onChange={(e) => setSignUpData({...signUpData, username: e.target.value})}/>
         <div className="flex items-center w-full relative">
-          <input type={inputPassType} name="pass" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} w-full signup-inputs`} id="signup-password" placeholder="Contraseña" value={password} onChange={handleInputChange}/>
+          <input type={inputPassType} name="pass" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} w-full signup-inputs`} placeholder="Contraseña" value={signUpData.password} onChange={(e) => setSignUpData({...signUpData, password: e.target.value})}/>
           <button className="absolute right-0 me-3 cursor-pointer" onClick={handlePasswordInput}>
             {inputPassType === "password" ? <Eye /> : <EyeClosed />}
           </button>
         </div>
-        <input type="email" name="email" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-email" placeholder="hola@test.com" value={email} onChange={handleInputChange}/>
-        <input type="text" name="name" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-name" placeholder="Nombre" value={name} onChange={handleInputChange}/>
-        <input type="text" name="lastname" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-lastname" placeholder="Apellidos" value={lastname} onChange={handleInputChange}/>
-        <input type="text" name="city" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-city" placeholder="Ciudad" value={city} onChange={handleInputChange}/>
-        <input type="text" name="country" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} id="signup-country" placeholder="País" value={country} onChange={handleInputChange}/>
+        <input type="email" name="email" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} placeholder="hola@test.com" value={signUpData.email} onChange={(e) => setSignUpData({...signUpData, email: e.target.value})}/>
+        <input type="text" name="image" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} placeholder="URL de imagen" value={signUpData.image} onChange={(e) => setSignUpData({...signUpData, image: e.target.value})}/>
+        <input type="text" name="name" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} placeholder="Nombre" value={signUpData.name} onChange={(e) => setSignUpData({...signUpData, name: e.target.value})}/>
+        <input type="text" name="lastname" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} placeholder="Apellidos" value={signUpData.lastname} onChange={(e) => setSignUpData({...signUpData, lastname: e.target.value})}/>
+        <input type="text" name="city" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} placeholder="Ciudad" value={signUpData.city} onChange={(e) => setSignUpData({...signUpData, city: e.target.value})}/>
+        <input type="text" name="country" className={`p-2 rounded-2xl ${errorAtSignUp ? "border-1 border-red-400" : ""} signup-inputs`} placeholder="País" value={signUpData.country} onChange={(e) => setSignUpData({...signUpData, country: e.target.value})}/>
       </div>
       <p className={`text-sm text-red-400 ${errorAtSignUp ? "" : "hidden"}`}>Rellena todos los campos e incluye un email válido</p>
       <button className="text-sm cursor-pointer hover:text-purple-500 self-end" onClick={() => navigate('/')}>Ya tengo una cuenta</button>
-      {/* onClick={() => handleClick(username, password, email, name, lastname, city, country, userImage)} */}
-      <SignUpButton buttonTxt={"Registrarme!"} handleClick={() => handleClick(username, password, email, name, lastname, city, country, userImage)}/>
+      <SignUpButton buttonTxt={"Registrarme!"} handleClick={handleClick}/>
       <hr />
       <p className="text-center text-sm">O regístrate con:</p>
       <div className='flex justify-center gap-3 w-full social-login'>
