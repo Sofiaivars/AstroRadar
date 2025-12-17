@@ -8,6 +8,7 @@ import { getUserLocation } from "@services/geolocation-service";
 import { fetchIssPassesList } from "@/features/issPassesList/issPassesListSlice";
 import { getUserData } from "@services/authService";
 import { setUserData } from "@features/userData/userDataSlice";
+import { fetchMissionList } from "@features/missionList/missionListSlice";
 
 function DashboardMain() {
   const dispatch = useDispatch()
@@ -35,6 +36,7 @@ function DashboardMain() {
         dispatch(setUserData(response))
       }
       getUserDataFromDB()
+      dispatch(fetchMissionList(userData.id));
     }
   }, [userLocation, setLocationCoords, dispatch, eventList.status, issPassesList.status, userData])
 
