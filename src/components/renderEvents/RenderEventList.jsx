@@ -3,7 +3,7 @@ import '@components/renderEvents/RenderEventList.css'
 import EventCard from "@components/renderEvents/EventCard"
 import PageLoader from "@components/loaders/PageLoader"
 import UserMissionCard from '@components/renderEvents/UserMissionCard'
-import { deleteMission, getUserMissions, updateMissionState } from "@services/events-missions-service";
+import { deleteMission, getUserMissions, updateMissionState } from "@services/events-missions-service"
 import { Toast } from 'primereact/toast';
 import { useSelector } from "react-redux"
 

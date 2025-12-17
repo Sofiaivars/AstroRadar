@@ -37,13 +37,14 @@ function DashboardMain() {
         dispatch(setUserData(response))
       }
       getUserDataFromDB()
-      dispatch(fetchMissionList(userData.id));
     }
   }, [userLocation, setLocationCoords, dispatch, eventList.status, issPassesList.status, userData])
 
   useEffect(() => {
-    console.log(missionList)
-  }, [missionList])
+    if(userData.id && (missionList.status === "idle" || missionList.status === "rejected")){
+      dispatch(fetchMissionList(userData.id));
+    }
+  }, [userData.id, missionList.status, dispatch])
 
   return (
     <>

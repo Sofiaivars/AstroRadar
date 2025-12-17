@@ -4,7 +4,6 @@ import RenderEventList from "@components/renderEvents/RenderEventList";
 import LoaderMini from "@components/loaders/LoaderMini.jsx";
 import "@pages/EventsPage.css";
 import PageLoader from "@components/loaders/PageLoader.jsx";
-import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 function EventsPage() {
@@ -13,8 +12,6 @@ function EventsPage() {
   const [categories, setCategories] = useState(null);
   const categoryList = categories ? Object.keys(categories) : [];
   const [renderCategory, setRenderCategory] = useState("all");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (events) {
@@ -29,11 +26,11 @@ function EventsPage() {
         <button
           className={`rounded-2xl p-2 transition-colors duration-500 cursor-pointer borde-con-degradado
     ${
-      renderCategory === "scheduled"
+      renderCategory === "programada"
         ? "bg-purple-400 text-white shadow-md"
         : "hover:bg-purple-300"
     }`}
-          onClick={() => setRenderCategory("scheduled")}
+          onClick={() => setRenderCategory("programada")}
         >
           Misiones programadas
         </button>
