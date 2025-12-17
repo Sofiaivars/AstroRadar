@@ -5,8 +5,10 @@ import PageLoader from "@components/loaders/PageLoader"
 import UserMissionCard from '@components/renderEvents/UserMissionCard'
 import { deleteMission, getUserMissions, updateMissionState } from "@services/events-missions-service";
 import { Toast } from 'primereact/toast';
+import { useSelector } from "react-redux"
 
 function RenderEventList({eventList, renderCategory, userId}){
+  const { missions } = useSelector((state) => state.missionList);
   const renderList = useMemo(() => {
     if(!eventList) return []
     
@@ -66,22 +68,22 @@ function RenderEventList({eventList, renderCategory, userId}){
               })
             )
           : <div className="flex items-center justify-center w-full h-full"><PageLoader /></div>
-        : (userMissionsList.length > 0)
-            ? (userMissionsList.map((mission) => {
+        : (missions.length > 0)
+            ? (missions.map((mission) => {
                 return (
                   <UserMissionCard
                     key={mission.id}
                     eventImg={mission.image}
-                    eventName={mission.event.name}
-                    eventCategory={mission.event.category}
-                    eventStart={mission.event.start_date}
-                    eventEnd={mission.event.end_date}
-                    eventVisibility={mission.event.visibility}
-                    eventMoon={mission.event.moon}
-                    eventId={mission.event.id}
+                    eventDefaultImg={mission.missions_event.image}
+                    eventName={mission.missions_event.event}
+                    eventCategory={mission.missions_event.category}
+                    eventStart={mission.missions_event.start_date}
+                    eventEnd={mission.missions_event.end_date}
+                    eventVisibility={mission.missions_event.visibility}
+                    eventMoon={mission.missions_event.moon}
+                    eventId={mission.event_id}
                     missionState={mission.state}
                     missionId={mission.id}
-                    userId={mission.user_id}
                     handleClick={handleUserMissionButton}
                     deleteUserMission={deleteUserMission}
                   />

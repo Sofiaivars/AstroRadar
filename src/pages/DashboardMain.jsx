@@ -14,6 +14,7 @@ function DashboardMain() {
   const dispatch = useDispatch()
   const userData = useSelector((state) => state.userData)
   const userLocation = useSelector((state) => state.userLocation)
+  const missionList = useSelector((state) => state.missionList)
   const eventList = useSelector((state) => state.eventList)
   const issPassesList = useSelector((state) => state.issPassesList)
   const setLocationCoords = useCallback((coords) => dispatch(setUserLocation(coords)), [dispatch])
@@ -39,6 +40,10 @@ function DashboardMain() {
       dispatch(fetchMissionList(userData.id));
     }
   }, [userLocation, setLocationCoords, dispatch, eventList.status, issPassesList.status, userData])
+
+  useEffect(() => {
+    console.log(missionList)
+  }, [missionList])
 
   return (
     <>
