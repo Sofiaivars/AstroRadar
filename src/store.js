@@ -5,6 +5,7 @@ import selectedBaseReducer from '@features/selectedBase/selectedBaseSlice';
 import eventListReducer from '@features/eventList/eventListSlice';
 import userDataReducer from '@features/userData/userDataSlice'
 import issPassesListReducer from '@features/issPassesList/issPassesListSlice';
+import missionListReducer from '@features/missionList/missionListSlice';
 
 const options = {
   reducer: {
@@ -14,6 +15,7 @@ const options = {
     eventList: eventListReducer,
     userData: userDataReducer,
     issPassesList: issPassesListReducer,
+    missionList: missionListReducer,
 
   }
 }

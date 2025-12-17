@@ -60,7 +60,7 @@ const addUserMission = async (userId, eventId, state = "programada") => {
 // Obtener userMissions
 const getUserMissions = async (userId) => {
   try {
-    const response = await fetch(`${mainURL}/umissions/usermissions/${userId}`);
+    const response = await fetch(`${mainURL}/missions/${userId}`);
     if (!response.ok) {
       if (response.status === 404) {
         return [];

@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from "react"
+import { useMemo, useRef } from "react"
 import '@components/renderEvents/RenderEventList.css'
 import EventCard from "@components/renderEvents/EventCard"
 import PageLoader from "@components/loaders/PageLoader"
@@ -7,7 +7,6 @@ import { deleteMission, getUserMissions, updateMissionState } from "@services/ev
 import { Toast } from 'primereact/toast';
 
 function RenderEventList({eventList, renderCategory, userId}){
-  const [userMissionsList, setUserMissionsList] = useState([])
   const renderList = useMemo(() => {
     if(!eventList) return []
     
@@ -38,18 +37,18 @@ function RenderEventList({eventList, renderCategory, userId}){
     return false
   }
 
-  // const handleUserMissionButton = async (missionId) => {
-  //   console.log("handleUserMissionButton")
-  // }
+  const handleUserMissionButton = async (missionId) => {
+    console.log("handleUserMissionButton")
+  }
 
-  // const deleteUserMission = async (missionId) => {
-  //   console.log("deleteUserMission")
-  // }
+  const deleteUserMission = async (missionId) => {
+    console.log("deleteUserMission")
+  }
 
   return(
     <div className="flex flex-col gap-3 w-full h-full overflow-y-auto p-3 render-events-list">
       {/* <Toast ref={toast} /> */}
-      {renderCategory !== "scheduled"
+      {renderCategory !== "programada"
         ? Array.isArray(eventList) && Array.isArray(renderList) && renderList.length > 0
           ? (renderList.map((astroEvent) => {
                 return <EventCard 
