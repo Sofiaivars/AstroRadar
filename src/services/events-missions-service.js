@@ -41,7 +41,7 @@ const getCategories = (list) => {
 }
 
 //Añadir evento a UserMissions================================
-const addUserMission = async (user_id, event_id, state) => {
+const addUserMission = async (user_id, event_id, state = "programada") => {
   const response = await fetch(`${mainURL}/umissions/add-user-mission`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

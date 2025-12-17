@@ -14,15 +14,18 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
     const missionExistsShow = () => {
       toast.current.show({ severity: 'warn', summary: 'Warning', detail: `La misión ya existe!` });
     }
+    const errorToast = () => {
+      toast.current.show({ severity: 'error', summary: 'Error', detail: `Error de servidor` });
+    }
     // Toast end
 
   const handleClick = async () => {
     try{
       if(!userId || !eventId){
-        return console.log({userId, eventId})
+        return errorToast()
       }
-      const missionState = "scheduled"
-      const response = await addUserMission(userId, eventId, missionState)
+      
+      const response = await addUserMission(userId, eventId)
       missionProgrammedShow()
       return console.log(response)
     }catch(error){
