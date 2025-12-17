@@ -18,14 +18,6 @@ function Step1Page() {
 
   const navigate = useNavigate();
 
-  // Obtener ubicación del dispositivo para el marcador morado
-  useEffect(() => {
-    getUserLocation(
-      (coords) => setUserPosition(coords),
-      (mensajeError) => setErrorMsg(mensajeError)
-    );
-  }, []);
-
   // Botón “Confirmar base estelar”
   const _confirmLocation = () => {
     if (!location) return;
