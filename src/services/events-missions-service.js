@@ -41,16 +41,16 @@ const getCategories = (list) => {
 }
 
 //Añadir evento a UserMissions================================
-const addUserMission = async (user_id, event_id, state = "programada") => {
-  const response = await fetch(`${mainURL}/umissions/add-user-mission`, {
+const addUserMission = async (userId, eventId, state = "programada") => {
+  const response = await fetch(`${mainURL}/missions/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user_id, event_id, state })
+    body: JSON.stringify({ userId, eventId, state })
   });
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw Error(errorData.msg || "Error al enviar userMission");
+    throw Error(errorData.message || "Error al enviar userMission");
   }
 
   const data = await response.json();

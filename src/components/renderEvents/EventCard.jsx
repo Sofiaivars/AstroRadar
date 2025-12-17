@@ -8,11 +8,11 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
 
   //Toast
     const toast = useRef(null)
-    const missionProgrammedShow = () => {
-      toast.current.show({ severity: 'success', summary: 'Success', detail: 'Misión programada correctamente!' });
+    const missionProgrammedShow = (message) => {
+      toast.current.show({ severity: 'success', summary: 'Success', detail: message });
     }
-    const missionExistsShow = () => {
-      toast.current.show({ severity: 'warn', summary: 'Warning', detail: `La misión ya existe!` });
+    const missionExistsShow = (message) => {
+      toast.current.show({ severity: 'warn', summary: 'Warning', detail: message });
     }
     const errorToast = () => {
       toast.current.show({ severity: 'error', summary: 'Error', detail: `Error de servidor` });
@@ -26,11 +26,10 @@ function EventCard({eventImg, eventName, eventCategory, eventStart, eventEnd, ev
       }
       
       const response = await addUserMission(userId, eventId)
-      missionProgrammedShow()
-      return console.log(response)
+      missionProgrammedShow(response.message)
+      return
     }catch(error){
-      missionExistsShow()
-      console.log(error)
+      missionExistsShow(error.message)
       return
     }
     
