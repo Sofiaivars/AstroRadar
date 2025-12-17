@@ -38,10 +38,6 @@ function DashboardMain() {
     }
   }, [userLocation, setLocationCoords, dispatch, eventList.status, issPassesList.status, userData])
 
-  // useEffect(() => {
-  //   console.log(userData)
-  // }, [userData])
-
   return (
     <>
       <div className="flex flex-col-reverse lg:flex-row lg:items-center lg:justify-center w-full lg:w-4/5 h-205 gap-3 z-10">
