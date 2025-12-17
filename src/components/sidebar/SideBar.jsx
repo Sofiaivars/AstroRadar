@@ -7,12 +7,10 @@ import {
   Settings,
   PowerOff,
 } from "lucide-react";
-import useGlobalReducer from "../../hooks/useGlobalReducer";
 
 function SideBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { store } = useGlobalReducer();
 
   const handleClick = () => {
     localStorage.removeItem("jwt-token");
@@ -20,19 +18,19 @@ function SideBar() {
   };
 
   const handleMissionNavigate = () => {
-    if (store.userActiveMission) {
-      if (!store.userActiveMission.base.id) {
-        console.log(store.userActiveMission);
-        console.log(store.userActiveMission.base.id);
-        return navigate("/dashboard/missions");
-      } else {
-        console.log(store.userActiveMission);
-        console.log(store.userActiveMission.base.id);
-        return navigate("/dashboard/missions/step2");
-      }
-    } else {
-      alert("No tienes activada una misión");
-    }
+    // if (store.userActiveMission) {
+    //   if (!store.userActiveMission.base.id) {
+    //     console.log(store.userActiveMission);
+    //     console.log(store.userActiveMission.base.id);
+    //     return navigate("/dashboard/missions");
+    //   } else {
+    //     console.log(store.userActiveMission);
+    //     console.log(store.userActiveMission.base.id);
+    //     return navigate("/dashboard/missions/step2");
+    //   }
+    // } else {
+    //   alert("No tienes activada una misión");
+    // }
   };
   const isActive = (path) => location.pathname === path;
 
@@ -41,8 +39,8 @@ function SideBar() {
     "text-white h-10 w-10 flex items-center justify-center rounded-[16px] transition duration-300 cursor-pointer";
 
   return (
-    <div className="flex flex-col justify-between items-center h-full p-2 rounded-2xl borde-con-degradado">
-      <div className="flex flex-col h-full gap-4 items-start">
+    <div className="flex flex-row lg:flex-col absolute lg:relative bottom-0 lg:bottom-none w-full lg:w-15 justify-between items-center h-15 lg:h-full p-2 rounded-2xl borde-con-degradado z-10">
+      <div className="flex flex-row lg:flex-col h-full gap-4 items-start">
         <button
           className={`${baseStyle} ${
             isActive("/dashboard") ? activeStyle : "hover:bg-gray-800"
@@ -80,7 +78,7 @@ function SideBar() {
           <CalendarSearch size={20} />
         </button>
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-row lg:flex-col justify-center">
         <button
           className="text-white h-10 w-10 flex items-center justify-center rounded-[12px] hover:bg-gray-800 transition duration-300 cursor-pointer"
           title="Settings"

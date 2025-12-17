@@ -1,36 +1,36 @@
-import { useEffect, useState } from "react"
-import LoginButton from "./LoginButton"
+import { useState } from "react"
+import LoginButton from "@components/login/LoginButton"
 import { useNavigate } from "react-router"
-import { login } from "../../servicios/login-service"
+import { userLogIn } from "@services/authService"
 import { Eye, EyeClosed } from "lucide-react";
+import { useDispatch } from "react-redux";
 
 function LoginForm(){
-  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [errorAtLogin, setErrorAtLogin] = useState(false)
   const [inputPassType, setInputPassType] = useState("password")
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleInputChange = (event) => {
     const { id, value } = event.target
 
-    if(id === "login-username") { return setUsername(value) }
+    if(id === "login-email") { return setEmail(value) }
     if(id === "login-password") { return setPassword(value) }
   }
 
-  const handleClick = async (username, password) => {
-    if( !username || !password) {
+  const handleClick = async (email, password) => {
+    if( !email || !password) {
       setErrorAtLogin(true)
       return
     }
   
     try{
-      const dataFromLogin = await login(username, password)
-      console.log(dataFromLogin)
+      await userLogIn(email, password, dispatch)
       navigate('/dashboard')
     }catch(error){
       setErrorAtLogin(true)
-      console.log(`Error en el login => ${error}`)
     }
   }
 
@@ -44,7 +44,7 @@ function LoginForm(){
       <div className="flex flex-col p-3 rounded-2xl borde-con-degradado justify-between shadow-lg shadow-purple-300 login-card">
         <h1 className="text-center text-xl mb-5 subtitle">¡Nos alegra volverte a ver!</h1>
         <div className="flex flex-col gap-3">
-          <input type="text" className={`p-2 rounded-2xl ${errorAtLogin ? "border-1 border-red-400" : ""} login-inputs`} id="login-username" placeholder="Nombre de usuario" value={username} onChange={handleInputChange} />
+          <input type="text" className={`p-2 rounded-2xl ${errorAtLogin ? "border-1 border-red-400" : ""} login-inputs`} id="login-email" placeholder="Email" value={email} onChange={handleInputChange} />
           <div className="flex w-full items-center relative">
             <input type={inputPassType} className={`p-2 rounded-2xl ${errorAtLogin ? "border-1 border-red-400" : ""} w-full login-inputs`} id="login-password" placeholder="Password" value={password} onChange={handleInputChange}/>
             <button className="absolute right-0 me-3 cursor-pointer" onClick={handlePasswordInput}>
@@ -55,8 +55,8 @@ function LoginForm(){
             <input type="checkbox" id="recordar-pass"/>
             <label className="" for="recordar-pass">Recordar</label>
           </div>
-          <p className={`text-xs text-center text-red-400 ${errorAtLogin ? "" : "hidden"}`}>nombre de usuario y/o contraseña incorrectos</p>
-          <LoginButton handleClick={() => handleClick(username, password)}/>
+          <p className={`text-xs text-center text-red-400 ${errorAtLogin ? "" : "hidden"}`}>email y/o contraseña incorrectos</p>
+          <LoginButton handleClick={() => handleClick(email, password)}/>
           <div className="flex justify-between">
             <a href="#" className='hover:text-purple-500 text-sm forgot'>Olvidaste la contraseña?</a>
             <button className="hover:text-purple-500 text-sm cursor-pointer" onClick={() => navigate('/signup')}>No tengo cuenta</button>

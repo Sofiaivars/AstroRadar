@@ -1,5 +1,5 @@
-import "./ErrorPage.css";
-import hansTriangle from "./assets/giferrorpage.gif";
+import "@pages/ErrorPage.css";
+import hansTriangle from "@pages/assets/giferrorpage.gif";
 import { TriangleAlert } from "lucide-react";
 import { useNavigate } from "react-router";
 

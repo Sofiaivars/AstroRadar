@@ -1,44 +1,24 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../servicios/events-missions-service";
-import RenderEventList from "../components/renderEvents/RenderEventList";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import LoaderMini from "../components/loaders/LoaderMini.jsx";
-import "./EventsPage.css";
-import PageLoader from "../components/loaders/PageLoader.jsx";
-import { useNavigate } from "react-router";
+import { getCategories } from "@services/events-missions-service";
+import RenderEventList from "@components/renderEvents/RenderEventList";
+import LoaderMini from "@components/loaders/LoaderMini.jsx";
+import "@pages/EventsPage.css";
+import PageLoader from "@components/loaders/PageLoader.jsx";
+import { useSelector } from "react-redux";
 
 function EventsPage() {
-  const [eventList, setEventList] = useState(null);
+  const { events, status } = useSelector((state) => state.eventList)
+  const userData = useSelector((state) => state.userData)
   const [categories, setCategories] = useState(null);
   const categoryList = categories ? Object.keys(categories) : [];
   const [renderCategory, setRenderCategory] = useState("all");
-  const [userId, setUserId] = useState(null);
-
-  const { store } = useGlobalReducer();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (store?.eventList) setEventList(store.eventList);
-    if (store?.userData?.id) setUserId(store.userData.id);
-  }, [store]);
-
-  useEffect(() => {
-    if (eventList) {
-      const dataToCategories = getCategories(eventList);
+    if (events) {
+      const dataToCategories = getCategories(events);
       setCategories(dataToCategories);
     }
-  }, [eventList]);
-
-  useEffect(() => {
-    if (store?.userData === null) {
-      return navigate("/dashboard");
-    }
-  }, [store?.userData, navigate]);
-
-  if (store?.userData === null) {
-    // Bloquea renderizado mientras redirige
-    return null;
-  }
+  }, [events]);
 
   return (
     <div className="flex flex-col w-full h-full rounded-2xl p-3 overflow-hidden borde-con-degradado">
@@ -46,11 +26,11 @@ function EventsPage() {
         <button
           className={`rounded-2xl p-2 transition-colors duration-500 cursor-pointer borde-con-degradado
     ${
-      renderCategory === "scheduled"
+      renderCategory === "programada"
         ? "bg-purple-400 text-white shadow-md"
         : "hover:bg-purple-300"
     }`}
-          onClick={() => setRenderCategory("scheduled")}
+          onClick={() => setRenderCategory("programada")}
         >
           Misiones programadas
         </button>
@@ -88,16 +68,12 @@ function EventsPage() {
           <LoaderMini />
         )}
       </div>
-      {eventList && store.userData ? (
+      {status === 'succeeded' ? (
         <RenderEventList
-          eventList={eventList}
+          eventList={events}
           renderCategory={renderCategory}
-          userId={userId}
+          userId={userData?.id}
         />
-      ) : store?.userData === null ? (
-        <div className="flex flex-col items-center justify-center h-full w-full text-center p-6">
-          <p>⚠️ Datos no disponibles, vuelve al DASHBOARD</p>
-        </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full w-full text-center p-6">
           <PageLoader />

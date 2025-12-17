@@ -1,6 +1,6 @@
-const getUserLocation = (onSuccess, onError) => {
+const getUserLocation = (onSuccess) => {
   if (!navigator.geolocation) {
-    onError("Geolocalización incompatible con el navegador");
+    console.error("Geolocalización incompatible con el navegador");
     return;
   }
 
@@ -15,23 +15,23 @@ const getUserLocation = (onSuccess, onError) => {
     (error) => {
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          onError("Permiso denegado para obtener la ubicación.");
+          console.error("Permiso denegado para obtener la ubicación.");
           break;
         case error.POSITION_UNAVAILABLE:
-          onError("Ubicación no disponible.");
+          console.error("Ubicación no disponible.");
           break;
         case error.TIMEOUT:
-          onError("Tiempo de espera excedido.");
+          console.error("Tiempo de espera excedido.");
           break;
         default:
-          onError("Error desconocido.");
+          console.error("Error desconocido.");
       }
     }
   );
 };
 
-const reverseGeocodingAPICall = async (latitud, longitud) => {
-  const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitud}&lon=${longitud}`);
+const reverseGeocodingAPICall = async ({ latitude, longitude }) => {
+  const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`);
   const data = await response.json();
   return data;
 }

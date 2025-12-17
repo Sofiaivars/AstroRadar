@@ -1,13 +1,13 @@
 import { CalendarDays, CalendarClock, CalendarOff, Telescope, Moon, Hourglass, Satellite, Trash, Sparkles, Eclipse, Orbit, Ban } from "lucide-react";
-import CountdownComponent from "./CountdownComponent";
+import CountdownComponent from "@components/renderEvents/CountdownComponent";
 
-function UserMissionCard({eventImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, missionState, missionId, userId, handleClick, deleteUserMission}){
+function UserMissionCard({eventImg, eventDefaultImg, eventName, eventCategory, eventStart, eventEnd, eventVisibility, eventMoon, missionState, missionId, handleClick, deleteUserMission}){
 
   return(
     <div className="flex rounded-2xl w-full items-center gap-3 text-sm border-b-2 border-purple-800">
       <div className="flex w-50 max-h-33 rounded-l-2xl overflow-hidden relative">
         <img 
-          src={eventImg ? eventImg : "https://skyandaluz.com/wp-content/uploads/2024/02/imagen-Conoce-las-misiones-espaciales-mas-importantes-de-la-historia.jpg"} 
+          src={eventImg ? eventImg : eventDefaultImg} 
           alt={eventCategory} className="w-full h-full object-cover" 
         />
         <div className="absolute top-19 right-3 text-purple-100">
@@ -72,7 +72,7 @@ function UserMissionCard({eventImg, eventName, eventCategory, eventStart, eventE
                   <button className={`bg-red-700 hover:bg-red-300 p-2 rounded-2xl cursor-pointer borde-con-degradado`} onClick={() => deleteUserMission(missionId)}>
                     <Trash size={20}/>
                   </button>
-                  <button className={`bg-purple-700 ${missionState !== "active" ? "hover:bg-purple-300" : ""} p-2 rounded-2xl w-30 cursor-pointer borde-con-degradado`} onClick={() => handleClick(missionId)} disabled={missionState === "active"}>
+                  <button className={`bg-purple-700 ${missionState !== "activada" ? "hover:bg-purple-300" : ""} p-2 rounded-2xl w-30 cursor-pointer borde-con-degradado`} onClick={() => handleClick(missionId)} disabled={missionState === "activada"}>
                     {missionState !== "active" ? "Empezar!" : "En curso..."}
                   </button>
               </>) 

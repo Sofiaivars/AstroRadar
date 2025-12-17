@@ -1,15 +1,22 @@
-import { useEffect, useRef, useState } from 'react'
-import useGlobalReducer from '../../hooks/useGlobalReducer.jsx'
-import LoaderMini from '../loaders/LoaderMini.jsx'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import LoaderMini from '@components/loaders/LoaderMini.jsx'
 import { Telescope, Moon } from 'lucide-react'
-import CountdownComponent from '../renderEvents/CountdownComponent.jsx'
-import { addUserMission } from '../../servicios/events-missions-service.js'
+import CountdownComponent from '@components/renderEvents/CountdownComponent.jsx'
+import { addUserMission } from '@services/events-missions-service.js'
 import { Toast } from 'primereact/toast';
+import { useSelector } from 'react-redux'
+import AstroButton from '@components/shared/AstroButton'
 
 const EventoDestacado = () => {
-  const [eventList, setEventList] = useState(null)
-  const [firstEvent, setFirstEvent] = useState(null)
-  const { store } = useGlobalReducer()
+  const { events } = useSelector((state) => state.eventList)
+  const firstEvent = useMemo(() => {
+    if(events){
+      const now = new Date()
+      const sortedList = [...events].sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+      const upEvents = sortedList.filter((e) => new Date(e.start_date) >= now)
+      return upEvents[0]
+    }
+  }, [events])
 
   //Toast
     const toast = useRef(null)
@@ -19,35 +26,11 @@ const EventoDestacado = () => {
     const missionAlreadyCreatedShow = () => {
       toast.current.show({ severity: 'warn', summary: 'Warning', detail: `La misión ya existe!` });
     }
-    // Toast end
+  // Toast end
 
   const handleClick = async () => {
-    if(!store.userData.id || !firstEvent.id){
-      return console.log('userId o eventId vacíos.')
-    }
-    try{
-      const missionState = "scheduled"
-      await addUserMission(store.userData.id, firstEvent.id, missionState)
-      return successOnCreateMissionShow()
-    }catch(error){
-      console.error(error)
-      missionAlreadyCreatedShow()
-    }
-    
+    missionAlreadyCreatedShow()
   }
-
-  useEffect(() => {
-    setEventList(store.eventList)
-  }, [])
-
-  useEffect(() => {
-    if(eventList){
-      const now = new Date()
-      const sortedList = eventList.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
-      const upEvents = sortedList.filter((e) => new Date(e.start_date) >= now)
-      setFirstEvent(upEvents[0])
-    }
-  }, [eventList])
 
   return (<>
     <div className="rounded-xl w-full h-[140px]">
@@ -89,52 +72,7 @@ const EventoDestacado = () => {
           <div className='flex text-sm items-center'>
             {firstEvent ? <CountdownComponent eventStart={firstEvent.start_date}/> : "Cargando..."}
           </div>
-          <button className="
-            group
-            rounded-[12px]
-            p-[1.5px]
-            text-white
-            text-sm
-            h-10
-            w-40
-            font-medium
-            transition
-            duration-300
-            flex
-            items-center
-            justify-center
-            hover:shadow-2xl
-            hover:shadow-purple-600/30"
-            style={{
-              backgroundImage:
-                "linear-gradient(var(--components-background), var(--components-background)), " +
-                "linear-gradient(to right, #a855f7, #d946ef, #22d3ee)", //bordeeeeeeeee
-              backgroundOrigin: "border-box",
-              backgroundClip: "padding-box, border-box",
-              border: "2px solid transparent",
-            }}
-            onClick={handleClick}
-          >
-            <div className="
-              rounded-[12px]
-              w-full
-              h-full
-              flex
-              items-center
-              justify-center
-              transition
-              duration-300
-              ease-in-out
-              group-hover:bg-gradient-to-br
-              group-hover:from-gray-700
-              group-hover:to-gray-900"
-              style={{
-                backgroundColor: "var(--components-background)",
-              }}
-            >
-              Comenzar misión
-            </div>
-          </button>
+          <AstroButton text="Comenzar misión" handleClick={handleClick}/> 
         </div>
       </div>
     </div>

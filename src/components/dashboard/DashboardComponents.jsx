@@ -1,118 +1,29 @@
-import EventoDestacado from "./EventoDestacado.jsx";
-import MapDashboard from "./MapDashboard.jsx";
-import RankingMain from "./ranking-component/RankingMain";
-import CosmoDashboard from "./cosmo-dashboard/CosmoDashboard";
-import MisionActual from "./MisionActual/MisionActual";
-import MisionRealizada from "./MisionRealizada/MisionRealizada";
-import Calendar from "./calendar/Calendar";
-import EventoSugerido from "./EventoSugerido.jsx";
-import EventoProgramado from "./EventoProgramado.jsx";
-import InfoTopComponent from "./InfoTopComponent/InfoTopComponent.jsx";
-import PageLoader from "../loaders/PageLoader.jsx";
 import { useEffect, useState } from "react";
-import { getJSONCoords } from "../../servicios/cosmo-service.js";
-import { getUserLocation } from "../../servicios/geolocation-service";
-import { getUserInfo } from "../../servicios/login-service.js";
-import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
-import MapboxDashboard from "./mapbox/MapboxDashboard.jsx";
-import { getEventsFromAPI, getISSPasses, getUserMissions } from "../../servicios/events-missions-service.js";
+import EventoDestacado from "@components/dashboard/EventoDestacado.jsx";
+import MapDashboard from "@components/dashboard/MapDashboard.jsx";
+import RankingMain from "@components/dashboard/ranking-component/RankingMain";
+import CosmoDashboard from "@components/dashboard/cosmo-dashboard/CosmoDashboard";
+import MisionActual from "@components/dashboard/MisionActual/MisionActual";
+import MisionRealizada from "@components/dashboard/MisionRealizada/MisionRealizada";
+import Calendar from "@components/dashboard/calendar/Calendar";
+import EventoSugerido from "@components/dashboard/EventoSugerido.jsx";
+import EventoProgramado from "@components/dashboard/EventoProgramado.jsx";
+import InfoTopComponent from "@components/dashboard/InfoTopComponent/InfoTopComponent.jsx";
+import PageLoader from "@components/loaders/PageLoader.jsx";
+import MapboxDashboard from "@components/dashboard/mapbox/MapboxDashboard.jsx";
+import { getJSONCoords } from "@services/cosmo-service.js";
+import { getEventsFromAPI, getISSPasses, getUserMissions } from "@services/events-missions-service.js";
+import { useSelector } from "react-redux";
 
 function DashboardComponents(){
-  const [userData, setUserData] = useState(null);
-  const [userLocation, setUserLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [spots, setSpots] = useState(null)
+  const userData = useSelector((state) => state.userData)
   const [isLoaded, setIsLoaded] = useState(false)
-
-  const { store, dispatch } = useGlobalReducer()
-
-  const fetchAI = async (lat, lon) => {
-    try {
-      const data = await getJSONCoords(lat, lon)
-      setSpots(data.spots)
-    } catch (error) {
-      console.error("Error:", error)
-    }
-  }
+  const [errorMsg, setErrorMsg] = useState(null)
 
   useEffect(() => {
-    if(!store.userData){
-      console.log('Obteniendo datos de usuario...')
-      const getUserDataFromDatabase = async () => {
-        const data = await getUserInfo();
-        dispatch({ type: 'ADD_USER_DATA', payload: data })
-        return
-      };
-      getUserDataFromDatabase();
-    }
-
-    if(!store.userLocation){
-      console.log('Obteniendo ubicación...')
-      getUserLocation(
-        (coords) => {
-          dispatch({ type: 'ADD_USER_LOCATION', payload: coords });
-          setErrorMsg(null);
-        },
-        (mensajeError) => {
-          setErrorMsg(mensajeError);
-        }
-      )
-    }
-
-    if(!Array.isArray(store.eventList) || store.eventList.length === 0){
-      try{
-        const getEvents = async () => {
-          const eventsFromAPI = await getEventsFromAPI()
-          dispatch({ type: "SET_EVENT_LIST", payload: eventsFromAPI })
-        }
-        getEvents()
-      }catch(error){
-        console.error(error)
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if(store.userData){
-      console.log(store.userData)
-      setUserData(store.userData)
+    const userDataHasData = Object.values(userData).some(value => value !== null)
+    if(userDataHasData){
       setIsLoaded(true)
-    }
-  }, [store.userData])
-
-  useEffect(() => {
-    if(store.userLocation){
-      setUserLocation(store.userLocation)
-    }
-  }, [store.userLocation])
-
-  useEffect(() => {
-    const getISSPassesFromAPI = async () => {
-      try {
-        const issData = await getISSPasses(userLocation.latitude, userLocation.longitude)
-        dispatch({ type: "SET_ISS_PASSES", payload: issData })
-        console.log('Cargados pasos ISS...')
-      } catch (error) {
-        console.error("Error obteniendo datos de ISS:", error)
-      }
-    }
-    if(userLocation){
-      fetchAI(userLocation.latitude, userLocation.longitude)
-      getISSPassesFromAPI()
-    }
-  }, [userLocation])
-
-  useEffect(() => {
-    if(!store.userActiveMission && userData){
-      const getActiveMissionFromDb = async () => {
-        const response = await getUserMissions(userData.id)
-        const active = [...response].filter((mission) => mission.state === "active")
-        dispatch({ type: "ADD_USER_ACTIVE_MISSION", payload: active[0] })
-        return
-      }
-      getActiveMissionFromDb()
-    }else{
-      console.log("Sin id de usuario.")
     }
   }, [userData])
 
@@ -126,24 +37,24 @@ function DashboardComponents(){
 
   return(
     <>
-      <InfoTopComponent errorMsg={errorMsg} userLocation={userLocation} />
-      <div className="flex flex-row gap-3 w-full h-full">
-        <div className="flex flex-col w-1/2 gap-1">
+      <InfoTopComponent errorMsg={errorMsg} userLocation={""} />
+      <div className="flex flex-col lg:flex-row gap-3 overflow-y-auto lg:overflow-hidden w-full h-full">
+        <div className="flex flex-col w-full lg:w-1/2 gap-1">
           <EventoDestacado />
-          <MapDashboard locations={spots} userPosition={userLocation}/>
-          <div className="flex flex-row w-full gap-1">
+          <MapDashboard locations={""} userPosition={""}/>
+          <div className="flex flex-col sm:flex-row w-full max-h-80 h-full gap-1">
             <Calendar />
             <EventoSugerido />
           </div>
         </div>
 
-        <div className="flex flex-col w-1/2 gap-1">
-          <div className="flex flex-row w-full gap-1">
+        <div className="flex flex-col w-full lg:w-1/2 gap-1">
+          <div className="flex flex-col sm:flex-row w-full gap-1">
             <MisionActual />
             <MisionRealizada />
           </div>
           <EventoProgramado />
-          <div className="flex flex-row items-center w-full h-full gap-1 relative rounded-2xl borde-con-degradado">
+          <div className="flex flex-col sm:flex-row items-center w-full h-full gap-1 relative rounded-2xl borde-con-degradado">
             <RankingMain />
             <CosmoDashboard scene={"dashboard"}/>
           </div>

@@ -41,16 +41,16 @@ const getCategories = (list) => {
 }
 
 //Añadir evento a UserMissions================================
-const addUserMission = async (user_id, event_id, state) => {
-  const response = await fetch(`${mainURL}/umissions/add-user-mission`, {
+const addUserMission = async (userId, eventId, state = "programada") => {
+  const response = await fetch(`${mainURL}/missions/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user_id, event_id, state })
+    body: JSON.stringify({ userId, eventId, state })
   });
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw Error(errorData.msg || "Error al enviar userMission");
+    throw Error(errorData.message || "Error al enviar userMission");
   }
 
   const data = await response.json();
@@ -60,18 +60,20 @@ const addUserMission = async (user_id, event_id, state) => {
 // Obtener userMissions
 const getUserMissions = async (userId) => {
   try {
-    const response = await fetch(`${mainURL}/umissions/usermissions/${userId}`);
+    const response = await fetch(`${mainURL}/missions/${userId}`);
+
     if (!response.ok) {
       if (response.status === 404) {
-        return [];
+        return { missions: [], count: 0 };
       }
-      throw Error("Error al obtener misiones del usuario.");
+      throw new Error("Error al obtener misiones del usuario");
     }
+
     const data = await response.json();
     return data;
   } catch (error) {
     console.error(`Error en getUserMissions: ${error}`);
-    return [];
+    throw error;
   }
 }
 
@@ -137,8 +139,8 @@ const updateMissionImage = async (missionID, imageSrc) => {
 }
 //==========================================================
 
-const getISSPasses = async (latitude, longitude) => {
-  const response = await fetch(`${mainURL}/isspasses`, {
+const getISSPasses = async ({ latitude, longitude }) => {
+  const response = await fetch(`${mainURL}/sats/iss`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ latitude, longitude })
@@ -150,11 +152,11 @@ const getISSPasses = async (latitude, longitude) => {
   }
 
   const data = await response.json();
-  return data
+  return data.passes;
 }
 
-const getAboveSatellites = async (latitude, longitude) => {
-  const response = await fetch(`${mainURL}/satsabove`, {
+const getAboveSatellites = async ({ latitude, longitude }) => {
+  const response = await fetch(`${mainURL}/sats/above`, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ latitude, longitude })

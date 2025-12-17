@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import "./StepsComponent.css";
+import "@components/missionsSteps/StepsComponent.css";
 
 const items = [
   { label: "Seleccionar ubicación" },

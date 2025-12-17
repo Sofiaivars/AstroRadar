@@ -1,4 +1,4 @@
-import './LoaderMini.css'
+import '@components/loaders/LoaderMini.css'
 
 function LoaderMini(){
 

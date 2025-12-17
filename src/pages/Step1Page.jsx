@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { updateMissionData } from "../servicios/mission-service.js";
-import { updateStellarBase } from "../servicios/events-missions-service.js";
-import cosmoTip1 from "../components/dashboard/cosmo-dashboard/assets/cosmo-step1.png";
-import { getUserLocation } from "../servicios/geolocation-service";
-import { getJSONCoords } from "../servicios/cosmo-service.js";
-import Map from "../components/dashboard/Map.jsx";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import CosmoDashboard from "../components/dashboard/cosmo-dashboard/CosmoDashboard.jsx";
+import { updateMissionData } from "@services/mission-service.js";
+import { updateStellarBase } from "@services/events-missions-service.js";
+import { getUserLocation } from "@services/geolocation-service";
+import { getJSONCoords } from "@services/cosmo-service.js";
+import cosmoTip1 from "@components/dashboard/cosmo-dashboard/assets/cosmo-step1.png";
+import Map from "@components/dashboard/Map.jsx";
+import CosmoDashboard from "@components/dashboard/cosmo-dashboard/CosmoDashboard.jsx";
 
 function Step1Page() {
   const [spots, setSpots] = useState(null); // puntos IA
@@ -18,45 +17,6 @@ function Step1Page() {
   const [missionId, setMissionId] = useState(null);
 
   const navigate = useNavigate();
-  const { store, dispatch } = useGlobalReducer(); // acceso al store global
-
-  // Cargar puntos IA al iniciar
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        fetchAI(coords.latitude, coords.longitude);
-      },
-      (err) => {
-        alert("Ubicación no permitida.");
-        console.error(err);
-      }
-    );
-  }, []);
-
-  const fetchAI = async (lat, lon) => {
-    try {
-      const data = await getJSONCoords(lat, lon);
-      setSpots(data.spots);
-    } catch (error) {
-      console.error("Error al obtener puntos IA:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (store.userActiveMission?.id) {
-      setMissionId(store.userActiveMission.id);
-    } else {
-      console.log("Sin datos de usuario en el store");
-    }
-  }, [location]);
-
-  // Obtener ubicación del dispositivo para el marcador morado
-  useEffect(() => {
-    getUserLocation(
-      (coords) => setUserPosition(coords),
-      (mensajeError) => setErrorMsg(mensajeError)
-    );
-  }, []);
 
   // Botón “Confirmar base estelar”
   const _confirmLocation = () => {
@@ -75,7 +35,6 @@ function Step1Page() {
 
   // Al seleccionar base desde el mapa
   const handleSelectBase = (base) => {
-    dispatch({ type: "SET_SELECTED_BASE", payload: base });
 
     setLocation({
       name: base.name,

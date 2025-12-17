@@ -1,48 +1,23 @@
-export const initialStore = () => {
-  return {
-    userLocation: null,
-    suggestedCoords: [],
-    selectedBase: null,
-    eventList: [],
-    userData: null,
-    issPassesList: null,
-    userActiveMission: null,
-  }
-};
+import { configureStore } from "@reduxjs/toolkit";
+import userLocationReducer from '@features/userLocation/userLocationSlice';
+import suggestedCoordsReducer from '@features/suggestedCoords/suggestedCoordsSlice';
+import selectedBaseReducer from '@features/selectedBase/selectedBaseSlice';
+import eventListReducer from '@features/eventList/eventListSlice';
+import userDataReducer from '@features/userData/userDataSlice'
+import issPassesListReducer from '@features/issPassesList/issPassesListSlice';
+import missionListReducer from '@features/missionList/missionListSlice';
 
-export default function storeReducer(store, action = {}) {
-  switch (action.type) {
-    case "ADD_USER_LOCATION":
-      return {
-        ...store,
-        userLocation: action.payload,
-      }
+const options = {
+  reducer: {
+    userLocation: userLocationReducer,
+    suggestedCoords: suggestedCoordsReducer,
+    selectedBase: selectedBaseReducer,
+    eventList: eventListReducer,
+    userData: userDataReducer,
+    issPassesList: issPassesListReducer,
+    missionList: missionListReducer,
 
-    case "SET_SELECTED_BASE":
-      return {
-        ...store,
-        selectedBase: {
-          name: action.payload.name,
-          coordinates: {
-            latitude: action.payload.coordinates.latitude,
-            longitude: action.payload.coordinates.longitude,
-          },
-        },
-      };
-
-    case "SET_EVENT_LIST":
-      return { ...store, eventList: [...action.payload] }
-
-    case "SET_ISS_PASSES":
-      return { ...store, issPassesList: action.payload }
-
-    case "ADD_USER_DATA":
-      return { ...store, userData: action.payload }
-
-    case "ADD_USER_ACTIVE_MISSION":
-      return { ...store, userActiveMission: action.payload }
-
-    default:
-      return store;
   }
 }
+
+export const store = configureStore(options);

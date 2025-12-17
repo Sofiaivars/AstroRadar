@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import LoaderMini from '../../loaders/LoaderMini.jsx';
-import useGlobalReducer from '../../../hooks/useGlobalReducer.jsx';
-
-
+import LoaderMini from '@components/loaders/LoaderMini.jsx';
 
 const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
-  const { dispatch } = useGlobalReducer();
 
   const [viewState, setViewState] = useState({
     longitude: 0,
@@ -136,8 +132,6 @@ const MapboxMap = ({ locations, userPosition, onSelectBase }) => {
       const data = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_SELECTED_BASE", payload });
-
         // Evitar duplicados por nombre
         setUserBases((prev) => {
           const exists = prev.some(

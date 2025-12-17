@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import LoaderMini from '../../loaders/LoaderMini.jsx';
-import useGlobalReducer from '../../../hooks/useGlobalReducer.jsx';
+import LoaderMini from '@components/loaders/LoaderMini.jsx';
 
 const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
-  const { dispatch } = useGlobalReducer();
 
   const [viewState, setViewState] = useState({
     longitude: 0,
@@ -72,7 +70,6 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
       const data = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_SELECTED_BASE", payload: newLocation });
         if (onSelectBase) onSelectBase(newLocation);
 
         setUserLocations([newLocation]);
@@ -123,7 +120,6 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
       const data = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_SELECTED_BASE", payload });
         if (onSelectBase) onSelectBase(payload);
 
         setShowSavedMessage(true);
@@ -140,7 +136,7 @@ const MapboxDashboard = ({ locations, userPosition, onSelectBase }) => {
   };
 
   return (
-    <div className="w-full h-[320px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado bg-[#0e0e0e]">
+    <div className="w-full min-h-[320px] rounded-2xl overflow-hidden relative shadow-lg borde-con-degradado bg-[#0e0e0e]">
       {isLoading ? (
         <div className="flex items-center justify-center h-full text-white text-sm opacity-60">
           <LoaderMini />

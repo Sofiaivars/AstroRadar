@@ -1,8 +1,7 @@
-import React, { act, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import StepsComponent from "../components/missionsSteps/StepsComponent";
+import StepsComponent from "@components/missionsSteps/StepsComponent";
 import { Outlet } from "react-router";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { CalendarDays, MessageCircleWarning } from "lucide-react";
 
 function MissionsPage() {
@@ -11,7 +10,6 @@ function MissionsPage() {
   const [activeMission, setActiveMission] = useState(null)
 
   const navigate = useNavigate()
-  const { store } = useGlobalReducer()
 
   const routeToStepIndex = {
     "/dashboard/missions/step1": 0,
@@ -23,23 +21,6 @@ function MissionsPage() {
     const step = routeToStepIndex[location.pathname] ?? 0;
     setActiveStep(step);
   }, [location.pathname]);
-
-  useEffect(() => {
-    if(store.userActiveMission){
-      setActiveMission(store.userActiveMission)
-      if(store.userActiveMission.base.id){
-        navigate('/dashboard/missions/step2')
-      }
-    }
-
-    if(!store.userActiveMission){
-      navigate('/dashboard')
-    }
-  }, [])
-
-  useEffect(() => {
-    console.log(activeMission)
-  }, [activeMission])
 
   return (
     <>
